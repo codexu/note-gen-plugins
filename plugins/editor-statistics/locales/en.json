@@ -1,0 +1,20 @@
+{
+  "command.refresh.title": "Refresh editor statistics",
+  "command.refresh.description": "Recalculate statistics for the active Markdown editor",
+  "command.showDetails.title": "Show editor statistics",
+  "command.showDetails.description": "Show detailed counts for the active Markdown editor",
+  "setting.showStatusBar.title": "Show in status bar",
+  "setting.primaryMetric.title": "Primary display",
+  "setting.compactMetric.title": "Compact display",
+  "setting.metric.charactersAndReadingTime": "Characters and reading time",
+  "setting.metric.characters": "Characters",
+  "setting.metric.words": "Words",
+  "setting.metric.readingTime": "Reading time",
+  "setting.characterMode.title": "Character count",
+  "setting.characterMode.withoutWhitespace": "Exclude whitespace",
+  "setting.characterMode.withWhitespace": "Include whitespace",
+  "setting.includeCodeBlocks.title": "Include code blocks in character count",
+  "permission.editorRead.description": "Read the active Markdown editor to calculate statistics locally",
+  "status.stale": "Update manually",
+  "unit.minute": "min"
+}

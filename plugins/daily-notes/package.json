@@ -1,0 +1,24 @@
+{
+  "name": "@notegen/plugin-daily-notes",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Official Daily Notes plugin for NoteGen.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit && notegen-plugin build",
+    "validate": "tsc -p tsconfig.json --noEmit && notegen-plugin validate",
+    "plugin:pack": "notegen-plugin pack"
+  },
+  "notegen": {
+    "source": "src/main.ts"
+  },
+  "devDependencies": {
+    "@notegen/plugin-api": "workspace:^",
+    "@notegen/plugin-cli": "workspace:^",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,294 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.plugin-playground",
+  "name": "Plugin Playground",
+  "description": "Official interactive examples and manual probes for every public NoteGen plugin API capability.",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.0",
+  "minAppVersion": "0.37.0",
+  "platforms": [
+    "desktop",
+    "ios",
+    "android"
+  ],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onWorkspace:open",
+    "onEditor:markdown",
+    "onNotes:change",
+    "onCommand:top.notegen.plugin-playground.open",
+    "onCommand:top.notegen.plugin-playground.refresh",
+    "onCommand:top.notegen.plugin-playground.clear",
+    "onCommand:top.notegen.plugin-playground.reset-form",
+    "onCommand:top.notegen.plugin-playground.describe",
+    "onCommand:top.notegen.plugin-playground.run",
+    "onCommand:top.notegen.plugin-playground.form-change",
+    "onCommand:top.notegen.plugin-playground.dialog",
+    "onCommand:top.notegen.plugin-playground.dialog-submit",
+    "onCommand:top.notegen.plugin-playground.dialog-update",
+    "onCommand:top.notegen.plugin-playground.dialog-replace",
+    "onCommand:top.notegen.plugin-playground.dialog-close",
+    "onCommand:top.notegen.plugin-playground.view",
+    "onCommand:top.notegen.plugin-playground.host",
+    "onCommand:top.notegen.plugin-playground.throw"
+  ],
+  "permissions": {
+    "editor.read": {
+      "scope": "active-editor",
+      "optional": true,
+      "description": "%permission.editor.read%"
+    },
+    "editor.write": {
+      "scope": "active-editor",
+      "optional": true,
+      "description": "%permission.editor.write%"
+    },
+    "notes.read": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.notes.read%"
+    },
+    "notes.create": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.notes.create%"
+    },
+    "notes.open": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.notes.open%"
+    },
+    "notes.list": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.notes.list%"
+    },
+    "notes.write": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.notes.write%"
+    },
+    "notes.delete": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.notes.delete%"
+    },
+    "notes.move": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.notes.move%"
+    },
+    "attachments.read": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.attachments.read%"
+    },
+    "attachments.create": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.attachments.create%"
+    },
+    "network.fetch": {
+      "scope": "network-origins",
+      "optional": true,
+      "description": "%permission.network.fetch%"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "top.notegen.plugin-playground.open",
+        "title": "%command.open%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.refresh",
+        "title": "%command.refresh%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.clear",
+        "title": "%command.clear%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.reset-form",
+        "title": "%command.reset-form%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.describe",
+        "title": "%command.describe%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.run",
+        "title": "%command.run%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.form-change",
+        "title": "%command.form-change%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.dialog",
+        "title": "%command.dialog%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.dialog-submit",
+        "title": "%command.dialog-submit%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.dialog-update",
+        "title": "%command.dialog-update%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.dialog-replace",
+        "title": "%command.dialog-replace%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.dialog-close",
+        "title": "%command.dialog-close%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.view",
+        "title": "%command.view%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.host",
+        "title": "%command.host%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.throw",
+        "title": "%command.throw%",
+        "icon": "flask-conical"
+      }
+    ],
+    "settings": [
+      {
+        "key": "top.notegen.plugin-playground.folder",
+        "type": "workspace-folder",
+        "scope": "workspace",
+        "default": "PluginPlayground",
+        "title": "%setting.folder%"
+      },
+      {
+        "key": "top.notegen.plugin-playground.sampleFile",
+        "type": "workspace-file",
+        "scope": "workspace",
+        "default": "",
+        "title": "%setting.sampleFile%"
+      },
+      {
+        "key": "top.notegen.plugin-playground.timeZone",
+        "type": "string",
+        "scope": "workspace",
+        "default": "system",
+        "placeholder": "Asia/Shanghai",
+        "maxLength": 100,
+        "title": "%setting.timeZone%"
+      },
+      {
+        "key": "top.notegen.plugin-playground.eventLimit",
+        "type": "number",
+        "scope": "device",
+        "default": 20,
+        "min": 5,
+        "max": 50,
+        "step": 1,
+        "title": "%setting.eventLimit%"
+      },
+      {
+        "key": "top.notegen.plugin-playground.showStatus",
+        "type": "boolean",
+        "scope": "device",
+        "default": true,
+        "title": "%setting.showStatus%"
+      },
+      {
+        "key": "top.notegen.plugin-playground.tone",
+        "type": "select",
+        "scope": "device",
+        "default": "default",
+        "options": [
+          {
+            "label": "%tone.default%",
+            "value": "default"
+          },
+          {
+            "label": "%tone.warning%",
+            "value": "warning"
+          }
+        ],
+        "title": "%setting.tone%"
+      }
+    ],
+    "statusBar": [
+      {
+        "id": "top.notegen.plugin-playground.status",
+        "alignment": "right",
+        "priority": -100,
+        "command": "top.notegen.plugin-playground.open"
+      }
+    ],
+    "views": [
+      {
+        "id": "top.notegen.plugin-playground.left",
+        "title": "%view.left%",
+        "location": "left-sidebar",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.right",
+        "title": "%view.right%",
+        "location": "right-sidebar",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.tab",
+        "title": "%view.tab%",
+        "location": "editor-tab",
+        "icon": "flask-conical"
+      }
+    ],
+    "menus": [
+      {
+        "location": "editor/slash",
+        "command": "top.notegen.plugin-playground.open",
+        "when": "editor == markdown"
+      },
+      {
+        "location": "editor/context",
+        "command": "top.notegen.plugin-playground.open",
+        "when": "editor == markdown"
+      },
+      {
+        "location": "file/context",
+        "command": "top.notegen.plugin-playground.open"
+      },
+      {
+        "location": "mobile/writing/overflow",
+        "command": "top.notegen.plugin-playground.open"
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/plugin-playground",
+  "license": "GPL-3.0-or-later"
+}

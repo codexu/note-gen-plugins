@@ -1,0 +1,109 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.daily-notes",
+  "name": "Daily Notes",
+  "description": "Open or create the note for the current logical day.",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.0",
+  "minAppVersion": "0.37.0",
+  "platforms": ["desktop"],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onCommand:top.notegen.daily-notes.open-today"
+  ],
+  "permissions": {
+    "notes.read": {
+      "scope": "workspace-file",
+      "optional": true,
+      "description": "%permission.notesRead.description%"
+    },
+    "notes.create": {
+      "scope": "workspace-folder",
+      "description": "%permission.notesCreate.description%"
+    },
+    "notes.open": {
+      "scope": "workspace-folder",
+      "description": "%permission.notesOpen.description%"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "top.notegen.daily-notes.open-today",
+        "title": "%command.openToday.title%",
+        "description": "%command.openToday.description%",
+        "icon": "calendar-days"
+      }
+    ],
+    "settings": [
+      {
+        "key": "top.notegen.daily-notes.timeZone",
+        "type": "string",
+        "scope": "workspace",
+        "title": "%setting.timeZone.title%",
+        "description": "%setting.timeZone.description%",
+        "default": "system",
+        "placeholder": "Asia/Shanghai",
+        "maxLength": 100
+      },
+      {
+        "key": "top.notegen.daily-notes.folder",
+        "permissionPaths": ["notes.create", "notes.open"],
+        "type": "string",
+        "scope": "workspace",
+        "title": "%setting.folder.title%",
+        "description": "%setting.folder.description%",
+        "default": "Daily/{{year}}/{{month}}",
+        "maxLength": 240
+      },
+      {
+        "key": "top.notegen.daily-notes.fileName",
+        "type": "string",
+        "scope": "workspace",
+        "title": "%setting.fileName.title%",
+        "description": "%setting.fileName.description%",
+        "default": "{{date}}.md",
+        "maxLength": 160
+      },
+      {
+        "key": "top.notegen.daily-notes.bodyTemplate",
+        "type": "string",
+        "scope": "workspace",
+        "title": "%setting.bodyTemplate.title%",
+        "description": "%setting.bodyTemplate.description%",
+        "default": "# {{dateLong}}\n\n",
+        "maxLength": 65536
+      },
+      {
+        "key": "top.notegen.daily-notes.templateFile",
+        "type": "workspace-file",
+        "scope": "workspace",
+        "title": "%setting.templateFile.title%",
+        "description": "%setting.templateFile.description%",
+        "default": ""
+      }
+    ],
+    "menus": [
+      {
+        "location": "file/context",
+        "command": "top.notegen.daily-notes.open-today"
+      },
+      {
+        "location": "editor/slash",
+        "command": "top.notegen.daily-notes.open-today",
+        "when": "editor == markdown"
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/daily-notes",
+  "license": "GPL-3.0-or-later"
+}

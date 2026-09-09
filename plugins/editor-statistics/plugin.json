@@ -1,0 +1,109 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.editor-statistics",
+  "name": "Editor Statistics",
+  "description": "Show local Markdown writing statistics in the status bar.",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.0",
+  "minAppVersion": "0.37.0",
+  "platforms": ["desktop"],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onEditor:markdown",
+    "onCommand:top.notegen.editor-statistics.refresh",
+    "onCommand:top.notegen.editor-statistics.show-details"
+  ],
+  "permissions": {
+    "editor.read": {
+      "scope": "active-editor",
+      "description": "%permission.editorRead.description%"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "top.notegen.editor-statistics.refresh",
+        "title": "%command.refresh.title%",
+        "description": "%command.refresh.description%",
+        "icon": "refresh-cw"
+      },
+      {
+        "id": "top.notegen.editor-statistics.show-details",
+        "title": "%command.showDetails.title%",
+        "description": "%command.showDetails.description%",
+        "icon": "chart-no-axes-combined"
+      }
+    ],
+    "settings": [
+      {
+        "key": "top.notegen.editor-statistics.showStatusBar",
+        "type": "boolean",
+        "scope": "workspace",
+        "title": "%setting.showStatusBar.title%",
+        "default": true
+      },
+      {
+        "key": "top.notegen.editor-statistics.primaryMetric",
+        "type": "select",
+        "scope": "workspace",
+        "title": "%setting.primaryMetric.title%",
+        "default": "characters-reading-time",
+        "options": [
+          { "label": "%setting.metric.charactersAndReadingTime%", "value": "characters-reading-time" },
+          { "label": "%setting.metric.characters%", "value": "characters" },
+          { "label": "%setting.metric.words%", "value": "words" },
+          { "label": "%setting.metric.readingTime%", "value": "reading-time" }
+        ]
+      },
+      {
+        "key": "top.notegen.editor-statistics.compactMetric",
+        "type": "select",
+        "scope": "workspace",
+        "title": "%setting.compactMetric.title%",
+        "default": "characters",
+        "options": [
+          { "label": "%setting.metric.characters%", "value": "characters" },
+          { "label": "%setting.metric.words%", "value": "words" },
+          { "label": "%setting.metric.readingTime%", "value": "reading-time" }
+        ]
+      },
+      {
+        "key": "top.notegen.editor-statistics.characterMode",
+        "type": "select",
+        "scope": "workspace",
+        "title": "%setting.characterMode.title%",
+        "default": "without-whitespace",
+        "options": [
+          { "label": "%setting.characterMode.withoutWhitespace%", "value": "without-whitespace" },
+          { "label": "%setting.characterMode.withWhitespace%", "value": "with-whitespace" }
+        ]
+      },
+      {
+        "key": "top.notegen.editor-statistics.includeCodeBlocks",
+        "type": "boolean",
+        "scope": "workspace",
+        "title": "%setting.includeCodeBlocks.title%",
+        "default": false
+      }
+    ],
+    "statusBar": [
+      {
+        "id": "top.notegen.editor-statistics.summary",
+        "alignment": "right",
+        "priority": 100,
+        "command": "top.notegen.editor-statistics.show-details"
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/editor-statistics",
+  "license": "GPL-3.0-or-later"
+}

@@ -1,0 +1,20 @@
+{
+  "command.refresh.title": "刷新编辑器统计",
+  "command.refresh.description": "重新计算活动 Markdown 编辑器的统计信息",
+  "command.showDetails.title": "查看编辑器统计",
+  "command.showDetails.description": "查看活动 Markdown 编辑器的详细统计",
+  "setting.showStatusBar.title": "在状态栏显示",
+  "setting.primaryMetric.title": "主要显示内容",
+  "setting.compactMetric.title": "紧凑显示内容",
+  "setting.metric.charactersAndReadingTime": "字符数与阅读时间",
+  "setting.metric.characters": "字符数",
+  "setting.metric.words": "单词数",
+  "setting.metric.readingTime": "阅读时间",
+  "setting.characterMode.title": "字符统计口径",
+  "setting.characterMode.withoutWhitespace": "不含空白",
+  "setting.characterMode.withWhitespace": "包含空白",
+  "setting.includeCodeBlocks.title": "字符统计包含代码块",
+  "permission.editorRead.description": "读取当前 Markdown 编辑器并在本地计算统计信息",
+  "status.stale": "需手动更新",
+  "unit.minute": "分钟"
+}

@@ -1,0 +1,5 @@
+{
+  "algorithm": "Ed25519",
+  "keyId": "ed25519-replace-with-sha256-of-raw-public-key",
+  "publicKey": "replace-with-base64-encoded-32-byte-public-key"
+}

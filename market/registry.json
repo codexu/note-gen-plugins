@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "publisherId": "notegen",
+  "publisherName": "NoteGen",
+  "plugins": [
+    {
+      "directory": "plugins/daily-notes",
+      "categories": [
+        "productivity",
+        "journaling"
+      ],
+      "featured": true,
+      "official": true,
+      "changelog": "Initial official release."
+    },
+    {
+      "directory": "plugins/editor-statistics",
+      "categories": [
+        "editor",
+        "statistics"
+      ],
+      "featured": true,
+      "official": true,
+      "changelog": "Initial official release."
+    },
+    {
+      "directory": "plugins/plugin-playground",
+      "categories": [
+        "development",
+        "examples"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "Initial official API playground with interactive capability probes."
+    }
+  ]
+}

@@ -1,0 +1,506 @@
+name: Release signed plugin market
+
+on:
+  schedule:
+    - cron: '23 3 * * 1,4'
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Immutable GitHub release tag, for example plugins-v1-20260908
+        required: true
+      generation:
+        description: Monotonically increasing positive integer
+        required: true
+      validity_days:
+        description: Signed index validity, maximum 14 days
+        required: true
+        default: '14'
+      first_release:
+        description: Confirm that no signed market has ever been published
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: plugin-market-production
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ github.event_name == 'schedule' && 'plugin-market-refresh' || 'plugin-market-production' }}
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - name: Require an immutable SDK revision
+        if: github.event_name != 'schedule'
+        shell: bash
+        env:
+          PLUGIN_SDK_REF: ${{ vars.PLUGIN_SDK_REF }}
+        run: |
+          if [[ ! "$PLUGIN_SDK_REF" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::Set PLUGIN_SDK_REF to the full commit SHA of the reviewed SDK release."
+            exit 1
+          fi
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          repository: codexu/note-gen-plugin-sdk
+          ref: ${{ vars.PLUGIN_SDK_REF }}
+          path: .sdk
+          persist-credentials: false
+        if: github.event_name != 'schedule'
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        if: github.event_name != 'schedule'
+        with:
+          version: 10.20.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20
+      - name: Resolve immutable release metadata
+        shell: bash
+        env:
+          INPUT_RELEASE_TAG: ${{ inputs.release_tag }}
+          INPUT_GENERATION: ${{ inputs.generation }}
+          INPUT_VALIDITY_DAYS: ${{ inputs.validity_days }}
+        run: |
+          if [ -n "$INPUT_RELEASE_TAG" ]; then
+            generation="$INPUT_GENERATION"
+            release_tag="$INPUT_RELEASE_TAG"
+          else
+            # A run ID is stable across GitHub's "Re-run jobs" operation, so a
+            # scheduled publication resumes the same immutable release.
+            generation="$GITHUB_RUN_ID"
+            release_tag="plugins-v1-run-$GITHUB_RUN_ID"
+          fi
+          if [[ ! "$release_tag" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$ ]]; then
+            echo "::error::release_tag must use 1–100 letters, digits, dots, underscores, or hyphens and start with a letter or digit."
+            exit 1
+          fi
+          validity_days="${INPUT_VALIDITY_DAYS:-14}"
+          node -e 'const generation=Number(process.argv[1]),days=Number(process.argv[2]);if(String(generation)!==process.argv[1]||!Number.isSafeInteger(generation)||generation<1||String(days)!==process.argv[2]||!Number.isInteger(days)||days<1||days>14)throw new Error("generation must be a positive safe integer and validity_days must be between 1 and 14")' "$generation" "$validity_days"
+          echo "GENERATION=$generation" >> "$GITHUB_ENV"
+          echo "RELEASE_TAG=$release_tag" >> "$GITHUB_ENV"
+          echo "VALIDITY_DAYS=$validity_days" >> "$GITHUB_ENV"
+      - name: Pin release source and record the SDK revision
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          PLUGIN_SDK_REF: ${{ vars.PLUGIN_SDK_REF }}
+        run: |
+          set -euo pipefail
+          tag_error="$RUNNER_TEMP/release-tag-error"
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" >/dev/null 2>"$tag_error"; then
+            tag_commit="$(gh api "repos/$GITHUB_REPOSITORY/commits/$RELEASE_TAG" --jq .sha)"
+            if [ "$tag_commit" != "$GITHUB_SHA" ]; then
+              echo "::error::Tag $RELEASE_TAG resolves to $tag_commit, not the source commit $GITHUB_SHA used by this run."
+              exit 1
+            fi
+          elif ! grep -q 'HTTP 404' "$tag_error"; then
+            cat "$tag_error" >&2
+            exit 1
+          fi
+          if [ "$EVENT_NAME" != "schedule" ]; then
+            sdk_sha="$(git -C .sdk rev-parse HEAD)"
+            test "$sdk_sha" = "$PLUGIN_SDK_REF"
+            echo "SDK_SHA=$sdk_sha" >> "$GITHUB_ENV"
+          fi
+      - name: Load the trusted marketplace public key
+        shell: bash
+        env:
+          MARKET_ROOT_PUBLIC_KEY: ${{ vars.MARKET_ROOT_PUBLIC_KEY }}
+        run: |
+          test -n "$MARKET_ROOT_PUBLIC_KEY"
+          mkdir -p "$RUNNER_TEMP/notegen-keys"
+          printf '%s\n' "$MARKET_ROOT_PUBLIC_KEY" > "$RUNNER_TEMP/notegen-keys/root.expected.pub"
+      - run: pnpm install --frozen-lockfile
+        if: github.event_name != 'schedule'
+      - run: pnpm --filter @notegen/plugin-api build
+        if: github.event_name != 'schedule'
+      - run: pnpm --filter @notegen/plugin-cli build
+        if: github.event_name != 'schedule'
+      - run: pnpm --filter @notegen/plugin-test build
+        if: github.event_name != 'schedule'
+      - run: pnpm build
+        if: github.event_name != 'schedule'
+      - run: pnpm validate
+        if: github.event_name != 'schedule'
+      - run: pnpm test
+        if: github.event_name != 'schedule'
+      - run: pnpm run plugin:pack
+        if: github.event_name != 'schedule'
+      - name: Read the currently published generation
+        shell: bash
+        env:
+          FIRST_RELEASE: ${{ inputs.first_release }}
+          EVENT_NAME: ${{ github.event_name }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          found=false
+          observed_index=false
+          previous_generation=""
+          candidate_number=0
+          mkdir -p "$RUNNER_TEMP/verified-market-generations"
+          for base in \
+            https://download.notegen.top/plugins/v1 \
+            https://github.com/codexu/note-gen-plugins/releases/latest/download \
+            "https://github.com/$GITHUB_REPOSITORY/releases/download/$RELEASE_TAG"; do
+            candidate_number=$((candidate_number + 1))
+            candidate="$RUNNER_TEMP/market-source-$candidate_number"
+            mkdir -p "$candidate"
+            if curl --fail --silent --show-error --location \
+              --connect-timeout 10 --max-time 60 \
+              --output "$candidate/index.json" "$base/index.json"; then
+              observed_index=true
+            else
+              echo "::warning::Could not download the catalog from $base; checking the next source."
+              continue
+            fi
+            if ! curl --fail --silent --show-error --location \
+              --connect-timeout 10 --max-time 60 \
+              --output "$candidate/index.sig" "$base/index.sig" || \
+              ! node tools/market.mjs verify \
+                --index "$candidate/index.json" \
+                --signature "$candidate/index.sig" \
+                --public-key "$RUNNER_TEMP/notegen-keys/root.expected.pub" \
+                --allow-expired true; then
+              echo "::warning::The catalog/signature pair from $base is incomplete or invalid; checking the next source."
+              continue
+            fi
+            candidate_generation="$(node -p 'JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8")).generation' "$candidate/index.json")"
+            generation_directory="$RUNNER_TEMP/verified-market-generations/$candidate_generation"
+            if [ -d "$generation_directory" ]; then
+              cmp --silent "$candidate/index.json" "$generation_directory/index.json" && \
+                cmp --silent "$candidate/index.sig" "$generation_directory/index.sig" || {
+                  echo "::error::Verified sources disagree on the signed bytes of generation $candidate_generation."
+                  exit 1
+                }
+            else
+              mkdir -p "$generation_directory"
+              cp "$candidate/index.json" "$generation_directory/index.json"
+              cp "$candidate/index.sig" "$generation_directory/index.sig"
+            fi
+            if [ "$found" != true ] || [ "$candidate_generation" -gt "$previous_generation" ]; then
+              found=true
+              previous_generation="$candidate_generation"
+              cp "$candidate/index.json" "$RUNNER_TEMP/previous-index.json"
+              cp "$candidate/index.sig" "$RUNNER_TEMP/previous-index.sig"
+            fi
+          done
+          if [ "$found" = true ]; then
+            echo "PREVIOUS_INDEX=$RUNNER_TEMP/previous-index.json" >> "$GITHUB_ENV"
+            echo "PREVIOUS_SIGNATURE=$RUNNER_TEMP/previous-index.sig" >> "$GITHUB_ENV"
+          fi
+
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            scheduled_release="$RUNNER_TEMP/scheduled-release-index"
+            if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+              mkdir -p "$scheduled_release"
+              gh release download "$RELEASE_TAG" --pattern index.json --dir "$scheduled_release"
+              gh release download "$RELEASE_TAG" --pattern index.sig --dir "$scheduled_release"
+              node tools/market.mjs verify \
+                --index "$scheduled_release/index.json" \
+                --signature "$scheduled_release/index.sig" \
+                --public-key "$RUNNER_TEMP/notegen-keys/root.expected.pub" \
+                --allow-expired true
+              release_generation="$(node -p 'JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8")).generation' "$scheduled_release/index.json")"
+              if [ -n "$previous_generation" ] && [ "$release_generation" -lt "$previous_generation" ]; then
+                echo "::error::Scheduled release $RELEASE_TAG was superseded by generation $previous_generation; refusing to roll back the current pointer."
+                exit 1
+              fi
+              echo "GENERATION=$release_generation" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            if [ "$found" != true ]; then
+              echo "::error::A scheduled refresh requires an existing published index."
+              exit 1
+            fi
+            next_generation="$(node -p 'Math.max(Number(process.argv[1]) + 1, Number(process.argv[2]))' "$previous_generation" "$GITHUB_RUN_ID")"
+            echo "GENERATION=$next_generation" >> "$GITHUB_ENV"
+            exit 0
+          fi
+
+          if [ "$found" != true ]; then
+            if [ "$observed_index" = true ]; then
+              echo "::error::Existing catalog bytes were found but none could be verified. Restore a valid signed source before publishing; first_release cannot reset this state."
+              exit 1
+            fi
+            if [ "$FIRST_RELEASE" != "true" ]; then
+              echo "::error::No previous signed index was found. Re-run with first_release enabled only after confirming this is the initial publication."
+              exit 1
+            fi
+            echo "No previous market index was available; explicit first publication confirmed."
+          fi
+      - name: Materialize protected signing keys
+        shell: bash
+        env:
+          PUBLISHER_PRIVATE_KEY_B64: ${{ secrets.PUBLISHER_PRIVATE_KEY_B64 }}
+          MARKET_ROOT_PRIVATE_KEY_B64: ${{ secrets.MARKET_ROOT_PRIVATE_KEY_B64 }}
+          PUBLISHER_PUBLIC_KEY_JSON: ${{ vars.PUBLISHER_PUBLIC_KEY_JSON }}
+          OSS_ENDPOINT: ${{ vars.OSS_ENDPOINT }}
+          OSS_BUCKET: ${{ vars.OSS_BUCKET }}
+          OSS_PUBLIC_BASE_URL: ${{ vars.OSS_PUBLIC_BASE_URL }}
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            test -n "$PUBLISHER_PRIVATE_KEY_B64"
+          fi
+          test -n "$MARKET_ROOT_PRIVATE_KEY_B64"
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            test -n "$PUBLISHER_PUBLIC_KEY_JSON"
+          fi
+          test -n "$OSS_ENDPOINT"
+          test -n "$OSS_BUCKET"
+          test -n "$OSS_PUBLIC_BASE_URL"
+          mkdir -p "$RUNNER_TEMP/notegen-keys" release-assets
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            printf '%s' "$PUBLISHER_PRIVATE_KEY_B64" | base64 --decode > "$RUNNER_TEMP/notegen-keys/publisher.pem"
+          fi
+          printf '%s' "$MARKET_ROOT_PRIVATE_KEY_B64" | base64 --decode > "$RUNNER_TEMP/notegen-keys/root.pem"
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            printf '%s' "$PUBLISHER_PUBLIC_KEY_JSON" > "$RUNNER_TEMP/notegen-keys/publisher.json"
+          fi
+          chmod 600 "$RUNNER_TEMP/notegen-keys"/*.pem
+      - name: Detect an interrupted publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            existing_release="$RUNNER_TEMP/existing-release"
+            mkdir -p "$existing_release"
+            gh release download "$RELEASE_TAG" --dir "$existing_release"
+            test -f "$existing_release/index.json"
+            test -f "$existing_release/index.sig"
+            node tools/market.mjs verify \
+              --index "$existing_release/index.json" \
+              --signature "$existing_release/index.sig" \
+              --public-key "$RUNNER_TEMP/notegen-keys/root.expected.pub" \
+              --allow-expired true
+            existing_generation="$(node -p 'JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8")).generation' "$existing_release/index.json")"
+            test "$existing_generation" = "$GENERATION" || {
+              echo "::error::Release $RELEASE_TAG belongs to generation $existing_generation, not $GENERATION."
+              exit 1
+            }
+            if [ -n "${PREVIOUS_INDEX:-}" ]; then
+              published_generation="$(node -p 'JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8")).generation' "$PREVIOUS_INDEX")"
+              if [ "$existing_generation" -lt "$published_generation" ]; then
+                echo "::error::Release $RELEASE_TAG was superseded by generation $published_generation; refusing to roll back the current pointer."
+                exit 1
+              fi
+              if [ "$existing_generation" = "$published_generation" ]; then
+                cmp --silent "$existing_release/index.json" "$PREVIOUS_INDEX" && \
+                  cmp --silent "$existing_release/index.sig" "$PREVIOUS_SIGNATURE" || {
+                    echo "::error::Generation $existing_generation is already current with different signed bytes."
+                    exit 1
+                  }
+              fi
+            fi
+            echo "EXISTING_RELEASE_DIR=$existing_release" >> "$GITHUB_ENV"
+          fi
+      - name: Sign and verify plugin packages
+        if: github.event_name != 'schedule'
+        shell: bash
+        run: |
+          for archive in plugins/*/.notegen/releases/*.unsigned.notegen-plugin; do
+            name="$(basename "$archive" .unsigned.notegen-plugin)"
+            node .sdk/packages/plugin-cli/dist/bin.js sign "$archive" \
+              --private-key "$RUNNER_TEMP/notegen-keys/publisher.pem" \
+              --output "release-assets/$name.notegen-plugin"
+            node .sdk/packages/plugin-cli/dist/bin.js verify "release-assets/$name.notegen-plugin" \
+              --public-key "$RUNNER_TEMP/notegen-keys/publisher.json" --require-signature
+          done
+      - name: Generate and root-sign market index
+        shell: bash
+        run: |
+          node -e 'const{createPrivateKey,createPublicKey}=require("node:crypto"),{readFileSync,writeFileSync}=require("node:fs");const k=createPublicKey(createPrivateKey(readFileSync(process.argv[1]))).export({format:"jwk"});writeFileSync(process.argv[2],Buffer.from(k.x,"base64url").toString("base64")+"\n")' "$RUNNER_TEMP/notegen-keys/root.pem" "$RUNNER_TEMP/notegen-keys/root.pub"
+          test "$(tr -d '\r\n ' < "$RUNNER_TEMP/notegen-keys/root.pub")" = "${{ vars.MARKET_ROOT_PUBLIC_KEY }}"
+
+          if [ -n "${EXISTING_RELEASE_DIR:-}" ]; then
+            cp "$EXISTING_RELEASE_DIR/index.json" release-assets/index.json
+            cp "$EXISTING_RELEASE_DIR/index.sig" release-assets/index.sig
+          else
+            if [ "${{ github.event_name }}" = "schedule" ]; then
+              node tools/market.mjs refresh \
+                --previous-index "$PREVIOUS_INDEX" \
+                --generation "$GENERATION" \
+                --validity-days "$VALIDITY_DAYS" \
+                --output release-assets/index.json
+            else
+              previous_args=()
+              if [ -n "${PREVIOUS_INDEX:-}" ]; then
+                previous_args=(--previous-index "$PREVIOUS_INDEX")
+              fi
+              oss_public_base_url="${{ vars.OSS_PUBLIC_BASE_URL }}"
+              oss_public_base_url="${oss_public_base_url%/}"
+              node tools/market.mjs generate \
+                --publisher "$RUNNER_TEMP/notegen-keys/publisher.json" \
+                --artifacts release-assets \
+                --base-url "$oss_public_base_url/packages/$RELEASE_TAG" \
+                --mirror-base-url "https://github.com/codexu/note-gen-plugins/releases/download/$RELEASE_TAG" \
+                --generation "$GENERATION" \
+                --validity-days "$VALIDITY_DAYS" \
+                "${previous_args[@]}" \
+                --output release-assets/index.json
+            fi
+            node tools/market.mjs sign \
+              --index release-assets/index.json \
+              --private-key "$RUNNER_TEMP/notegen-keys/root.pem" \
+              --output release-assets/index.sig
+          fi
+          node tools/market.mjs verify --index release-assets/index.json --signature release-assets/index.sig --public-key "$RUNNER_TEMP/notegen-keys/root.pub"
+      - name: Record release build provenance
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { writeFile } from 'node:fs/promises'
+          const metadata = {
+            schemaVersion: 1,
+            generation: Number(process.env.GENERATION),
+            sourceCommit: process.env.GITHUB_SHA,
+            sdkCommit: process.env.SDK_SHA ?? null,
+          }
+          await writeFile('release-assets/release-metadata.json', `${JSON.stringify(metadata, null, 2)}\n`, { flag: 'wx' })
+          NODE
+      - name: Publish or verify immutable GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            for asset in release-assets/*; do
+              existing="$EXISTING_RELEASE_DIR/$(basename "$asset")"
+              test -f "$existing"
+              cmp --silent "$asset" "$existing" || {
+                echo "::error::Release $RELEASE_TAG already contains different bytes for $(basename "$asset")."
+                exit 1
+              }
+            done
+            echo "Existing release contains the exact requested assets; continuing the interrupted publication."
+          else
+            gh release create "$RELEASE_TAG" release-assets/* \
+              --target "$GITHUB_SHA" \
+              --title "$RELEASE_TAG" \
+              --notes "Signed NoteGen plugin marketplace generation $GENERATION. Source commit: $GITHUB_SHA. SDK commit: ${SDK_SHA:-not rebuilt (index refresh only)}."
+          fi
+          tag_commit="$(gh api "repos/$GITHUB_REPOSITORY/commits/$RELEASE_TAG" --jq .sha)"
+          if [ "$tag_commit" != "$GITHUB_SHA" ]; then
+            echo "::error::Release tag changed during publication; refusing to publish OSS pointers."
+            exit 1
+          fi
+      - name: Publish immutable plugin packages to OSS
+        if: github.event_name != 'schedule'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          AWS_DEFAULT_REGION: ${{ vars.OSS_REGION }}
+          OSS_ENDPOINT: ${{ vars.OSS_ENDPOINT }}
+          OSS_BUCKET: ${{ vars.OSS_BUCKET }}
+        run: |
+          set -euo pipefail
+          upload_immutable() {
+            source="$1"
+            key="$2"
+            content_type="$3"
+            digest="$(sha256sum "$source" | cut -d ' ' -f 1)"
+            head_error="$RUNNER_TEMP/oss-head-error"
+            if existing="$(aws s3api head-object \
+              --bucket "$OSS_BUCKET" \
+              --key "$key" \
+              --endpoint-url "$OSS_ENDPOINT" \
+              --query 'Metadata.sha256' \
+              --output text 2>"$head_error")"; then
+              if [ -z "$existing" ] || [ "$existing" = "None" ]; then
+                echo "::error::Existing immutable OSS object $key has no sha256 metadata; refusing to overwrite it."
+                exit 1
+              fi
+              if [ "$existing" != "$digest" ]; then
+                echo "::error::Immutable OSS object s3://$OSS_BUCKET/$key already exists with different bytes."
+                exit 1
+              fi
+              echo "Existing immutable OSS object matches: $key"
+              return
+            elif ! grep -Eqi '404|NoSuchKey|Not Found|does not exist' "$head_error"; then
+              cat "$head_error" >&2
+              echo "::error::Unable to prove that immutable OSS object $key is absent."
+              exit 1
+            fi
+            aws s3 cp "$source" "s3://$OSS_BUCKET/$key" \
+              --endpoint-url "$OSS_ENDPOINT" \
+              --cache-control "public,max-age=31536000,immutable" \
+              --content-type "$content_type" \
+              --metadata "sha256=$digest" \
+              --no-progress
+          }
+          for package in release-assets/*.notegen-plugin; do
+            upload_immutable \
+              "$package" \
+              "plugins/v1/packages/$RELEASE_TAG/$(basename "$package")" \
+              "application/zip"
+          done
+      - name: Publish signed index generation and current pointer to OSS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          AWS_DEFAULT_REGION: ${{ vars.OSS_REGION }}
+          OSS_ENDPOINT: ${{ vars.OSS_ENDPOINT }}
+          OSS_BUCKET: ${{ vars.OSS_BUCKET }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          upload_immutable() {
+            source="$1"
+            key="$2"
+            content_type="$3"
+            digest="$(sha256sum "$source" | cut -d ' ' -f 1)"
+            head_error="$RUNNER_TEMP/oss-head-error"
+            if existing="$(aws s3api head-object \
+              --bucket "$OSS_BUCKET" \
+              --key "$key" \
+              --endpoint-url "$OSS_ENDPOINT" \
+              --query 'Metadata.sha256' \
+              --output text 2>"$head_error")"; then
+              if [ -z "$existing" ] || [ "$existing" = "None" ]; then
+                echo "::error::Existing immutable OSS object $key has no sha256 metadata; refusing to overwrite it."
+                exit 1
+              fi
+              if [ "$existing" != "$digest" ]; then
+                echo "::error::Immutable OSS object s3://$OSS_BUCKET/$key already exists with different bytes."
+                exit 1
+              fi
+              echo "Existing immutable OSS object matches: $key"
+              return
+            elif ! grep -Eqi '404|NoSuchKey|Not Found|does not exist' "$head_error"; then
+              cat "$head_error" >&2
+              echo "::error::Unable to prove that immutable OSS object $key is absent."
+              exit 1
+            fi
+            aws s3 cp "$source" "s3://$OSS_BUCKET/$key" \
+              --endpoint-url "$OSS_ENDPOINT" \
+              --cache-control "public,max-age=31536000,immutable" \
+              --content-type "$content_type" \
+              --metadata "sha256=$digest" \
+              --no-progress
+          }
+          for asset in index.json index.sig; do
+            content_type="application/json"
+            if [ "$asset" = "index.sig" ]; then content_type="text/plain"; fi
+            upload_immutable \
+              "release-assets/$asset" \
+              "plugins/v1/generations/$GENERATION/$asset" \
+              "$content_type"
+          done
+          aws s3 cp "release-assets/index.sig" "s3://$OSS_BUCKET/plugins/v1/index.sig" \
+            --endpoint-url "$OSS_ENDPOINT" \
+            --cache-control "no-cache,no-store,must-revalidate" \
+            --content-type "text/plain" \
+            --no-progress
+          aws s3 cp "release-assets/index.json" "s3://$OSS_BUCKET/plugins/v1/index.json" \
+            --endpoint-url "$OSS_ENDPOINT" \
+            --cache-control "no-cache,no-store,must-revalidate" \
+            --content-type "application/json" \
+            --no-progress

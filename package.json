@@ -1,0 +1,24 @@
+{
+  "name": "note-gen-plugins",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Source workspace for official NoteGen plugins and the static marketplace catalog.",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "validate": "pnpm -r --if-present validate",
+    "plugin:pack": "pnpm -r --if-present run plugin:pack",
+    "test": "node --test tests/*.test.mjs",
+    "market:generate": "node tools/market.mjs generate",
+    "market:refresh": "node tools/market.mjs refresh",
+    "market:sign": "node tools/market.mjs sign",
+    "market:verify": "node tools/market.mjs verify"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@notegen/plugin-test": "workspace:^"
+  },
+  "packageManager": "pnpm@10.20.0"
+}
