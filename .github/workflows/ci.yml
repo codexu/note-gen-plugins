@@ -40,6 +40,8 @@ jobs:
       - run: pnpm --filter @notegen/plugin-api build
       - run: pnpm --filter @notegen/plugin-cli build
       - run: pnpm --filter @notegen/plugin-test build
+      # The CLI executable does not exist during a fresh checkout's first install.
+      - run: pnpm install --offline --frozen-lockfile
       - run: pnpm build
       - run: pnpm validate
       - run: pnpm test

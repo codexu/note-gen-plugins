@@ -124,6 +124,9 @@ jobs:
         if: github.event_name != 'schedule'
       - run: pnpm --filter @notegen/plugin-test build
         if: github.event_name != 'schedule'
+      # Relink workspace CLI binaries after building them from a fresh checkout.
+      - run: pnpm install --offline --frozen-lockfile
+        if: github.event_name != 'schedule'
       - run: pnpm build
         if: github.event_name != 'schedule'
       - run: pnpm validate
