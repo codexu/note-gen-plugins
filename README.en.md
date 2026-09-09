@@ -6,10 +6,11 @@ Source workspace for official NoteGen plugins and the static marketplace
 release tooling.
 
 > [!IMPORTANT]
-> This repository now contains official plugin source code and the complete
-> signed release workflow, but it has not yet published a production marketplace
-> index, index signature, or signed plugin package that NoteGen can consume. The
-> remote marketplace and community submissions are also not open.
+> Signed `0.1.0` packages for all three official plugins and the production index
+> are published through GitHub Actions to OSS/CDN and
+> [GitHub Releases](https://github.com/codexu/note-gen-plugins/releases).
+> Clients need marketplace support and the matching embedded root public key.
+> Community submissions are not open yet.
 
 ## Official plugins
 
@@ -107,7 +108,7 @@ unsigned index therefore cannot open the marketplace.
 
 ## Trust boundary
 
-The marketplace will use two Ed25519 signature layers:
+The marketplace uses two Ed25519 signature layers:
 
 1. The marketplace root public key embedded in NoteGen verifies the exact bytes
    of `index.json` against `index.sig`.
@@ -119,16 +120,16 @@ During installation, NoteGen also checks the package SHA-256 and verifies every
 file listed in `integrity.json`. Any failure stops installation; there is no
 fallback to an unverified package.
 
-The root public key in the current marketplace client is still a safe
-placeholder, so the remote marketplace fails closed before downloading
-anything. Before launch, maintainers still need to generate the root key offline,
-store it under controlled access, establish publisher-key registration and review, and publish the
-same signed artifacts through the CDN and GitHub Releases.
+The production root and official publisher keys are configured, and identical
+signed artifacts are published to OSS/CDN and GitHub Releases. Clients must embed
+the production root public key. Local builds that still use the placeholder fail
+closed before downloading anything. Publishing the marketplace does not update
+installed NoteGen applications.
 
 ## Maintainer release procedure
 
 The repository includes two workflows. `CI` checks out an immutable SDK commit, builds
-the API, CLI, and test host, validates both official plugins, and runs their
+the API, CLI, and test host, validates all three official plugins, and runs their
 behavior tests. `Release signed plugin market` packages and publisher-signs the
 plugins, creates a root-signed index, and publishes an immutable GitHub Release.
 A Monday-and-Thursday scheduled run refreshes the index with a 14-day validity

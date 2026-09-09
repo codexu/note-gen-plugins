@@ -5,8 +5,9 @@
 NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 
 > [!IMPORTANT]
-> 本仓库现在提供官方插件源码与完整的签名发布流程，但尚未发布 NoteGen 可消费的
-> 生产市场索引、索引签名和签名插件包。远程市场与社区投稿也尚未开放。
+> 三个官方插件的 `0.1.0` 签名包及生产市场索引已通过 GitHub Actions 发布到 OSS/CDN
+> 和 [GitHub Releases](https://github.com/codexu/note-gen-plugins/releases)。
+> 客户端需要支持插件市场并内置对应根公钥；社区投稿尚未开放。
 
 ## 官方插件
 
@@ -105,7 +106,7 @@ https://github.com/codexu/note-gen-plugins/releases/latest/download/index.sig
 
 ## 信任边界
 
-市场将使用两层 Ed25519 签名：
+市场使用两层 Ed25519 签名：
 
 1. NoteGen 内置的市场根公钥验证 `index.json` 的原始字节与 `index.sig`；
 2. 根索引登记的发布者公钥验证包内 `signature.sig`，签名覆盖规范化的
@@ -114,9 +115,9 @@ https://github.com/codexu/note-gen-plugins/releases/latest/download/index.sig
 安装时还会校验插件包 SHA-256，并逐文件验证 `integrity.json`。任何一步失败
 都会终止安装，不会降级为未验证安装。
 
-当前插件市场客户端的根公钥仍是安全占位内容，远程市场会在下载前关闭并返回
-信任配置错误。正式开放前还需要离线生成市场根密钥并受控保管、建立发布者密钥
-登记与审核流程，并把相同的签名产物发布到 OSS/CDN 和 GitHub Releases。
+生产市场已配置根密钥与官方发布者密钥，并向 OSS/CDN 和 GitHub Releases 发布
+相同的签名产物。客户端必须内置生产根公钥；仍使用占位内容的本地构建会在下载前
+关闭远程市场并返回信任配置错误。发布市场本身不会自动更新已安装的 NoteGen。
 
 ## 维护者发布流程
 
