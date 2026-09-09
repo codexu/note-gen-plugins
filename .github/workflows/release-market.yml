@@ -395,115 +395,25 @@ jobs:
             echo "::error::Release tag changed during publication; refusing to publish OSS pointers."
             exit 1
           fi
+      - name: Install native OSS publisher
+        run: |
+          python3 -m venv "$RUNNER_TEMP/oss-publisher"
+          "$RUNNER_TEMP/oss-publisher/bin/pip" install oss2==2.19.1
       - name: Publish immutable plugin packages to OSS
         if: github.event_name != 'schedule'
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
-          AWS_DEFAULT_REGION: ${{ vars.OSS_REGION }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          OSS_REGION: ${{ vars.OSS_REGION }}
           OSS_ENDPOINT: ${{ vars.OSS_ENDPOINT }}
           OSS_BUCKET: ${{ vars.OSS_BUCKET }}
-        run: |
-          set -euo pipefail
-          upload_immutable() {
-            source="$1"
-            key="$2"
-            content_type="$3"
-            digest="$(sha256sum "$source" | cut -d ' ' -f 1)"
-            head_error="$RUNNER_TEMP/oss-head-error"
-            if existing="$(aws s3api head-object \
-              --bucket "$OSS_BUCKET" \
-              --key "$key" \
-              --endpoint-url "$OSS_ENDPOINT" \
-              --query 'Metadata.sha256' \
-              --output text 2>"$head_error")"; then
-              if [ -z "$existing" ] || [ "$existing" = "None" ]; then
-                echo "::error::Existing immutable OSS object $key has no sha256 metadata; refusing to overwrite it."
-                exit 1
-              fi
-              if [ "$existing" != "$digest" ]; then
-                echo "::error::Immutable OSS object s3://$OSS_BUCKET/$key already exists with different bytes."
-                exit 1
-              fi
-              echo "Existing immutable OSS object matches: $key"
-              return
-            elif ! grep -Eqi '404|NoSuchKey|Not Found|does not exist' "$head_error"; then
-              cat "$head_error" >&2
-              echo "::error::Unable to prove that immutable OSS object $key is absent."
-              exit 1
-            fi
-            aws s3 cp "$source" "s3://$OSS_BUCKET/$key" \
-              --endpoint-url "$OSS_ENDPOINT" \
-              --cache-control "public,max-age=31536000,immutable" \
-              --content-type "$content_type" \
-              --metadata "sha256=$digest" \
-              --no-progress
-          }
-          for package in release-assets/*.notegen-plugin; do
-            upload_immutable \
-              "$package" \
-              "plugins/v1/packages/$RELEASE_TAG/$(basename "$package")" \
-              "application/zip"
-          done
+          OSS_PUBLIC_BASE_URL: ${{ vars.OSS_PUBLIC_BASE_URL }}
+        run: '"$RUNNER_TEMP/oss-publisher/bin/python" tools/publish-oss.py packages'
       - name: Publish signed index generation and current pointer to OSS
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
-          AWS_DEFAULT_REGION: ${{ vars.OSS_REGION }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          OSS_REGION: ${{ vars.OSS_REGION }}
           OSS_ENDPOINT: ${{ vars.OSS_ENDPOINT }}
           OSS_BUCKET: ${{ vars.OSS_BUCKET }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          upload_immutable() {
-            source="$1"
-            key="$2"
-            content_type="$3"
-            digest="$(sha256sum "$source" | cut -d ' ' -f 1)"
-            head_error="$RUNNER_TEMP/oss-head-error"
-            if existing="$(aws s3api head-object \
-              --bucket "$OSS_BUCKET" \
-              --key "$key" \
-              --endpoint-url "$OSS_ENDPOINT" \
-              --query 'Metadata.sha256' \
-              --output text 2>"$head_error")"; then
-              if [ -z "$existing" ] || [ "$existing" = "None" ]; then
-                echo "::error::Existing immutable OSS object $key has no sha256 metadata; refusing to overwrite it."
-                exit 1
-              fi
-              if [ "$existing" != "$digest" ]; then
-                echo "::error::Immutable OSS object s3://$OSS_BUCKET/$key already exists with different bytes."
-                exit 1
-              fi
-              echo "Existing immutable OSS object matches: $key"
-              return
-            elif ! grep -Eqi '404|NoSuchKey|Not Found|does not exist' "$head_error"; then
-              cat "$head_error" >&2
-              echo "::error::Unable to prove that immutable OSS object $key is absent."
-              exit 1
-            fi
-            aws s3 cp "$source" "s3://$OSS_BUCKET/$key" \
-              --endpoint-url "$OSS_ENDPOINT" \
-              --cache-control "public,max-age=31536000,immutable" \
-              --content-type "$content_type" \
-              --metadata "sha256=$digest" \
-              --no-progress
-          }
-          for asset in index.json index.sig; do
-            content_type="application/json"
-            if [ "$asset" = "index.sig" ]; then content_type="text/plain"; fi
-            upload_immutable \
-              "release-assets/$asset" \
-              "plugins/v1/generations/$GENERATION/$asset" \
-              "$content_type"
-          done
-          aws s3 cp "release-assets/index.sig" "s3://$OSS_BUCKET/plugins/v1/index.sig" \
-            --endpoint-url "$OSS_ENDPOINT" \
-            --cache-control "no-cache,no-store,must-revalidate" \
-            --content-type "text/plain" \
-            --no-progress
-          aws s3 cp "release-assets/index.json" "s3://$OSS_BUCKET/plugins/v1/index.json" \
-            --endpoint-url "$OSS_ENDPOINT" \
-            --cache-control "no-cache,no-store,must-revalidate" \
-            --content-type "application/json" \
-            --no-progress
+        run: '"$RUNNER_TEMP/oss-publisher/bin/python" tools/publish-oss.py index'
