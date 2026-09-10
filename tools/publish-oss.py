@@ -37,7 +37,7 @@ def upload(bucket, source, key, content_type, immutable=True):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('mode', choices=['packages', 'index'])
+    parser.add_argument('mode', choices=['packages', 'index', 'prune'])
     args = parser.parse_args()
     bucket = oss2.Bucket(
         oss2.ProviderAuthV4(EnvironmentVariableCredentialsProvider()),
@@ -65,6 +65,33 @@ def main():
         expected = {source.name for source in assets.glob('*.notegen-plugin')}
         if not expected or uploaded != expected:
             raise RuntimeError('Every release package must be referenced by the signed index')
+    elif args.mode == 'prune':
+        # Only clean this marketplace namespace, after the new pointer is live.
+        prefix = urlsplit(os.environ['OSS_PUBLIC_BASE_URL']).path.strip('/') + '/'
+        if prefix != 'plugins/v1/':
+            raise RuntimeError('Unexpected marketplace prefix; refusing cleanup')
+        if bucket.get_object(prefix + 'index.json').read() != (assets / 'index.json').read_bytes():
+            raise RuntimeError('Current OSS index differs; refusing cleanup')
+        if bucket.get_object(prefix + 'index.sig').read() != (assets / 'index.sig').read_bytes():
+            raise RuntimeError('Current OSS signature differs; refusing cleanup')
+        keep = {prefix + name for name in ['index.json', 'index.sig']}
+        keep.update(prefix + f"generations/{index['generation']}/{name}" for name in ['index.json', 'index.sig'])
+        for plugin in index['plugins']:
+            for release in plugin['releases']:
+                key = urlsplit(release['packageUrl']).path.lstrip('/')
+                if not key.startswith(prefix + 'packages/'):
+                    raise RuntimeError('Package outside marketplace namespace')
+                keep.add(key)
+        for key in keep:
+            bucket.head_object(key)
+        old_keys = [obj.key for obj in oss2.ObjectIterator(bucket, prefix=prefix) if obj.key not in keep]
+        for key in old_keys:
+            bucket.delete_object(key)
+            print(f'Deleted superseded plugin asset: {key}')
+        remaining = {obj.key for obj in oss2.ObjectIterator(bucket, prefix=prefix)}
+        if remaining != keep:
+            raise RuntimeError('OSS cleanup verification failed')
+        print(f'OSS cleanup complete; retained {len(keep)} current assets')
     else:
         generation = str(index['generation'])
         if generation != os.environ['GENERATION']:

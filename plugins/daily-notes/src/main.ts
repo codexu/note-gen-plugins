@@ -257,8 +257,10 @@ async function showNoticeSafely(context: PluginContext, message: string): Promis
 }
 
 export const activate: PluginActivate = async (context) => {
-  const commandId = `${context.plugin.id}.open-today`
-  context.commands.handle(commandId, async () => {
+  let navigationDate: string | undefined
+  let running = false
+  const workspaceSubscription = context.workspace.onDidChange(() => { navigationDate = undefined })
+  async function openDay(requestedDate?: string) {
     const noticeTitle = context.i18n.t('command.openToday.title')
     try {
       assertNotCancelled(context)
@@ -279,6 +281,13 @@ export const activate: PluginActivate = async (context) => {
       ])
       assertNotCancelled(context)
 
+      if (requestedDate) {
+        const parsed = new Date(`${requestedDate}T12:00:00Z`)
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(requestedDate) || !Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== requestedDate) {
+          throw new Error(context.i18n.t('navigation.invalidDate'))
+        }
+        resolvedDay.logicalDate = requestedDate
+      }
       const dateValues = parseLogicalDate(resolvedDay)
       const pathValues: Record<PathVariableName, string> = dateValues
       const folder = renderTemplate(
@@ -332,6 +341,7 @@ export const activate: PluginActivate = async (context) => {
       }
 
       assertNotCancelled(context)
+      if ((await context.workspace.getCurrent()).id !== workspace.id) throw new Error(context.i18n.t('navigation.workspaceChanged'))
       const result = await context.notes.openOrCreate({
         workspaceId: workspace.id,
         path,
@@ -347,6 +357,7 @@ export const activate: PluginActivate = async (context) => {
         })
       }
 
+      navigationDate = resolvedDay.logicalDate
       try {
         await context.storage.workspace.set('last-opened', {
           schemaVersion: 1,
@@ -364,6 +375,60 @@ export const activate: PluginActivate = async (context) => {
         await showNoticeSafely(context, `${noticeTitle}: ${safeErrorMessage(error)}`)
       }
       throw error
+    }
+  }
+  async function run(date?: string) {
+    if (running) return
+    running = true
+    try {
+      const result = await openDay(date)
+      if (dialog) await context.ui.closeDialog(dialog)
+      return result
+    } finally { running = false }
+  }
+  async function currentDate() {
+    return navigationDate ?? (await context.calendar.resolveDay({ timeZone: readStringSetting(context, 'timeZone', 'system').trim(), dayStartsAt: '00:00' })).logicalDate
+  }
+  context.commands.handle(`${context.plugin.id}.open-today`, async () => run())
+  for (const [name, offset] of [['previous-day', -1], ['next-day', 1]] as const) {
+    context.commands.handle(`${context.plugin.id}.${name}`, async () => {
+      const date = new Date(`${await currentDate()}T12:00:00Z`)
+      date.setUTCDate(date.getUTCDate() + offset)
+      return run(date.toISOString().slice(0, 10))
+    })
+  }
+  let dialog: string | undefined
+  const dialogSubscription = context.ui.onDidCloseDialog(event => { if (event.id === dialog) dialog = undefined })
+  context.signal.addEventListener('abort', () => { workspaceSubscription.dispose(); dialogSubscription.dispose() })
+  context.commands.handle(`${context.plugin.id}.choose-date`, async () => {
+    const date = await currentDate()
+    const result = await context.ui.openDialog({
+      ...(dialog ? { replaceId: dialog } : {}),
+      title: context.i18n.t('navigation.title'),
+      description: context.i18n.t('navigation.description'),
+      content: { blocks: [
+        { type: 'form', id: 'date', resetKey: date, fields: [{ id: 'date', type: 'date', label: context.i18n.t('navigation.date'), value: date, required: true, maxLength: 10 }], command: `${context.plugin.id}.open-date`, submitLabel: context.i18n.t('navigation.open') },
+        { type: 'actions', actions: [
+          { id: 'previous', label: context.i18n.t('navigation.previous'), command: `${context.plugin.id}.previous-day` },
+          { id: 'today', label: context.i18n.t('command.openToday.title'), command: `${context.plugin.id}.open-today` },
+          { id: 'next', label: context.i18n.t('navigation.next'), command: `${context.plugin.id}.next-day` },
+        ] },
+      ] },
+    })
+    dialog = result.id
+  })
+  context.commands.handle(`${context.plugin.id}.open-date`, async argument => {
+    if (!argument || typeof argument !== 'object' || Array.isArray(argument)) return
+    const input = argument as Record<string, unknown>
+    if (!input.values || typeof input.values !== 'object' || Array.isArray(input.values)) return
+    const values = input.values as Record<string, unknown>
+    if (typeof values.date !== 'string') return
+    try {
+      const result = await run(values.date.trim())
+      if (result && typeof input.dialogId === 'string' && input.dialogId === dialog) await context.ui.closeDialog(input.dialogId)
+      return result
+    } catch {
+      return { fieldErrors: { date: context.i18n.t('navigation.dateError') } }
     }
   })
 }

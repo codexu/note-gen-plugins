@@ -5,7 +5,7 @@
 NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 
 > [!IMPORTANT]
-> 三个官方插件的 `0.1.0` 签名包及生产市场索引已通过 GitHub Actions 发布到 OSS/CDN
+> 官方插件签名包及生产市场索引已通过 GitHub Actions 发布到 OSS/CDN
 > 和 [GitHub Releases](https://github.com/codexu/note-gen-plugins/releases)。
 > 客户端需要支持插件市场并内置对应根公钥；社区投稿尚未开放。
 
@@ -13,9 +13,9 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 
 | 插件 | ID | 说明 |
 | --- | --- | --- |
+| [Bookmarks](plugins/bookmarks) | `top.notegen.bookmarks` | 常用笔记收藏、正文摘要和拖拽排序 |
 | [Daily Notes](plugins/daily-notes) | `top.notegen.daily-notes` | 按当前逻辑日期打开或创建每日笔记 |
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | 在状态栏显示本地 Markdown 写作统计 |
-| [Plugin Playground](plugins/plugin-playground) | `top.notegen.plugin-playground` | 覆盖公开插件 API 的交互测试与官方开发示例 |
 
 这些插件都是独立插件，只使用
 [`@notegen/plugin-api`](https://github.com/codexu/note-gen-plugin-sdk/tree/main/packages/plugin-api)
@@ -40,7 +40,6 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 
 - [每日笔记使用说明](plugins/daily-notes/USAGE.zh-CN.md)
 - [编辑器统计使用说明](plugins/editor-statistics/USAGE.zh-CN.md)
-- [插件能力实验室使用说明](plugins/plugin-playground/USAGE.zh-CN.md)
 
 使用说明随插件包离线分发。插件目录中的 `USAGE.md` 为英文默认说明，
 `USAGE.zh-CN.md` 为中文说明；更新后的 SDK 构建工具会自动打包并校验它们。
@@ -90,6 +89,31 @@ SDK；这种源码检出只用于官方插件的可复现发布链。
 
 ## 静态分发设计
 
+### 市场介绍的多语言元数据
+
+在 `market/registry.json` 的插件条目中维护 `localizations`，每种语言包含完整的
+`name` 和 `description`。当前官方插件提供 `en` 和 `zh-CN`；这些内容随市场索引
+根签名，不依赖下载或执行插件，也不改变已发布插件包的内容。
+
+```json
+"localizations": {
+  "en": { "name": "Daily Notes", "description": "Open or create the note for the current logical day." },
+  "zh-CN": { "name": "每日笔记", "description": "按当前逻辑日期打开或创建每日笔记。" }
+}
+```
+
+客户端优先匹配完整语言标签，再匹配基础语言；中文缺少地区翻译时使用 `zh-CN`，
+随后回退 `en`，最后使用原 `name`、`description`。搜索匹配各语言名称和介绍。
+每个插件最多 20 个语言，名称和介绍分别限制为 120、2000 个 UTF-8 字节。
+
+**上线顺序**：先发布支持该可选字段的客户端，再将 Actions 仓库变量
+`PLUGIN_MARKET_LOCALIZATIONS` 设为 `true`，发布新一代市场索引。
+生成工具对应选项为 `--localized-metadata true`，默认不加入新翻译。
+旧客户端严格拒绝未知字段，因此不能在它们仍需使用当前 v1 源时直接开启；
+如果必须同时服务旧客户端，应先另建新版索引端点。新版客户端仍能读取旧索引。
+已发布的翻译会在后续生成及定时续签时保留，关闭变量不会自动删除它们。
+2026-09-10 已开启线上发布开关并发布中英文索引，客户端需支持 `localizations` 字段。
+
 NoteGen 的无服务器市场使用 OSS/CDN 作为主源，并使用 GitHub Release assets
 作为备用源。客户端按顺序访问：
 
@@ -121,14 +145,55 @@ https://github.com/codexu/note-gen-plugins/releases/latest/download/index.sig
 
 ## 维护者发布流程
 
+### 每次插件更新
+
+1. 在本仓库 `main` 修改插件，将该插件 `plugin.json` 和 `package.json` 的版本号
+   同步提升，并更新 `market/registry.json` 中对应的 `changelog`、使用说明和翻译。
+   已发布的同一版本不能包含不同字节；未修改的插件不需要升版本。
+2. 提交并推送，确认 CI 通过。在 GitHub Actions 选择
+   **Release signed plugin market → Run workflow → main**，填写：
+
+   | 参数 | 填写规则 |
+   | --- | --- |
+   | `release_tag` | 新的唯一标签，例如 `plugins-v1-20260910-r2`；不要复用已有标签发布新提交 |
+   | `generation` | 严格大于线上最高有效索引代际的正整数；不要只依赖时间戳，定时任务可能使用更大的 run ID |
+   | `validity_days` | 通常为 `14`，允许范围为 1–14 天 |
+   | `first_release` | 正常更新为 `false`；仅确认从未发布过市场时才设为 `true` |
+
+3. Actions 检出固定 SDK 提交，构建、校验、测试和打包插件，使用发布者密钥签署
+   插件包，再生成并根签名市场索引。随后发布 GitHub Release，通过阿里云官方
+   SDK 上传 OSS，最后更新 CDN 对应的索引指针。
+4. 确认 Actions 成功、线上索引包含新版本，验证索引签名及 CDN/GitHub 下载包的
+   SHA-256、发布者签名和文件完整性，再到 NoteGen 测试安装和更新。
+
+手动发布会构建和打包**全部官方插件**，GitHub Release 附带本次产物。
+已有版本保留原下载路径；OSS 对象已存在且 SHA-256 元数据一致时跳过上传，
+缺失时上传，不会覆盖不同内容的同版本文件。
+
+普通插件更新无需发布 npm。只有 SDK 本身发生变化时，才先按
+[SDK 发布流程](https://github.com/codexu/note-gen-plugin-sdk#maintainer-release-procedure)
+发布相关 npm 包；需要采用该 SDK 的官方插件再更新固定的 `PLUGIN_SDK_REF`。
+SDK 发布、插件市场发布和 NoteGen 应用发布是独立流程。
+
+### 自动续签与失败恢复
+
+每周一、周四的定时任务只续签索引，复用已有插件包，不重新构建或打包插件。
+14 天是市场索引的签名有效期，不是插件使用期限，也不应当作检查新版本的间隔。
+
+网络或上传中断时，从原 Actions 运行选择 **Re-run jobs**，保留原提交与标签。
+如果必须修改代码，使用新提交、新标签和更高的 `generation` 重新发布。
+不要删除旧 Release、覆盖同版本包或通过 `first_release` 绕过历史索引校验。
+
+### 发布配置与完整性约束
+
 仓库已经提供两条自动化流程：`CI` 会从固定 SHA 的 SDK 仓库构建 API、CLI 与测试宿主，
 然后验证官方插件并执行现有行为测试；`Release signed plugin market` 会打包、
 发布者签名、生成根签名索引，并发布不可变的 GitHub Release。每周一和周四的
 定时任务只续签索引并复用原有不可变插件包，以 14 天有效期留出 Actions 延迟
 和单次失败的恢复余量。
 
-首次发布前，创建需要人工审批的 `plugin-market-production` Environment，以及
-不要求人工审批、仅供定时续签的 `plugin-market-refresh` Environment。生产环境
+首次发布前，创建 `plugin-market-production` Environment，按团队要求设置审批；
+另建不要求人工审批、仅供定时续签的 `plugin-market-refresh` Environment。生产环境
 配置完整凭据，续签环境只配置续签所需的根密钥、公开信息和 OSS 凭据：
 
 - Secrets：`PUBLISHER_PRIVATE_KEY_B64`、`MARKET_ROOT_PRIVATE_KEY_B64`；
@@ -143,7 +208,7 @@ https://github.com/codexu/note-gen-plugins/releases/latest/download/index.sig
 确实是规范的 32 字节 Ed25519 公钥后再嵌入安装包。
 
 手动发布时，`generation` 必须严格大于当前线上索引；默认建议使用 UTC Unix
-秒值。工作流分别下载 OSS、GitHub latest 和本次 tag 的索引与签名，逐一验签、
+秒值，但必须与实际最高代际比较。工作流分别下载 OSS、GitHub latest 和本次 tag 的索引与签名，逐一验签、
 校验结构后取最高 generation；同代际出现不同有效字节会失败。OSS 的两个指针
 更新中断或暂时不同步时，可以从有效 GitHub 副本恢复。找不到历史索引时，只有
 显式勾选 `first_release` 才能首次发布；发现索引但全部验签失败时不能用该选项重置。
@@ -167,7 +232,30 @@ Re-run jobs，以保留原源码提交；定时任务也会复用同一 run ID �
 > 绝对不要向本仓库、Issue、Pull Request、GitHub Actions 日志或 Release
 > 上传市场根私钥、发布者私钥、恢复材料或其他签名凭据。
 
+## 客户端安装与更新检查
+
+| 安装来源 | 使用方式 | 是否参与市场更新 |
+| --- | --- | --- |
+| 开发版本 | 构建生成 `.notegen/package`，在开发者入口导入；修改后重新构建并重新导入 | 否 |
+| 插件市场 | 从「发现」安装，经过索引、包签名和完整性验证 | 是，显示兼容且更高的版本 |
+
+「发现」中的版本是市场版本；“已安装”按钮只表示同 ID 已存在，不表示本地已安装
+该版本。请在「已安装」检查实际版本及“开发版本／插件市场”来源标签。
+
+测试 `0.1.0 → 0.1.1` 时，必须先通过市场安装签名的 `0.1.0`，再发布 `0.1.1`。
+如果旧版是开发导入，应先卸载开发版，再安装市场版；直接安装市场最新版只能
+验证安装，不能验证这次升级。不要为测试升级回滚生产市场索引。
+
+当前客户端进入插件设置时可能复用尚未过期的索引，「更新」页也不会主动联网刷新。
+看不到新版本时，先在「发现」点击「刷新」，再回到「更新」。若仍没有更新，检查
+已安装来源、实际版本，以及新版本的 `minAppVersion`、`apiVersion` 和平台兼容性。
+开发版本不会因为刷新市场而自动转换为市场版本。
+
 ## 撤销版本与发布者换钥
+
+整插件下架、恢复发布和历史资产保留的拟议流程见
+[插件下架与版本撤销方案](docs/plugin-withdrawal-design.md)（设计草案，尚未实现）。
+下面描述的是当前已支持的版本撤销配置。
 
 在 `market/registry.json` 对应插件登记中添加 `revocations`，例如：
 
@@ -208,3 +296,9 @@ Re-run jobs，以保留原源码提交；定时任务也会复用同一 run ID �
 社区插件仍采用各自源码仓库与插件清单声明的许可证。
 
 更多信息请访问 [NoteGen 文档](https://notegen.top)。
+
+## 2026-09-10 官方插件重发 / Catalog reset
+
+官方插件仅保留 Bookmarks、每日笔记、写作统计，版本统一为 0.1.0。SDK API 版本保持 0.1.1。
+
+本次使用显式 `reset_catalog=true`，保留更高索引 generation，但不保留旧插件和历史版本。新包和索引发布并校验后，清理 OSS `plugins/v1/` 下未被新索引引用的旧资产。日常发布保持该开关关闭。已安装更高版本或开发版本的用户需卸载旧插件后安装新的 0.1.0，不会自动降级。

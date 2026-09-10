@@ -1,0 +1,138 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.bookmarks",
+  "name": "Bookmarks",
+  "description": "Keep workspace bookmarks with labels.",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.1",
+  "minAppVersion": "0.37.0",
+  "platforms": [
+    "desktop"
+  ],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onCommand:top.notegen.bookmarks.open",
+    "onCommand:top.notegen.bookmarks.add",
+    "onCommand:top.notegen.bookmarks.add-file",
+    "onCommand:top.notegen.bookmarks.visit",
+    "onCommand:top.notegen.bookmarks.remove",
+    "onCommand:top.notegen.bookmarks.reorder",
+    "onCommand:top.notegen.bookmarks.rename",
+    "onCommand:top.notegen.bookmarks.rename-save"
+  ],
+  "permissions": {
+    "notes.read": {
+      "scope": "workspace-folder",
+      "description": "%permission.notes.read%"
+    },
+    "notes.open": {
+      "scope": "workspace-folder",
+      "description": "%permission.notes.open%"
+    },
+    "editor.read": {
+      "scope": "active-editor",
+      "optional": true,
+      "description": "%permission.editor.read%"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "top.notegen.bookmarks.open",
+        "title": "%command.open%",
+        "icon": "bookmark"
+      },
+      {
+        "id": "top.notegen.bookmarks.add",
+        "title": "%command.add%",
+        "icon": "bookmark"
+      },
+      {
+        "id": "top.notegen.bookmarks.add-file",
+        "title": "%command.add-file%",
+        "icon": "bookmark"
+      },
+      {
+        "id": "top.notegen.bookmarks.visit",
+        "title": "%command.visit%",
+        "icon": "bookmark"
+      },
+      {
+        "id": "top.notegen.bookmarks.remove",
+        "title": "%command.remove%",
+        "icon": "bookmark"
+      },
+      {
+        "id": "top.notegen.bookmarks.reorder",
+        "title": "%command.reorder%",
+        "icon": "bookmark"
+      },
+      {
+        "id": "top.notegen.bookmarks.rename",
+        "title": "%command.rename%",
+        "icon": "pencil"
+      },
+      {
+        "id": "top.notegen.bookmarks.rename-save",
+        "title": "%command.rename-save%",
+        "icon": "check"
+      }
+    ],
+    "views": [
+      {
+        "id": "top.notegen.bookmarks.view",
+        "title": "%name%",
+        "location": "left-sidebar",
+        "icon": "bookmark"
+      }
+    ],
+    "menus": [
+      {
+        "location": "file/context",
+        "command": "top.notegen.bookmarks.add-file",
+        "when": "resourceKind == file && resourceExt == md"
+      },
+      {
+        "location": "editor/context",
+        "command": "top.notegen.bookmarks.add",
+        "when": "editor == markdown"
+      },
+      {
+        "location": "tab/context",
+        "command": "top.notegen.bookmarks.add-file",
+        "when": "resourceKind == file && resourceExt == md",
+        "icon": "bookmark",
+        "order": 10
+      },
+      {
+        "location": "editor/toolbar",
+        "command": "top.notegen.bookmarks.add",
+        "when": "editor == markdown",
+        "icon": "bookmark",
+        "order": 10
+      }
+    ],
+    "settings": [
+      {
+        "key": "top.notegen.bookmarks.view.title",
+        "type": "string",
+        "scope": "workspace",
+        "title": "%setting.title%",
+        "description": "%setting.title.description%",
+        "default": "",
+        "maxLength": 80
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/bookmarks",
+  "license": "GPL-3.0-or-later"
+}

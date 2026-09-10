@@ -338,7 +338,14 @@ export const activate: PluginActivate = async (context) => {
       ? latestResult.statistics
       : await refreshNow()
     if (statistics && !context.signal.aborted) {
-      await context.ui.showNotice(formatDetails(context, statistics))
+      await context.ui.openDialog({
+        title: context.i18n.t('command.showDetails.title'),
+        ...(current.path ? { description: current.path } : {}),
+        content: { blocks: [{ type: 'key-value', items: formatDetails(context, statistics).split('\n').slice(1).map(line => {
+          const split = line.indexOf(': ')
+          return { label: line.slice(0, split), value: line.slice(split + 2) }
+        }) }] },
+      })
     }
     return statistics
   }))

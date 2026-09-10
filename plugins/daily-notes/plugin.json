@@ -4,12 +4,18 @@
   "name": "Daily Notes",
   "description": "Open or create the note for the current logical day.",
   "version": "0.1.0",
-  "apiVersion": "^0.1.0",
+  "apiVersion": "^0.1.1",
   "minAppVersion": "0.37.0",
-  "platforms": ["desktop"],
+  "platforms": [
+    "desktop"
+  ],
   "entry": "dist/main.js",
   "activationEvents": [
-    "onCommand:top.notegen.daily-notes.open-today"
+    "onCommand:top.notegen.daily-notes.open-today",
+    "onCommand:top.notegen.daily-notes.choose-date",
+    "onCommand:top.notegen.daily-notes.open-date",
+    "onCommand:top.notegen.daily-notes.previous-day",
+    "onCommand:top.notegen.daily-notes.next-day"
   ],
   "permissions": {
     "notes.read": {
@@ -33,6 +39,26 @@
         "title": "%command.openToday.title%",
         "description": "%command.openToday.description%",
         "icon": "calendar-days"
+      },
+      {
+        "id": "top.notegen.daily-notes.choose-date",
+        "title": "%navigation.title%",
+        "icon": "calendar-days"
+      },
+      {
+        "id": "top.notegen.daily-notes.open-date",
+        "title": "%navigation.open%",
+        "icon": "calendar-days"
+      },
+      {
+        "id": "top.notegen.daily-notes.previous-day",
+        "title": "%navigation.previous%",
+        "icon": "calendar-days"
+      },
+      {
+        "id": "top.notegen.daily-notes.next-day",
+        "title": "%navigation.next%",
+        "icon": "calendar-days"
       }
     ],
     "settings": [
@@ -48,7 +74,10 @@
       },
       {
         "key": "top.notegen.daily-notes.folder",
-        "permissionPaths": ["notes.create", "notes.open"],
+        "permissionPaths": [
+          "notes.create",
+          "notes.open"
+        ],
         "type": "string",
         "scope": "workspace",
         "title": "%setting.folder.title%",
@@ -92,6 +121,10 @@
         "location": "editor/slash",
         "command": "top.notegen.daily-notes.open-today",
         "when": "editor == markdown"
+      },
+      {
+        "location": "file/context",
+        "command": "top.notegen.daily-notes.choose-date"
       }
     ]
   },

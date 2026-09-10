@@ -210,6 +210,10 @@ async function generate(args) {
     }
   }
 
+  const resetCatalog = args.get('reset-catalog') === 'true'
+  // A reset discards releases, but still requires a verified previous generation.
+  if (resetCatalog && !previous) fail('Catalog reset requires a previous signed index')
+  const history = resetCatalog ? null : previous
   const registry = await json(registryPath)
   const publisher = await json(publisherPath)
   if (publisher.algorithm !== 'Ed25519') fail('publisher key must use Ed25519')
@@ -231,9 +235,9 @@ async function generate(args) {
     const assetName = `${manifest.id}-${manifest.version}.notegen-plugin`
     const asset = await readFile(join(artifacts, assetName))
     const packageSha256 = createHash('sha256').update(asset).digest('hex')
-    const previousPlugin = previous?.plugins.find((plugin) => plugin.id === manifest.id)
+    const previousPlugin = history?.plugins.find((plugin) => plugin.id === manifest.id)
     const previousRelease = previousPlugin?.releases.find((release) => release.version === manifest.version)
-    const previousPublisher = previous?.publishers.find(entry => entry.id === previousPlugin?.publisherId)
+    const previousPublisher = history?.publishers.find(entry => entry.id === previousPlugin?.publisherId)
     const previousReleases = previousPlugin ? withReleasePermissions(previousPlugin).releases.map(release => ({
       ...release, publisherKeyId: release.publisherKeyId ?? previousPublisher?.keyId,
     })) : []
@@ -283,7 +287,7 @@ async function generate(args) {
     }
   }
   // Removing a registry row must not erase authenticated withdrawal information.
-  for (const plugin of previous?.plugins ?? []) {
+  for (const plugin of history?.plugins ?? []) {
     if (!plugins.some(entry => entry.id === plugin.id)) plugins.push(withReleasePermissions(plugin))
   }
   const index = {

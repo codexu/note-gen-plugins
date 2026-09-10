@@ -1,0 +1,17 @@
+{
+  "language": "en",
+  "name": "Favorites",
+  "command.open": "Bookmarks · Open",
+  "command.add": "Bookmarks · Bookmark current note",
+  "command.visit": "Bookmarks · Open note",
+  "command.remove": "Bookmarks · Remove",
+  "permission.notes.read": "Access selected notes for Bookmarks.",
+  "permission.notes.open": "Access selected notes for Bookmarks.",
+  "command.add-file": "Add to bookmarks",
+  "permission.editor.read": "Read the active document path to bookmark the current note.",
+  "command.reorder": "Bookmarks · Reorder",
+  "command.rename": "Bookmarks · Rename",
+  "command.rename-save": "Bookmarks · Save name",
+  "setting.title": "Display name",
+  "setting.title.description": "Customize the sidebar title. Leave empty for Favorites. Applies to this workspace."
+}

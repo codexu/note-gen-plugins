@@ -18,7 +18,8 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@notegen/plugin-test": "workspace:^"
+    "@notegen/plugin-test": "workspace:^",
+    "@notegen/plugin-api": "workspace:^"
   },
   "packageManager": "pnpm@10.20.0"
 }

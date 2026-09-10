@@ -20,6 +20,11 @@ on:
         required: true
         type: boolean
         default: false
+      reset_catalog:
+        description: Reset to registry plugins and delete old OSS plugin assets after publication
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -347,6 +352,7 @@ jobs:
                 --generation "$GENERATION" \
                 --validity-days "$VALIDITY_DAYS" \
                 "${previous_args[@]}" \
+                --reset-catalog "${{ inputs.reset_catalog == true && 'true' || 'false' }}" \
                 --localized-metadata "${{ vars.PLUGIN_MARKET_LOCALIZATIONS == 'true' && 'true' || 'false' }}" \
                 --output release-assets/index.json
             fi
@@ -418,3 +424,13 @@ jobs:
           OSS_ENDPOINT: ${{ vars.OSS_ENDPOINT }}
           OSS_BUCKET: ${{ vars.OSS_BUCKET }}
         run: '"$RUNNER_TEMP/oss-publisher/bin/python" tools/publish-oss.py index'
+      - name: Remove superseded OSS plugin assets after catalog reset
+        if: github.event_name == 'workflow_dispatch' && inputs.reset_catalog == true
+        env:
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          OSS_REGION: ${{ vars.OSS_REGION }}
+          OSS_ENDPOINT: ${{ vars.OSS_ENDPOINT }}
+          OSS_BUCKET: ${{ vars.OSS_BUCKET }}
+          OSS_PUBLIC_BASE_URL: ${{ vars.OSS_PUBLIC_BASE_URL }}
+        run: '"$RUNNER_TEMP/oss-publisher/bin/python" tools/publish-oss.py prune'

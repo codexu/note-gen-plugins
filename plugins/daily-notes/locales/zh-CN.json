@@ -33,5 +33,14 @@
   "weekday.3": "星期三",
   "weekday.4": "星期四",
   "weekday.5": "星期五",
-  "weekday.6": "星期六"
+  "weekday.6": "星期六",
+  "navigation.title": "每日笔记 · 日期导航",
+  "navigation.description": "输入日期，或以前一次成功打开的日记为基准前后切换。首次使用以今天为基准。不存在的日记将使用现有模板创建。",
+  "navigation.date": "日期（YYYY-MM-DD）",
+  "navigation.open": "打开指定日期",
+  "navigation.previous": "每日笔记 · 前一天",
+  "navigation.next": "每日笔记 · 后一天",
+  "navigation.invalidDate": "请输入真实有效的 YYYY-MM-DD 日期。",
+  "navigation.workspaceChanged": "工作区已切换，请重试。",
+  "navigation.dateError": "无法打开，请检查日期、目录授权及错误通知。"
 }

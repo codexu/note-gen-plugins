@@ -1,0 +1,17 @@
+{
+  "language": "zh-CN",
+  "name": "收藏",
+  "command.open": "收藏 · 打开",
+  "command.add": "收藏 · 收藏当前笔记",
+  "command.visit": "收藏 · 打开笔记",
+  "command.remove": "收藏 · 移除",
+  "permission.notes.read": "在授权范围内提供收藏功能。",
+  "permission.notes.open": "在授权范围内提供收藏功能。",
+  "command.add-file": "收藏到收藏",
+  "permission.editor.read": "获取当前文档路径，用于一键收藏。",
+  "command.reorder": "收藏 · 排序",
+  "command.rename": "收藏 · 重命名",
+  "command.rename-save": "收藏 · 保存名称",
+  "setting.title": "显示名称",
+  "setting.title.description": "自定义侧栏名称，留空显示“收藏”。仅作用于当前工作区。"
+}

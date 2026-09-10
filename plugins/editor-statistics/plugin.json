@@ -4,9 +4,11 @@
   "name": "Editor Statistics",
   "description": "Show local Markdown writing statistics in the status bar.",
   "version": "0.1.0",
-  "apiVersion": "^0.1.0",
+  "apiVersion": "^0.1.1",
   "minAppVersion": "0.37.0",
-  "platforms": ["desktop"],
+  "platforms": [
+    "desktop"
+  ],
   "entry": "dist/main.js",
   "activationEvents": [
     "onEditor:markdown",
@@ -49,10 +51,22 @@
         "title": "%setting.primaryMetric.title%",
         "default": "characters-reading-time",
         "options": [
-          { "label": "%setting.metric.charactersAndReadingTime%", "value": "characters-reading-time" },
-          { "label": "%setting.metric.characters%", "value": "characters" },
-          { "label": "%setting.metric.words%", "value": "words" },
-          { "label": "%setting.metric.readingTime%", "value": "reading-time" }
+          {
+            "label": "%setting.metric.charactersAndReadingTime%",
+            "value": "characters-reading-time"
+          },
+          {
+            "label": "%setting.metric.characters%",
+            "value": "characters"
+          },
+          {
+            "label": "%setting.metric.words%",
+            "value": "words"
+          },
+          {
+            "label": "%setting.metric.readingTime%",
+            "value": "reading-time"
+          }
         ]
       },
       {
@@ -62,9 +76,18 @@
         "title": "%setting.compactMetric.title%",
         "default": "characters",
         "options": [
-          { "label": "%setting.metric.characters%", "value": "characters" },
-          { "label": "%setting.metric.words%", "value": "words" },
-          { "label": "%setting.metric.readingTime%", "value": "reading-time" }
+          {
+            "label": "%setting.metric.characters%",
+            "value": "characters"
+          },
+          {
+            "label": "%setting.metric.words%",
+            "value": "words"
+          },
+          {
+            "label": "%setting.metric.readingTime%",
+            "value": "reading-time"
+          }
         ]
       },
       {
@@ -74,8 +97,14 @@
         "title": "%setting.characterMode.title%",
         "default": "without-whitespace",
         "options": [
-          { "label": "%setting.characterMode.withoutWhitespace%", "value": "without-whitespace" },
-          { "label": "%setting.characterMode.withWhitespace%", "value": "with-whitespace" }
+          {
+            "label": "%setting.characterMode.withoutWhitespace%",
+            "value": "without-whitespace"
+          },
+          {
+            "label": "%setting.characterMode.withWhitespace%",
+            "value": "with-whitespace"
+          }
         ]
       },
       {

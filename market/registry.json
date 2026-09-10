@@ -4,6 +4,26 @@
   "publisherName": "NoteGen",
   "plugins": [
     {
+      "directory": "plugins/bookmarks",
+      "categories": [
+        "productivity",
+        "navigation"
+      ],
+      "featured": true,
+      "official": true,
+      "changelog": "重新发布 0.1.0：文件名、正文摘要、整行拖拽与右键移除。",
+      "localizations": {
+        "en": {
+          "name": "Bookmarks",
+          "description": "Bookmark notes with content previews and drag to reorder."
+        },
+        "zh-CN": {
+          "name": "Bookmarks",
+          "description": "收藏常用笔记，显示正文摘要，支持拖拽排序和右键移除。"
+        }
+      }
+    },
+    {
       "directory": "plugins/daily-notes",
       "categories": [
         "productivity",
@@ -40,26 +60,6 @@
         "zh-CN": {
           "name": "写作统计",
           "description": "在状态栏显示当前 Markdown 笔记的字数等写作统计。"
-        }
-      }
-    },
-    {
-      "directory": "plugins/plugin-playground",
-      "categories": [
-        "development",
-        "examples"
-      ],
-      "featured": false,
-      "official": true,
-      "changelog": "新增一键完整演示：自动准备测试文件、运行全部能力示例并打开侧栏、标签页和弹窗；保留单项测试入口，保护非示例笔记。",
-      "localizations": {
-        "en": {
-          "name": "Plugin Playground",
-          "description": "Official interactive examples and manual probes for every public NoteGen plugin API capability."
-        },
-        "zh-CN": {
-          "name": "插件能力实验室",
-          "description": "一键体验 NoteGen 插件公开 API，包含视图、表单、笔记操作等交互演示与开发示例。"
         }
       }
     }

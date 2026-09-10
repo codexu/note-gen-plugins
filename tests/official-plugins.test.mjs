@@ -51,7 +51,7 @@ async function createMarketFixture(t) {
     await writeFile(join(directory, 'artifacts', `${manifest.id}-${version}.notegen-plugin`), `fixture package ${version}`)
   }
   await writeVersion(manifest.version, manifest.permissions)
-  const generate = async (output, generation, previous) => runFile(process.execPath, [
+  const generate = async (output, generation, previous, extra = []) => runFile(process.execPath, [
     marketTool, 'generate',
     '--registry', join(directory, 'market', 'registry.json'),
     '--publisher', join(directory, 'publisher.json'),
@@ -60,9 +60,25 @@ async function createMarketFixture(t) {
     '--generation', String(generation),
     '--output', join(directory, output),
     ...(previous ? ['--previous-index', join(directory, previous)] : []),
+    ...extra,
   ])
   return { directory, writeVersion, generate }
 }
+
+test('explicit catalog reset drops old releases and removed plugins while preserving generation checks', async t => {
+  const { directory, generate, writeVersion } = await createMarketFixture(t)
+  await generate('old.json', 10)
+  const old = JSON.parse(await readFile(join(directory, 'old.json'), 'utf8'))
+  old.plugins.push({ ...old.plugins[0], id: 'top.notegen.removed' })
+  await writeFile(join(directory, 'old.json'), JSON.stringify(old))
+  await writeVersion('0.1.0', { 'notes.read': {} })
+  await generate('reset.json', 11, 'old.json', ['--reset-catalog', 'true'])
+  const reset = JSON.parse(await readFile(join(directory, 'reset.json'), 'utf8'))
+  assert.equal(reset.plugins.length, 1)
+  assert.deepEqual(reset.plugins[0].releases.map(release => release.version), ['0.1.0'])
+  await assert.rejects(generate('rollback.json', 10, 'old.json', ['--reset-catalog', 'true']), /generation must be greater/)
+  await assert.rejects(generate('missing.json', 12, undefined, ['--reset-catalog', 'true']), /requires a previous/)
+})
 
 test('market preserves historical release permissions when a newer version expands them', async (t) => {
   const fixture = await createMarketFixture(t)

@@ -33,5 +33,14 @@
   "weekday.3": "Wednesday",
   "weekday.4": "Thursday",
   "weekday.5": "Friday",
-  "weekday.6": "Saturday"
+  "weekday.6": "Saturday",
+  "navigation.title": "Daily Notes · Date navigation",
+  "navigation.description": "Choose a date or move relative to the last diary opened by this plugin (today initially). Missing notes use your existing template.",
+  "navigation.date": "Date (YYYY-MM-DD)",
+  "navigation.open": "Open selected date",
+  "navigation.previous": "Daily Notes · Previous day",
+  "navigation.next": "Daily Notes · Next day",
+  "navigation.invalidDate": "Enter a valid YYYY-MM-DD date.",
+  "navigation.workspaceChanged": "Workspace changed. Try again.",
+  "navigation.dateError": "Could not open. Check date, folder permissions and the error notice."
 }
