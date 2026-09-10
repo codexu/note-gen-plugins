@@ -6,10 +6,14 @@ Plugin Playground (`top.notegen.plugin-playground`) is an official manual testin
 
 1. Open **Plugin Playground** from the command palette, the Lab status item, editor slash/context menu, file context menu or mobile writing overflow menu.
 2. Choose a test folder in plugin settings (default: `PluginPlayground`). Grant the needed note and attachment permissions for that folder, editor permissions for the active editor, and network permission for `https://notegen.top`. Choosing a folder does not grant permission.
-3. Select an operation, enter text and a result limit, then run it. Operations marked ⚠ require the consent checkbox. Deletion also requires entering `DELETE`.
+3. Click **Run the full demo** to prepare notes and an attachment, run all 32 operations, and open both sidebars, a tab and a dialog. No per-operation selection or repeated confirmation is needed. The command palette also includes **Run all plugin capability demos**.
 4. Inspect the returned result or host error. The coverage table records the latest success/failure for each operation. Refresh to see new events.
 
 All permissions are optional. UI, calendar, storage and settings examples remain usable without file/editor/network grants. Restricted calls report `PermissionDenied`. Grant changes may restart the plugin, requiring new fixture files.
+
+The full demo uses plugin sample storage, visits `https://notegen.top/`, and creates fixtures in the test folder. It writes, moves and deletes a closed fixture before opening a fresh note for editor examples. Editor mutations check this session's fixture marker first; other notes are not edited. An editor that is not ready, a non-source mode, or an unsupported platform is reported per operation without stopping the other examples. The dialog stays open for interactive validation, update, replacement and close examples.
+
+Choose **Show individual probes** for the original operation form. Marked individual probes still require consent, and individual deletion requires `DELETE`. Host navigation, setting changes and the intentional exception remain interactive entries rather than switching pages or interrupting the host during the full demo.
 
 ## Suggested manual checks
 

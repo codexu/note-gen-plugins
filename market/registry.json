@@ -31,7 +31,7 @@
       ],
       "featured": false,
       "official": true,
-      "changelog": "Initial official API playground with interactive capability probes."
+      "changelog": "新增一键完整演示：自动准备测试文件、运行全部能力示例并打开侧栏、标签页和弹窗；保留单项测试入口，保护非示例笔记。"
     }
   ]
 }

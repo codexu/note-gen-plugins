@@ -3,7 +3,7 @@
   "id": "top.notegen.plugin-playground",
   "name": "Plugin Playground",
   "description": "Official interactive examples and manual probes for every public NoteGen plugin API capability.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "apiVersion": "^0.1.0",
   "minAppVersion": "0.37.0",
   "platforms": [
@@ -30,7 +30,9 @@
     "onCommand:top.notegen.plugin-playground.dialog-close",
     "onCommand:top.notegen.plugin-playground.view",
     "onCommand:top.notegen.plugin-playground.host",
-    "onCommand:top.notegen.plugin-playground.throw"
+    "onCommand:top.notegen.plugin-playground.throw",
+    "onCommand:top.notegen.plugin-playground.demo",
+    "onCommand:top.notegen.plugin-playground.advanced"
   ],
   "permissions": {
     "editor.read": {
@@ -169,6 +171,16 @@
       {
         "id": "top.notegen.plugin-playground.throw",
         "title": "%command.throw%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.demo",
+        "title": "%command.demo%",
+        "icon": "flask-conical"
+      },
+      {
+        "id": "top.notegen.plugin-playground.advanced",
+        "title": "%command.advanced%",
         "icon": "flask-conical"
       }
     ],

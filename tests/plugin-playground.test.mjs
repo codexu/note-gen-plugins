@@ -57,3 +57,25 @@ test('Playground validates dialog fields and closes only after valid submission'
   await host.executeCommand(command('dialog-submit'), { dialogId, values: { name: 'NoteGen' } })
   assert.equal(host.dialog, null)
 })
+
+test('Full demo prepares fixtures once for repeated clicks and keeps all views available', async t => {
+  const host = await setup(t)
+  await Promise.all([host.executeCommand(command('demo')), host.executeCommand(command('demo'))])
+  // Three creations, one deletion: the pagination fixture and editor fixture remain.
+  assert.equal(host.notes.length, 2)
+  assert.ok(host.notes.every(note => note.path.startsWith('PluginPlayground/fixture-')))
+  assert.ok(host.notes.every(note => note.content.includes('<!-- playground:')))
+  assert.equal(Object.keys(host.views).length, 3)
+  assert.ok(host.dialog)
+  assert.ok(host.active)
+})
+
+test('Full demo continues after denied grants without claiming those operations passed', async t => {
+  const host = await setup(t, Object.fromEntries(Object.keys(manifest.permissions).map(key => [key, false])))
+  await host.executeCommand(command('demo'))
+  assert.equal(host.notes.length, 0)
+  assert.ok(host.dialog)
+  const output = JSON.stringify(host.views)
+  assert.match(output, /PermissionDenied/)
+  assert.ok(host.active)
+})

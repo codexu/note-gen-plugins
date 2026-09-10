@@ -1,6 +1,6 @@
 {
   "name": "@notegen/plugin-playground",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Official comprehensive NoteGen plugin API playground and reference examples.",
   "license": "GPL-3.0-or-later",

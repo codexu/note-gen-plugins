@@ -35,6 +35,7 @@ export function createOperations(ctx: PluginContext, t: (key: string) => string,
   let page: { workspaceId: string; folder: string; cursor: string } | undefined
   let serial = 0
   const session = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+  const marker = `<!-- playground:${session} -->`
   const setting = (name: string) => ctx.settings.get(id(name))
   const folder = () => {
     const value = String(setting('folder') ?? 'PluginPlayground').trim().replace(/\/$/, '')
@@ -53,9 +54,14 @@ export function createOperations(ctx: PluginContext, t: (key: string) => string,
     await assertWorkspace(target.workspaceId)
     return target
   }
-  async function editor() {
+  async function editor(demo: boolean) {
     const active = await ctx.editor.getActiveEditor()
     if (!active || active.composing) throw new Error(t('error.editor'))
+    if (demo) {
+      await owned()
+      const snapshot = await ctx.editor.getTextSnapshot({ editorId: active.editorId, expectedRevision: active.revision, format: 'markdown' })
+      if (!snapshot.text.includes(marker)) throw new Error(t('error.demoEditor'))
+    }
     return active
   }
   async function expectCode(code: string, action: () => Promise<unknown>) {
@@ -97,11 +103,11 @@ export function createOperations(ctx: PluginContext, t: (key: string) => string,
           const workspace = await current()
           const path = `${folder()}/fixture-${session}-${++serial}.md`
           if (operation === 'note-write-create') {
-            const result = await ctx.notes.write({ path, content: `# Plugin Playground\n\n${text}\n`, create: true })
+            const result = await ctx.notes.write({ path, content: `# Plugin Playground\n\n${text}\n${marker}\n`, create: true })
             if (result.created) { await assertWorkspace(workspace.id); fixture = { workspaceId: workspace.id, path } }
             return result
           }
-          const result = await ctx.notes.openOrCreate({ workspaceId: workspace.id, path, initialContent: `# Plugin Playground\n\n${text}\n`, conflict: 'open-existing', open: false, idempotencyKey: `${session}-${serial}` })
+          const result = await ctx.notes.openOrCreate({ workspaceId: workspace.id, path, initialContent: `# Plugin Playground\n\n${text}\n${marker}\n`, conflict: 'open-existing', open: false, idempotencyKey: `${session}-${serial}` })
           if (result.status === 'created') { await assertWorkspace(workspace.id); fixture = { workspaceId: workspace.id, path } }
           else throw new Error(t('error.existing'))
           return result
@@ -111,7 +117,7 @@ export function createOperations(ctx: PluginContext, t: (key: string) => string,
           return ctx.notes.openOrCreate({ ...target, initialContent: '', conflict: 'open-existing', open: true, idempotencyKey: `${session}-open-${++serial}` })
         }
         case 'note-read': {
-          const selected = String(setting('sampleFile') ?? '').trim()
+          const selected = values.demo === true ? '' : String(setting('sampleFile') ?? '').trim()
           const path = selected || (await owned()).path
           return ctx.notes.read({ path })
         }
@@ -178,17 +184,17 @@ export function createOperations(ctx: PluginContext, t: (key: string) => string,
           return ctx.attachments.read({ path: target.path })
         }
         case 'editor-read': {
-          const active = await editor()
+          const active = await editor(values.demo === true)
           return { active, selection: await ctx.editor.getSelection(), snapshot: await ctx.editor.getTextSnapshot({ editorId: active.editorId, expectedRevision: active.revision, format: 'markdown' }) }
         }
         case 'editor-cursor':
         case 'editor-selection': {
-          const active = await editor()
+          const active = await editor(values.demo === true)
           return ctx.editor.applyEdit({ editorId: active.editorId, expectedRevision: active.revision, text, target: operation === 'editor-cursor' ? 'cursor' : 'selection' })
         }
         case 'editor-batch':
         case 'editor-select': {
-          const active = await editor()
+          const active = await editor(values.demo === true)
           if (active.mode !== 'source') throw new Error(t('error.source'))
           const snapshot = await ctx.editor.getTextSnapshot({ editorId: active.editorId, expectedRevision: active.revision, format: 'markdown' })
           const base = { editorId: active.editorId, expectedRevision: snapshot.revision }

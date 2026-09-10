@@ -1,5 +1,7 @@
 # Plugin Playground
 
+Version `0.1.1` adds **Run the full demo**: prepare fixtures, run all 32 capability examples, and open both sidebars, a tab and an interactive dialog with one action. Individual probes remain available in an expandable form. Permission and platform limits are reported per operation; automatic editor examples only modify this session's fixture notes.
+
 [简体中文](README.md) · [Usage and manual acceptance guide](USAGE.md)
 
 An official interactive reference for the current public NoteGen plugin API. The implementation follows `.sdk/packages/plugin-api/src/index.ts` and the host broker/UI constraints without importing host internals or using DOM, Node.js, filesystem or direct network APIs.

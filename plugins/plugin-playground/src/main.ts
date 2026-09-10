@@ -2,7 +2,7 @@ import type {
   PluginActivate, PluginCommandArgument, PluginCommandResult, PluginDeactivate,
   PluginDisposable, PluginFormBlock, PluginUiDocument,
 } from '@notegen/plugin-api'
-import { createOperations, display, errorText, id, mutations, operations, record } from './operations.js'
+import { createOperations, display, errorText, id, mutations, operations, record, type Operation } from './operations.js'
 
 let cleanup: (() => void) | undefined
 
@@ -18,6 +18,9 @@ export const activate: PluginActivate = async ctx => {
   let preview = ''
   let sequence = 0
   let queue = Promise.resolve()
+  let advanced = false
+  let demoRunning = false
+  let demoRequested = false
   const events: { number: number; name: string; detail: string }[] = []
   const passed = new Set<string>()
   const failed = new Map<string, string>()
@@ -51,8 +54,13 @@ export const activate: PluginActivate = async ctx => {
         { label: 'Plugin / API', value: `${ctx.plugin.version} / ${ctx.plugin.apiVersion}` },
         { label: t('note'), value: paths.note }, { label: t('attachment'), value: paths.attachment },
       ] },
-      form(),
-      { type: 'text', text: preview || t('form.hint'), tone: 'muted' },
+      { type: 'callout', title: t('demo.title'), text: t('demo.description') },
+      { type: 'actions', actions: [
+        { id: 'demo', label: demoRunning ? t('demo.running') : t('demo.start'), command: id('demo') },
+        { id: 'advanced', label: advanced ? t('demo.hideAdvanced') : t('demo.advanced'), command: id('advanced'), variant: 'secondary' },
+      ] },
+      ...(advanced ? [form()] : []),
+      { type: 'text', text: advanced ? preview || t('form.hint') : t('ready'), tone: 'muted' },
       { type: 'actions', actions: [
         { id: 'refresh', label: t('refresh'), command: id('refresh'), variant: 'secondary' },
         { id: 'reset', label: t('reset'), command: id('reset-form'), variant: 'secondary' },
@@ -82,8 +90,13 @@ export const activate: PluginActivate = async ctx => {
     return { blocks: [
       { type: 'heading', text: t('title') },
       { type: 'callout', title: t('scope.title'), text: t('scope.text') },
-      form(view),
-      { type: 'text', text: preview || t('form.hint'), tone: 'muted' },
+      { type: 'text', text: t('demo.description') },
+      { type: 'actions', actions: [
+        { id: 'demo', label: demoRunning ? t('demo.running') : t('demo.start'), command: id('demo') },
+        { id: 'advanced', label: advanced ? t('demo.hideAdvanced') : t('demo.advanced'), command: id('advanced'), variant: 'secondary' },
+      ] },
+      ...(advanced ? [form(view)] : []),
+      { type: 'text', text: advanced ? preview || t('form.hint') : t('ready'), tone: 'muted' },
       { type: 'text', text: result },
       { type: 'actions', actions: [
         { id: 'open', label: t('open'), command: id('open') },
@@ -115,6 +128,9 @@ export const activate: PluginActivate = async ctx => {
   }
   function handle(name: string, action: (argument: PluginCommandArgument) => PluginCommandResult | Promise<PluginCommandResult>) {
     disposables.push(ctx.commands.handle(id(name), argument => {
+      // Coalesce repeated clicks before the first queued run starts.
+      if (name === 'demo' && demoRequested) return
+      if (name === 'demo') demoRequested = true
       const submittedEpoch = epoch
       const task = queue.then(async () => {
         if (stopped || ctx.signal.aborted || submittedEpoch !== epoch) return
@@ -128,11 +144,64 @@ export const activate: PluginActivate = async ctx => {
           throw error
         }
       })
+      if (name === 'demo') void task.then(() => { demoRequested = false }, () => { demoRequested = false })
       queue = task.then(() => {}, () => {})
       return task
     }))
   }
   handle('open', async () => { await render(); await ctx.ui.views.open(id('tab')); await ctx.ui.views.focus(id('tab')) })
+  handle('advanced', async () => { advanced = !advanced; formReset++; await render() })
+  handle('demo', async () => {
+    const startedEpoch = epoch
+    const current = () => !stopped && !ctx.signal.aborted && startedEpoch === epoch
+    demoRunning = true
+    lab.reset()
+    passed.clear(); failed.clear(); events.length = 0
+    result = t('demo.running')
+    subscribeOptionalEvents()
+    // Keep file mutations ahead of opening the fixture in an editor. Create two
+    // notes before pagination, and leave a fresh note for the editor examples.
+    const sequence: Operation[] = [
+      'environment', 'calendar', 'settings', 'storage-save', 'storage-read', 'storage-delete',
+      'note-write-create', 'note-create', 'note-read', 'note-list', 'note-next', 'note-search',
+      'note-write', 'note-stale', 'note-move', 'note-delete',
+      'attachment-create', 'attachment-read', 'invalid-zone', 'invalid-path',
+      'note-create', 'note-open', 'editor-read', 'editor-cursor', 'editor-selection',
+      'editor-batch', 'editor-select', 'network', 'notice',
+      'status-hide', 'status-busy', 'status-show',
+    ]
+    try {
+      await render()
+      for (const view of ['left', 'right', 'tab']) {
+        if (!current()) return
+        try { await ctx.ui.views.open(id(view)); log('demo.view', await ctx.ui.views.getState(id(view))) }
+        catch (error) { log(`demo.view.${view}`, errorText(error)) }
+      }
+      for (const operation of sequence) {
+        if (!current()) return
+        try {
+          const output = await lab.run(operation, { text: 'NoteGen Plugin Playground', limit: 1, confirm: 'DELETE', demo: true })
+          if (!current()) return
+          passed.add(operation); failed.delete(operation)
+          log(operation, output)
+        } catch (error) {
+          if (!current()) return
+          failed.set(operation, errorText(error)); passed.delete(operation)
+          log(operation, errorText(error))
+        }
+      }
+      if (!current()) return
+      // Leave the interactive dialog visible instead of opening and immediately
+      // closing it. Its buttons demonstrate update, replace and close on demand.
+      try { await openDialog(); passed.add('dialog') }
+      catch (error) { failed.set('dialog', errorText(error)) }
+      if (!current()) return
+      result = `${t('demo.complete')}\n${t('passed')}: ${passed.size}/${operations.length}\n${t('failed')}: ${failed.size}`
+    } finally {
+      demoRunning = false
+      if (current()) await render()
+    }
+  })
   handle('refresh', async () => { subscribeOptionalEvents(); await render() })
   handle('clear', async () => { events.length = 0; passed.clear(); failed.clear(); result = t('ready'); await render() })
   handle('reset-form', async () => { formReset++; preview = ''; await render() })

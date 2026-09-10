@@ -1,9 +1,9 @@
 {
   "title": "Plugin Playground",
   "welcome": "Welcome to the {name} Plugin Playground",
-  "ready": "Choose an operation and run it. Results appear here.",
+  "ready": "Run the full demo to prepare fixtures and see every capability result.",
   "scope.title": "Official testing and development example",
-  "scope.text": "Use a test workspace. ⚠ operations require consent: editor operations change the active note; file mutations target notes created by this session; network requests visit https://notegen.top/. Close every tab, pane and separate window for a target before writing, moving or deleting it.",
+  "scope.text": "The full demo prepares separate fixture files without per-operation selection or confirmation. Individual editor probes modify the active note; marked probes still require consent. File writes, moves and deletion require the target to be closed in every editor.",
   "run": "Run selected operation",
   "operation": "Operation",
   "input": "Text (edit, search query, storage value or notice)",
@@ -134,5 +134,15 @@
   "setting.tone": "Result text tone",
   "tone.default": "Default",
   "tone.warning": "Warning",
-  "op.status-busy": "Show busy status bar"
+  "op.status-busy": "Show busy status bar",
+  "demo.title": "Experience the complete demo",
+  "demo.description": "Run all 32 capability examples and open both sidebars, a tab and an interactive dialog. This creates, edits and deletes fixture files in the test folder, uses plugin sample storage, and visits notegen.top. Editor demos only modify this session’s fixture notes. Missing grants or unsupported capabilities are reported individually.",
+  "demo.start": "Run the full demo",
+  "demo.running": "Running the full demo…",
+  "demo.complete": "Demo finished. Close the dialog to inspect results in a sidebar. Switch to source mode and use individual probes for source-only editor operations.",
+  "demo.advanced": "Show individual probes",
+  "demo.hideAdvanced": "Hide individual probes",
+  "command.demo": "Run all plugin capability demos",
+  "command.advanced": "Toggle individual probes",
+  "error.demoEditor": "The demo note is not active yet, or another note is active. This editor demo was not executed; retry from a sidebar."
 }
