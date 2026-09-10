@@ -53,12 +53,21 @@ export const activate: PluginActivate = async ctx => {
   async function show(guard: () => Promise<void>, open = true) {
     const items = await Promise.all(bookmarks.map(async item => {
       let description = ''
+      let metadata = t('更新时间不可用', 'Update time unavailable')
       try {
-        description = noteDescription((await ctx.notes.read({ path: item.path })).content)
+        const note = await ctx.notes.read({ path: item.path })
+        description = noteDescription(note.content)
+        if (typeof note.modifiedAt === 'number' && Number.isFinite(note.modifiedAt)) {
+          const modified = new Date(note.modifiedAt)
+          if (!Number.isNaN(modified.getTime())) {
+            const pad = (value: number) => String(value).padStart(2, '0')
+            metadata = t('更新于 ', 'Updated ') + `${modified.getFullYear()}/${pad(modified.getMonth() + 1)}/${pad(modified.getDate())} ${pad(modified.getHours())}:${pad(modified.getMinutes())}`
+          }
+        }
       } catch {
         // A missing or inaccessible file must not hide the remaining bookmarks.
       }
-      return { id: item.path, label: item.path.split('/').pop()!.replace(/\.md$/i, '').slice(0, 100), icon: 'file-text', ...(description ? { description } : {}) }
+      return { id: item.path, label: item.path.split('/').pop()!.replace(/\.md$/i, '').slice(0, 100), icon: 'file-text', metadata, ...(description ? { description } : {}) }
     }))
     await guard()
     generation = w.token()

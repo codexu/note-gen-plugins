@@ -57,3 +57,9 @@ Development output is written to `.notegen/package`, and the unsigned archive
 is written to `.notegen/releases`. The marketplace does not yet publish a
 signed index, so the presence of this source does not make the plugin available
 for installation from NoteGen.
+
+## Interface visibility
+
+In NoteGen versions that support display preferences, open Settings → Plugins → Installed → this plugin’s settings → Interface visibility. You can independently control the file context menu, tab context menu, and slash command menu. Entries are shown by default. Changes apply immediately and are saved for all workspaces on this device.
+
+Hiding an entry keeps the plugin and its data. Commands remain available in the command palette. Hidden sidebar or editor views are not reopened automatically; enable the corresponding display option to see them again.
