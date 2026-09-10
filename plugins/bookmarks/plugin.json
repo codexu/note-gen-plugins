@@ -3,7 +3,7 @@
   "id": "top.notegen.bookmarks",
   "name": "Bookmarks",
   "description": "Keep workspace bookmarks with labels.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "apiVersion": "^0.1.1",
   "minAppVersion": "0.37.0",
   "platforms": [

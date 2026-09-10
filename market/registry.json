@@ -11,7 +11,7 @@
       ],
       "featured": true,
       "official": true,
-      "changelog": "重新发布 0.1.0：文件名、正文摘要、整行拖拽与右键移除。",
+      "changelog": "更新至 0.1.1：显示收藏笔记更新时间，补充界面展示设置说明。",
       "localizations": {
         "en": {
           "name": "Bookmarks",
@@ -31,7 +31,7 @@
       ],
       "featured": true,
       "official": true,
-      "changelog": "Initial official release.",
+      "changelog": "更新至 0.1.1：使用已发布 SDK 重新构建，补充界面展示设置说明。",
       "localizations": {
         "en": {
           "name": "Daily Notes",
@@ -51,7 +51,7 @@
       ],
       "featured": true,
       "official": true,
-      "changelog": "Initial official release.",
+      "changelog": "更新至 0.1.1：使用已发布 SDK 重新构建，补充界面展示设置说明。",
       "localizations": {
         "en": {
           "name": "Editor Statistics",

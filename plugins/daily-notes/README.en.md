@@ -7,7 +7,7 @@ resolves the logical date using the configured workspace time zone, then opens
 an existing note or creates a new one.
 
 - Plugin ID: `top.notegen.daily-notes`
-- Version: `0.1.0`
+- Version: `0.1.1`
 - Platform: NoteGen Desktop
 - Minimum NoteGen version: `0.37.0`
 

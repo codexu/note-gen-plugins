@@ -6,7 +6,7 @@ NoteGen 官方编辑器统计插件。它在本地解析活动 Markdown 编辑�
 状态栏显示字符数、单词数和预计阅读时间。
 
 - 插件 ID：`top.notegen.editor-statistics`
-- 版本：`0.1.0`
+- 版本：`0.1.1`
 - 平台：NoteGen Desktop
 - 最低 NoteGen 版本：`0.37.0`
 

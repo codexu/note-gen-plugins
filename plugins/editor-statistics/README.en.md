@@ -7,7 +7,7 @@ active Markdown editor locally and shows character count, word count, and
 estimated reading time in the status bar.
 
 - Plugin ID: `top.notegen.editor-statistics`
-- Version: `0.1.0`
+- Version: `0.1.1`
 - Platform: NoteGen Desktop
 - Minimum NoteGen version: `0.37.0`
 
