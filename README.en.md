@@ -77,16 +77,9 @@ official-plugin release chain.
 
 ## Marketplace status
 
-Once the marketplace opens, this repository is intended to contain:
+Official packages are published. Community registration, PR verification, and independent signed-package ingestion are implemented; production opening remains pending real-client acceptance and repository protection setup.
 
-- reviewable registration sources for community plugins and publishers;
-- review policies and automated validation;
-- release tooling that generates the signed marketplace index;
-- immutable fallback distribution assets published through GitHub Releases.
-
-There is currently no “open a pull request to publish” process. Do not submit a
-custom community-plugin directory or JSON format. Adding official plugin source
-to this repository does not publish it to the marketplace.
+See [Submit a community plugin](community/README.en.md) for the supported registry format. Authors keep source in their own repositories and submit registration PRs. Merge does not publish: a maintainer dispatches the release workflow on main after review.
 
 ## Static distribution design
 
@@ -313,3 +306,13 @@ release acceptance process. See [the maintainer checklist](COMMUNITY-REVIEW.md).
 官方插件仅保留 Bookmarks、每日笔记、写作统计，版本统一为 0.1.0。SDK API 版本保持 0.1.1。
 
 本次使用显式 `reset_catalog=true`，保留更高索引 generation，但不保留旧插件和历史版本。新包和索引发布并校验后，清理 OSS `plugins/v1/` 下未被新索引引用的旧资产。日常发布保持该开关关闭。已安装更高版本或开发版本的用户需卸载旧插件后安装新的 0.1.0，不会自动降级。
+
+## Interface visibility maintenance
+
+NoteGen derives per-device display switches from each plugin’s `contributes.views`, `contributes.menus`, and `contributes.statusBar`. Entries are shown by default. File-menu entries inherited by tab context menus use the independent tab-menu switch. Plugins do not access private host settings.
+
+When changing an entry, update its manifest, both README translations, and bundled USAGE documents together. Do not add duplicate display settings for new entries; Editor Statistics retains its existing workspace setting for compatibility. Hiding entries preserves commands and data. The host ignores navigation requests for hidden views, and plugins must not override user display preferences. Updated documentation requires repackaging; the new host can control existing plugin packages directly.
+
+## Community submissions
+
+The registration and independent-package publication path is implemented. See [Submit a community plugin](community/README.en.md) for the format, PR workflow, updates, key rotation, and revocation. Production opening remains pending protected-branch/environment setup and real-client acceptance. Merge registers a plugin; a maintainer must dispatch the release workflow on main.

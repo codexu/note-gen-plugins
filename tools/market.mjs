@@ -213,6 +213,7 @@ async function generate(args) {
   const resetCatalog = args.get('reset-catalog') === 'true'
   // A reset discards releases, but still requires a verified previous generation.
   if (resetCatalog && !previous) fail('Catalog reset requires a previous signed index')
+  if (resetCatalog && previous.plugins.some(plugin => !plugin.official)) fail('Catalog reset cannot discard community history')
   const history = resetCatalog ? null : previous
   const registry = await json(registryPath)
   const publisher = await json(publisherPath)
@@ -236,6 +237,7 @@ async function generate(args) {
     const asset = await readFile(join(artifacts, assetName))
     const packageSha256 = createHash('sha256').update(asset).digest('hex')
     const previousPlugin = history?.plugins.find((plugin) => plugin.id === manifest.id)
+    if (previousPlugin && previousPlugin.publisherId !== registry.publisherId) fail('Official registration cannot replace a community publisher')
     const previousRelease = previousPlugin?.releases.find((release) => release.version === manifest.version)
     const previousPublisher = history?.publishers.find(entry => entry.id === previousPlugin?.publisherId)
     const previousReleases = previousPlugin ? withReleasePermissions(previousPlugin).releases.map(release => ({
@@ -286,6 +288,76 @@ async function generate(args) {
       if (!releases.some(release => release.version === version)) fail(`Cannot revoke unknown release ${manifest.id}@${version}`)
     }
   }
+  const publishers = [{
+    id: registry.publisherId, name: registry.publisherName,
+    keyId: publisher.keyId, publicKey: publisher.publicKey,
+    ...(registry.previousPublisherKeys ? { previousKeys: registry.previousPublisherKeys } : {}),
+    verified: true,
+  }]
+  if (args.get('community')) {
+    const community = await json(resolve(args.get('community')))
+    if (community.schemaVersion !== 1) fail('Unsupported prepared community catalog')
+    for (const entry of community.publishers) {
+      if (publishers.some(item => item.id === entry.id)) fail('Community publisher conflicts with official publisher')
+      publishers.push({ id: entry.id, name: entry.name, keyId: entry.keyId, publicKey: entry.publicKey,
+        ...(entry.previousKeys ? { previousKeys: entry.previousKeys } : {}), verified: false })
+    }
+    for (const registration of community.plugins) {
+      const manifest = registration.manifest
+      if (plugins.some(item => item.id === registration.id)) fail('Community plugin conflicts with official plugin')
+      const old = previous?.plugins.find(item => item.id === registration.id)
+      if (old && (old.official || old.publisherId !== registration.publisherId || old.repository !== registration.repository)) {
+        fail('Community plugin cannot change ownership or replace an official plugin')
+      }
+      const releases = []
+      for (const entry of registration.releases) {
+        const prior = old?.releases.find(item => item.version === entry.version)
+        if (prior && (prior.packageSha256 !== entry.packageSha256
+          || (prior.publisherKeyId ?? previous.publishers.find(p => p.id === old.publisherId)?.keyId) !== entry.publisherKeyId)) {
+          fail(`${registration.id}@${entry.version} cannot replace published bytes or signing identity`)
+        }
+        const assetName = `${registration.id}-${entry.version}.notegen-plugin`
+        if (!prior) {
+          const bytes = await readFile(join(artifacts, assetName))
+          if (createHash('sha256').update(bytes).digest('hex') !== entry.packageSha256) {
+            fail(`Staged community package differs from verified bytes: ${assetName}`)
+          }
+        }
+        releases.push({
+          ...(prior ?? {
+            version: entry.version, publisherKeyId: entry.publisherKeyId,
+            minAppVersion: entry.minAppVersion, apiVersion: entry.apiVersion,
+            platforms: entry.platforms, permissions: entry.permissions,
+            packageUrl: `${baseUrl}/${assetName}`,
+            ...(mirrorBaseUrl ? { packageUrls: [`${baseUrl}/${assetName}`, `${mirrorBaseUrl}/${assetName}`] } : {}),
+            packageSha256: entry.packageSha256, publishedAt: now.toISOString(), changelog: entry.changelog,
+          }),
+          publisherKeyId: entry.publisherKeyId,
+          ...(registration.revocations?.[entry.version] ? { revoked: registration.revocations[entry.version] } : {}),
+        })
+      }
+      for (const release of old?.releases ?? []) {
+        if (!releases.some(entry => entry.version === release.version)) releases.push(release)
+      }
+      plugins.push({ id: registration.id, name: manifest.name,
+        description: manifest.description ?? manifest.name,
+        author: typeof manifest.author === 'string' ? manifest.author : manifest.author?.name ?? registration.publisherId,
+        publisherId: registration.publisherId, repository: registration.repository,
+        license: manifest.license, categories: registration.categories, featured: false, official: false,
+        permissions: Object.keys(manifest.permissions).sort(), releases })
+    }
+  }
+  // Keep old keys and publishers even when entries are not in this generation's input.
+  for (const old of previous?.publishers ?? []) {
+    const current = publishers.find(entry => entry.id === old.id)
+    if (!current) { publishers.push(old); continue }
+    const keys = [current, ...(current.previousKeys ?? [])]
+    for (const key of [old, ...(old.previousKeys ?? [])]) {
+      if (!keys.some(entry => entry.keyId === key.keyId && entry.publicKey === key.publicKey)) {
+        fail(`Publisher ${old.id} must retain its authenticated signing keys when rotating`)
+      }
+    }
+  }
   // Removing a registry row must not erase authenticated withdrawal information.
   for (const plugin of history?.plugins ?? []) {
     if (!plugins.some(entry => entry.id === plugin.id)) plugins.push(withReleasePermissions(plugin))
@@ -295,14 +367,7 @@ async function generate(args) {
     generation,
     generatedAt: now.toISOString(),
     expiresAt: now.getTime() + validityDays * 86_400_000,
-    publishers: [{
-      id: registry.publisherId,
-      name: registry.publisherName,
-      keyId: publisher.keyId,
-      publicKey: publisher.publicKey,
-      ...(registry.previousPublisherKeys ? { previousKeys: registry.previousPublisherKeys } : {}),
-      verified: true,
-    }],
+    publishers,
     plugins,
   }
   validateIndex(index)

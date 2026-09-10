@@ -35,11 +35,14 @@ concurrency:
 
 jobs:
   release:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: ${{ github.event_name == 'schedule' && 'plugin-market-refresh' || 'plugin-market-production' }}
     steps:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          persist-credentials: false
       - name: Require an immutable SDK revision
         if: github.event_name != 'schedule'
         shell: bash
@@ -243,6 +246,17 @@ jobs:
             fi
             echo "No previous market index was available; explicit first publication confirmed."
           fi
+      - name: Verify and stage community packages before loading signing keys
+        if: github.event_name != 'schedule'
+        shell: bash
+        run: |
+          previous_args=()
+          if [ -n "${PREVIOUS_INDEX:-}" ]; then
+            previous_args=(--previous-index "$PREVIOUS_INDEX")
+          fi
+          python3 tools/community.py "${previous_args[@]}" \
+            --artifacts release-assets \
+            --output "$RUNNER_TEMP/community-catalog.json"
       - name: Materialize protected signing keys
         shell: bash
         env:
@@ -321,6 +335,17 @@ jobs:
             node .sdk/packages/plugin-cli/dist/bin.js verify "release-assets/$name.notegen-plugin" \
               --public-key "$RUNNER_TEMP/notegen-keys/publisher.json" --require-signature
           done
+      - name: Restore previously published community assets for interrupted OSS uploads
+        if: github.event_name != 'schedule'
+        shell: bash
+        run: |
+          if [ -n "${EXISTING_RELEASE_DIR:-}" ]; then
+            for asset in "$EXISTING_RELEASE_DIR"/*.notegen-plugin; do
+              test -f "$asset" || continue
+              destination="release-assets/$(basename "$asset")"
+              if [ ! -e "$destination" ]; then cp "$asset" "$destination"; fi
+            done
+          fi
       - name: Generate and root-sign market index
         shell: bash
         run: |
@@ -346,6 +371,7 @@ jobs:
               oss_public_base_url="${oss_public_base_url%/}"
               node tools/market.mjs generate \
                 --publisher "$RUNNER_TEMP/notegen-keys/publisher.json" \
+                --community "$RUNNER_TEMP/community-catalog.json" \
                 --artifacts release-assets \
                 --base-url "$oss_public_base_url/packages/$RELEASE_TAG" \
                 --mirror-base-url "https://github.com/codexu/note-gen-plugins/releases/download/$RELEASE_TAG" \

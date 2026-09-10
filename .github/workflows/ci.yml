@@ -14,6 +14,9 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - name: Require an immutable SDK revision
         shell: bash
         env:
@@ -45,3 +48,15 @@ jobs:
       - run: pnpm build
       - run: pnpm validate
       - run: pnpm test
+      - name: Verify community registrations and signed packages
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        shell: bash
+        run: |
+          previous_args=()
+          if [[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ ]] && [[ "$BASE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+            previous_args=(--base-ref "$BASE_SHA" --changes-only)
+          fi
+          python3 tools/community.py "${previous_args[@]}" \
+            --artifacts "$RUNNER_TEMP/community-packages" \
+            --output "$RUNNER_TEMP/community-catalog.json"

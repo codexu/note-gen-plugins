@@ -1,0 +1,9 @@
+# Require code-owner review in the main branch ruleset; this file alone does not enforce it.
+* @codexu
+/community/ @codexu
+/market/ @codexu
+/tools/ @codexu
+/.github/ @codexu
+/package.json @codexu
+/pnpm-lock.yaml @codexu
+/pnpm-workspace.yaml @codexu

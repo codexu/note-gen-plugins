@@ -9,6 +9,7 @@
     "validate": "pnpm -r --if-present validate",
     "plugin:pack": "pnpm -r --if-present run plugin:pack",
     "test": "node --test tests/*.test.mjs",
+    "community:verify": "python3 tools/community.py --artifacts .community/packages --output .community/catalog.json",
     "market:generate": "node tools/market.mjs generate",
     "market:refresh": "node tools/market.mjs refresh",
     "market:sign": "node tools/market.mjs sign",

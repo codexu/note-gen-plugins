@@ -4,3 +4,6 @@ node_modules/
 .DS_Store
 release-assets/
 market/private/
+
+# Verified community staging output
+.community/
