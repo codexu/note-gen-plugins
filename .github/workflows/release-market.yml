@@ -347,6 +347,7 @@ jobs:
                 --generation "$GENERATION" \
                 --validity-days "$VALIDITY_DAYS" \
                 "${previous_args[@]}" \
+                --localized-metadata "${{ vars.PLUGIN_MARKET_LOCALIZATIONS == 'true' && 'true' || 'false' }}" \
                 --output release-assets/index.json
             fi
             node tools/market.mjs sign \

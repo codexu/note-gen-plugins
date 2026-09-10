@@ -52,6 +52,20 @@ function nonEmptyString(value, name) {
   if (typeof value !== 'string' || !value.trim()) fail(`${name} must be a non-empty string`)
 }
 
+function validateLocalizations(localizations) {
+  if (localizations === undefined) return
+  if (!localizations || typeof localizations !== 'object' || Array.isArray(localizations) || Object.keys(localizations).length > 20) fail('localizations must contain at most 20 locales')
+  for (const [locale, text] of Object.entries(localizations)) {
+    if (!/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/.test(locale) || locale.length > 35) fail(`Invalid localization locale: ${locale}`)
+    if (!text || typeof text !== 'object' || Array.isArray(text) || Object.keys(text).some(key => !['name', 'description'].includes(key))) fail(`Invalid localization: ${locale}`)
+    for (const [key, limit] of [['name', 120], ['description', 2000]]) {
+      nonEmptyString(text[key], `localizations.${locale}.${key}`)
+      if (/[\u0000-\u001f\u007f-\u009f]/u.test(text[key])) fail(`localizations.${locale}.${key} contains control characters`)
+      if (Buffer.byteLength(text[key], 'utf8') > limit) fail(`localizations.${locale}.${key} is too long`)
+    }
+  }
+}
+
 function httpsUrl(value, name) {
   nonEmptyString(value, name)
   try {
@@ -123,6 +137,7 @@ function validateIndex(index, { requireCurrent = true } = {}) {
     nonEmptyString(plugin.id, 'plugin.id')
     nonEmptyString(plugin.name, `${plugin.id}.name`)
     nonEmptyString(plugin.description, `${plugin.id}.description`)
+    validateLocalizations(plugin.localizations)
     nonEmptyString(plugin.author, `${plugin.id}.author`)
     if (pluginIds.has(plugin.id)) fail(`duplicate plugin ${plugin.id}`)
     pluginIds.add(plugin.id)
@@ -204,6 +219,7 @@ async function generate(args) {
   const now = new Date()
   const plugins = []
   for (const registration of registry.plugins) {
+    validateLocalizations(registration.localizations)
     if (registration.revocations !== undefined) {
       if (!registration.revocations || Array.isArray(registration.revocations) || typeof registration.revocations !== 'object') fail('revocations must be a version-to-reason object')
       for (const reason of Object.values(registration.revocations)) {
@@ -245,6 +261,9 @@ async function generate(args) {
       id: manifest.id,
       name: manifest.name,
       description: manifest.description ?? manifest.name,
+      ...(args.get('localized-metadata') === 'true' && registration.localizations
+        ? { localizations: registration.localizations }
+        : previousPlugin?.localizations ? { localizations: previousPlugin.localizations } : {}),
       author: typeof manifest.author === 'string' ? manifest.author : manifest.author?.name ?? registry.publisherName,
       publisherId: registry.publisherId,
       ...(manifest.repository ? { repository: manifest.repository } : {}),
