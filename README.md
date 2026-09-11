@@ -16,6 +16,13 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [Bookmarks](plugins/bookmarks) | `top.notegen.bookmarks` | 常用笔记收藏、正文摘要和拖拽排序 |
 | [Daily Notes](plugins/daily-notes) | `top.notegen.daily-notes` | 按当前逻辑日期打开或创建每日笔记 |
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | 在状态栏显示本地 Markdown 写作统计 |
+| [文档预览](plugins/document-preview) | `top.notegen.document-preview` | 离线预览 PDF、DOCX、XLSX 和 PPTX |
+| [文件图标](plugins/iconize) | `top.notegen.iconize` | 为文件和文件夹设置图标或 Emoji |
+| [韩语语言包](plugins/language-pack-ko) | `top.notegen.language-pack-ko` | 添加韩语界面 |
+| [动态模板](plugins/templates) | `top.notegen.templates` | Markdown 动态模板和自定义字段 |
+| [主题](plugins/themes) | `top.notegen.themes` | 三组完整明暗配色主题 |
+
+新增的以上五个插件最低要求 NoteGen 0.37.1，并需满足各自声明的插件 API 版本。
 
 这些插件都是独立插件，只使用
 [`@notegen/plugin-api`](https://github.com/codexu/note-gen-plugin-sdk/tree/main/packages/plugin-api)
@@ -95,7 +102,19 @@ SDK；这种源码检出只用于官方插件的可复现发布链。
 
 ## 静态分发设计
 
-### 市场介绍的多语言元数据
+### 官方插件语言规范
+
+所有 `plugins/` 下的官方插件（包括主题和语言包）至少支持简体中文 `zh-CN` 和英文 `en`：
+
+- `plugin.json` 必须声明这两种 `locales`，并设置 `defaultLocale: "en"`。名称和介绍分别使用 `%name%`、`%description%`；命令、权限、设置和视图的文案使用语言键。
+- 两份语言文件必须有相同的键，翻译不能为空。按钮、提示和自定义设置界面也必须提供中英文；技术标识、路径示例、用户内容不作翻译。
+- 显示语言跟随 NoteGen，由宿主传入；插件负责提供翻译，不自行读取系统语言。未支持的语言回退到英文。文档预览通过 `notegen:preview-init.locale` 接收语言，旧宿主未传语言时回退英文。
+- 每个插件提供中文 `README.md`、英文 `README.en.md`、中文 `USAGE.zh-CN.md` 和英文 `USAGE.md`。语言包提供的目标语言不替代这两种基础语言。
+- 市场登记中的中英文名称和介绍与插件语言文件保持一致；发布工具从官方插件语言文件生成中英文元数据及英文兜底文本。尚未登记的插件不会因此自动上架。
+
+`pnpm validate` 包含 `validate:localizations`，现有 CI 和发布流程因此会检查语言声明、翻译键完整性、声明式文案引用、文档存在性和已登记市场文案的一致性。自动校验不能判断翻译质量；发布前仍需在 NoteGen 中分别切换中英文检查列表和设置页。
+
+### 市场元数据格式
 
 在 `market/registry.json` 的插件条目中维护 `localizations`，每种语言包含完整的
 `name` 和 `description`。当前官方插件提供 `en` 和 `zh-CN`；这些内容随市场索引

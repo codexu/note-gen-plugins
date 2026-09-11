@@ -13,5 +13,6 @@
   "command.rename": "收藏 · 重命名",
   "command.rename-save": "收藏 · 保存名称",
   "setting.title": "显示名称",
-  "setting.title.description": "自定义侧栏名称，留空显示“收藏”。仅作用于当前工作区。"
+  "setting.title.description": "自定义侧栏名称，留空显示“收藏”。仅作用于当前工作区。",
+  "description": "收藏常用笔记，显示正文摘要，支持拖拽排序和右键移除。"
 }

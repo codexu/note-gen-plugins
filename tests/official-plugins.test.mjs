@@ -18,6 +18,10 @@ async function createMarketFixture(t) {
   t.after(() => rm(directory, { recursive: true, force: true }))
   await mkdir(join(directory, 'market'))
   await mkdir(join(directory, 'plugin'))
+  await mkdir(join(directory, 'plugin', 'locales'))
+  for (const [locale, name] of [['en', 'Market fixture'], ['zh-CN', '市场测试插件']]) {
+    await writeFile(join(directory, 'plugin', 'locales', `${locale}.json`), JSON.stringify({ name, description: name }))
+  }
   await mkdir(join(directory, 'artifacts'))
   const { publicKey, privateKey } = generateKeyPairSync('ed25519')
   const raw = Buffer.from(publicKey.export({ format: 'jwk' }).x, 'base64url')
@@ -36,7 +40,10 @@ async function createMarketFixture(t) {
   }))
   const manifest = {
     id: 'top.notegen.market-fixture',
-    name: 'Market fixture',
+    name: '%name%',
+    description: '%description%',
+    defaultLocale: 'en',
+    locales: { en: 'locales/en.json', 'zh-CN': 'locales/zh-CN.json' },
     author: 'NoteGen',
     version: '1.0.0',
     minAppVersion: '0.26.0',

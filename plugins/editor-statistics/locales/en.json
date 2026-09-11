@@ -16,5 +16,7 @@
   "setting.includeCodeBlocks.title": "Include code blocks in character count",
   "permission.editorRead.description": "Read the active Markdown editor to calculate statistics locally",
   "status.stale": "Update manually",
-  "unit.minute": "min"
+  "unit.minute": "min",
+  "name": "Editor Statistics",
+  "description": "Show local Markdown writing statistics in the status bar."
 }

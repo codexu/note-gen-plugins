@@ -1,0 +1,6 @@
+{
+  "permission.read": "Read previewable documents anywhere in this workspace. Files are processed locally and never uploaded.",
+  "name": "Document Preview",
+  "description": "Offline read-only PDF, Word (.docx), Excel (.xlsx) and PowerPoint (.pptx) previews.",
+  "preview.name": "Document Preview · PDF / DOCX / XLSX / PPTX"
+}

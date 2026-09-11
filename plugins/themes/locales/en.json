@@ -1,0 +1,7 @@
+{
+  "name": "NoteGen Themes",
+  "description": "Paper & Ink, Pine and Sea Mist: three themes with light and dark palettes.",
+  "theme.paper-ink": "Paper & Ink",
+  "theme.pine": "Pine",
+  "theme.sea-mist": "Sea Mist"
+}

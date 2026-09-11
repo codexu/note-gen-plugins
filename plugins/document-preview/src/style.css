@@ -1,0 +1,50 @@
+*{box-sizing:border-box}body{margin:0;background:#f3f4f6;color:#202124;font:14px/1.5 system-ui,sans-serif}header{padding:10px 16px;font-weight:600;overflow-wrap:anywhere;background:#fff;border-bottom:1px solid #ddd}nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:#fff;position:sticky;top:0;z-index:20}button,input,select{font:inherit;color:inherit;background:#fff;border:1px solid #bbb;border-radius:5px;padding:5px 9px}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #2563eb;outline-offset:2px}input[type=number]{width:85px}input[type=search]{width:180px}#status{margin:0;padding:6px 16px;min-height:32px;overflow-wrap:anywhere}#status[role=alert]{color:#b91c1c}main{padding:16px;overflow:auto;max-height:calc(100vh - 160px)}.pdf-page{position:relative;background:white;margin:0 auto;box-shadow:0 1px 5px #0003;flex-shrink:0}.pdf-page canvas{display:block}.textLayer{position:absolute;text-align:initial;inset:0;overflow:clip;opacity:1;line-height:1;text-size-adjust:none;-webkit-text-size-adjust:none;forced-color-adjust:none;transform-origin:0 0;caret-color:CanvasText;z-index:1}.textLayer :is(span,br){color:transparent;position:absolute;white-space:pre;cursor:text;transform-origin:0 0}.textLayer span.markedContent{top:0;height:0}.textLayer span[role=img]{user-select:none}.textLayer ::selection{background:#0066ff55}.textLayer .search-hit{background:#ffc10788}.textLayer .search-hit.current{background:#ff7f0088}.sheet-grid{border-collapse:collapse;background:white;font:13px/1.4 ui-monospace,monospace}.sheet-grid th,.sheet-grid td{border:1px solid #ddd;min-width:85px;max-width:400px;height:28px;padding:4px 8px;white-space:pre-wrap;overflow-wrap:anywhere}.sheet-grid th{background:#eee;position:sticky;top:0}.sheet-grid tbody th{left:0}.notice{padding:12px;background:#fff8db;border:1px solid #e2c677}.docx-wrapper{padding:12px!important}.docx-wrapper>section.docx{margin-bottom:16px!important}a{pointer-events:none}select{max-width:300px}
+.textLayer mark{color:transparent}.sheet-grid{color:#202124}@media(prefers-color-scheme:dark){body{background:#202124;color:#e8eaed}header,nav{background:#292a2d;border-color:#555}button,input,select{background:#303134;color:#eee;border-color:#777}.notice{background:#403822;color:#fff2c6;border-color:#8c7940}#status[role=alert]{color:#ff9999}}
+
+/* Only the document pane scrolls. Its remaining height follows the actual
+   toolbar height, including wrapped controls and multi-line status messages. */
+html,body{width:100%;height:100%;overflow:hidden}
+body{display:flex;flex-direction:column;min-width:0;min-height:0}
+header,nav,#status{flex:0 0 auto;min-width:0}
+nav{position:relative}
+main{flex:1 1 0;min-width:0;min-height:0;max-height:none;overscroll-behavior:contain}
+/* Mirror NoteGen's globals.css scrollbar rules inside the isolated frame. */
+main{--muted:240 4.8% 95.9%;--muted-foreground:240 3.8% 46.1%;--foreground:240 10% 3.9%;--scrollbar-size:12px;--scrollbar-track-hover:hsl(var(--muted) / .28);--scrollbar-thumb:hsl(var(--muted-foreground) / .26);--scrollbar-thumb-hover:hsl(var(--muted-foreground) / .48);--scrollbar-thumb-active:hsl(var(--foreground) / .62);scrollbar-width:thin;scrollbar-color:var(--scrollbar-thumb) transparent}
+main::-webkit-scrollbar{width:var(--scrollbar-size);height:var(--scrollbar-size)}
+main::-webkit-scrollbar-track{background-color:transparent;transition:background-color .15s ease}
+main::-webkit-scrollbar-thumb{border-radius:9999px;background-color:var(--scrollbar-thumb);border:4px solid transparent;background-clip:padding-box;transition:background-color .15s ease,border-width .15s ease}
+main::-webkit-scrollbar-track:hover{background-color:var(--scrollbar-track-hover)}
+main::-webkit-scrollbar-thumb:hover{border-width:2px;background-color:var(--scrollbar-thumb-hover)}
+main::-webkit-scrollbar-thumb:active{border-width:1px;background-color:var(--scrollbar-thumb-active)}
+main::-webkit-scrollbar-corner{background-color:transparent}
+@media(prefers-color-scheme:dark){main{--muted:240 3.7% 15.9%;--muted-foreground:240 5% 64.9%;--foreground:0 0% 98%}}
+.hiddenCanvasElement{position:absolute;width:0;height:0;visibility:hidden;pointer-events:none}
+main .docx-wrapper{padding:0!important;background:transparent!important}
+.pptx-content{display:flex;flex-direction:column}
+.pptx-container{flex:0 0 auto;width:100%;min-width:0;margin-block:auto}
+.pptx-container :is(video,audio){display:none!important}
+.sheet-content{padding:0}
+.sheet-content .sheet-grid{margin:0;min-width:100%;table-layout:fixed;border-style:hidden}
+.sheet-content .sheet-grid th,.sheet-content .sheet-grid td{white-space:pre;overflow:hidden;text-overflow:ellipsis}
+.sheet-content .sheet-grid tr>:first-child{width:48px;min-width:48px}
+.sheet-content .sheet-grid thead th{z-index:2}
+.sheet-content .sheet-grid tbody th{top:auto;z-index:1}
+.sheet-content .sheet-grid thead th:first-child{left:0;z-index:3}
+
+[hidden],#status:empty{display:none!important}
+nav{gap:10px;padding:6px 10px;border-bottom:1px solid #ddd;font-size:13px}
+nav button,nav input,nav select{height:30px;padding:3px 7px}
+.toolbar-group{display:flex;align-items:center;gap:4px;min-width:0}
+.page-controls{flex:0 0 auto;font-variant-numeric:tabular-nums}
+:is(.pdf-toolbar,.pptx-toolbar) .page-input{width:48px;padding:3px;text-align:center;appearance:textfield;-moz-appearance:textfield}
+.page-input::-webkit-inner-spin-button,.page-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.zoom-controls{flex:0 0 auto}
+.zoom-controls select{width:108px;flex:0 0 auto}
+.icon-button{display:inline-flex;align-items:center;justify-content:center;width:30px;padding:0;border-color:transparent;background:transparent;flex:0 0 auto}
+.icon-button svg{width:17px;height:17px}
+.icon-button:hover:not(:disabled){background:#8882}
+.search-controls{margin-left:auto;flex:1 1 170px;flex-wrap:wrap;justify-content:flex-end}
+.search-controls input{width:120px;min-width:80px;max-width:180px;flex:1 1 100px}
+.search-results{flex:0 0 auto}
+.match-count{font-variant-numeric:tabular-nums;color:#666;white-space:nowrap}
+@media(prefers-color-scheme:dark){nav{border-color:#555}.match-count{color:#aaa}}

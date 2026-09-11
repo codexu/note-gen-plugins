@@ -1,0 +1,30 @@
+{
+  "name": "@notegen/plugin-document-preview",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline, isolated PDF, DOCX, XLSX and PPTX previews for NoteGen.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs && notegen-plugin build",
+    "validate": "notegen-plugin validate",
+    "plugin:pack": "notegen-plugin pack"
+  },
+  "notegen": {
+    "source": "src/preview.js"
+  },
+  "dependencies": {
+    "@aiden0z/pptx-renderer": "1.2.4",
+    "docx-preview": "0.3.7",
+    "jszip": "3.10.1",
+    "pdfjs-dist": "4.10.38",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "devDependencies": {
+    "@notegen/plugin-cli": "workspace:^",
+    "esbuild": "^0.25.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

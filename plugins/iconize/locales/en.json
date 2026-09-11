@@ -1,0 +1,14 @@
+{
+  "language": "en",
+  "name": "Iconize",
+  "description": "Assign built-in icons or Emoji to workspace files and folders.",
+  "permission.notes.list": "Optional: observe note moves and deletions within granted folders so assignments can follow notes. No note content is read.",
+  "command.open": "Iconize: Configure icons",
+  "command.assign": "Iconize: Assign icon",
+  "command.new": "Iconize: New rule",
+  "command.save": "Iconize: Save rule",
+  "command.edit": "Iconize: Edit rule",
+  "command.toggle": "Iconize: Toggle rule",
+  "command.remove": "Iconize: Delete rule",
+  "command.reorder": "Iconize: Reorder rules"
+}

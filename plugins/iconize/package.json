@@ -1,0 +1,21 @@
+{
+  "name": "@notegen/plugin-iconize",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Assign built-in icons and Emoji to workspace files and folders.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit && notegen-plugin build",
+    "plugin:pack": "notegen-plugin pack",
+    "validate": "tsc -p tsconfig.json --noEmit && notegen-plugin validate"
+  },
+  "notegen": {
+    "source": "src/main.ts"
+  },
+  "devDependencies": {
+    "@notegen/plugin-api": "workspace:^",
+    "@notegen/plugin-cli": "workspace:^",
+    "typescript": "^5.8.3"
+  }
+}

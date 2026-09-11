@@ -1,6 +1,6 @@
 {
   "language": "en",
-  "name": "Favorites",
+  "name": "Bookmarks",
   "command.open": "Bookmarks · Open",
   "command.add": "Bookmarks · Bookmark current note",
   "command.visit": "Bookmarks · Open note",
@@ -13,5 +13,6 @@
   "command.rename": "Bookmarks · Rename",
   "command.rename-save": "Bookmarks · Save name",
   "setting.title": "Display name",
-  "setting.title.description": "Customize the sidebar title. Leave empty for Favorites. Applies to this workspace."
+  "setting.title.description": "Customize the sidebar title. Leave empty for Favorites. Applies to this workspace.",
+  "description": "Bookmark notes with content previews and drag to reorder."
 }

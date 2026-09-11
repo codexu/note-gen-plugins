@@ -1,0 +1,30 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.language-pack-ko",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.2",
+  "minAppVersion": "0.37.1",
+  "platforms": ["desktop"],
+  "activationEvents": [],
+  "permissions": {},
+  "contributes": {},
+  "defaultLocale": "en",
+  "locales": { "en": "locales/en.json", "zh-CN": "locales/zh-CN.json" },
+  "resources": {
+    "languages": [
+      {
+        "locale": "ko",
+        "name": "한국어",
+        "messages": "messages/ko.json"
+      }
+    ]
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/language-pack-ko",
+  "license": "GPL-3.0-or-later"
+}

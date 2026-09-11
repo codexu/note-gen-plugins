@@ -6,7 +6,7 @@ NoteGen 官方每日笔记插件。执行命令时，它会按照当前工作区
 逻辑日期，并打开已有笔记或创建一篇新笔记。
 
 - 插件 ID：`top.notegen.daily-notes`
-- 版本：`0.1.1`
+- 版本：`0.1.2`
 - 平台：NoteGen Desktop
 - 最低 NoteGen 版本：`0.37.0`
 

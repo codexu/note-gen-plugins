@@ -1,0 +1,14 @@
+{
+  "language": "zh-CN",
+  "name": "文件图标",
+  "description": "为工作区文件和文件夹设置内置图标或 Emoji。",
+  "permission.notes.list": "可选：接收授权文件夹内的笔记移动和删除事件，让指定图标跟随笔记。不会读取笔记正文。",
+  "command.open": "图标：管理规则",
+  "command.assign": "图标：指定图标",
+  "command.new": "图标：新增规则",
+  "command.save": "图标：保存规则",
+  "command.edit": "图标：编辑规则",
+  "command.toggle": "图标：启用或停用",
+  "command.remove": "图标：删除规则",
+  "command.reorder": "图标：规则排序"
+}

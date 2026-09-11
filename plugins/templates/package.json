@@ -1,0 +1,25 @@
+{
+  "name": "@notegen/plugin-templates",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Official dynamic Markdown templates for NoteGen.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "templates:sync": "node scripts/sync-templates.mjs",
+    "build": "node scripts/sync-templates.mjs && tsc -p tsconfig.json --noEmit && notegen-plugin build",
+    "validate": "tsc -p tsconfig.json --noEmit && notegen-plugin validate",
+    "plugin:pack": "node scripts/sync-templates.mjs && notegen-plugin pack"
+  },
+  "notegen": {
+    "source": "src/main.ts"
+  },
+  "devDependencies": {
+    "@notegen/plugin-api": "workspace:^",
+    "@notegen/plugin-cli": "workspace:^",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -11,14 +11,14 @@
       ],
       "featured": true,
       "official": true,
-      "changelog": "更新至 0.1.1：显示收藏笔记更新时间，补充界面展示设置说明。",
+      "changelog": "更新至 0.1.2：补齐插件列表和设置页的中英文名称、介绍，统一跟随 NoteGen 界面语言。",
       "localizations": {
         "en": {
           "name": "Bookmarks",
           "description": "Bookmark notes with content previews and drag to reorder."
         },
         "zh-CN": {
-          "name": "Bookmarks",
+          "name": "收藏",
           "description": "收藏常用笔记，显示正文摘要，支持拖拽排序和右键移除。"
         }
       }
@@ -31,7 +31,7 @@
       ],
       "featured": true,
       "official": true,
-      "changelog": "更新至 0.1.1：使用已发布 SDK 重新构建，补充界面展示设置说明。",
+      "changelog": "更新至 0.1.2：补齐插件列表和设置页的中英文名称、介绍，统一跟随 NoteGen 界面语言。",
       "localizations": {
         "en": {
           "name": "Daily Notes",
@@ -51,7 +51,7 @@
       ],
       "featured": true,
       "official": true,
-      "changelog": "更新至 0.1.1：使用已发布 SDK 重新构建，补充界面展示设置说明。",
+      "changelog": "更新至 0.1.2：补齐插件列表和设置页的中英文名称、介绍，统一跟随 NoteGen 界面语言。",
       "localizations": {
         "en": {
           "name": "Editor Statistics",
@@ -60,6 +60,104 @@
         "zh-CN": {
           "name": "写作统计",
           "description": "在状态栏显示当前 Markdown 笔记的字数等写作统计。"
+        }
+      }
+    },
+    {
+      "directory": "plugins/document-preview",
+      "categories": [
+        "editor",
+        "productivity"
+      ],
+      "featured": true,
+      "official": true,
+      "changelog": "首次发布：离线只读预览 PDF、DOCX、XLSX 和 PPTX，支持中英文界面。 最低需要 NoteGen 0.37.1，并满足对应插件 API 要求。",
+      "localizations": {
+        "en": {
+          "name": "Document Preview",
+          "description": "Offline read-only PDF, Word (.docx), Excel (.xlsx) and PowerPoint (.pptx) previews."
+        },
+        "zh-CN": {
+          "name": "文档预览",
+          "description": "离线只读预览 PDF、Word（.docx）、Excel（.xlsx）和 PowerPoint（.pptx）文档。"
+        }
+      }
+    },
+    {
+      "directory": "plugins/iconize",
+      "categories": [
+        "appearance",
+        "productivity"
+      ],
+      "featured": true,
+      "official": true,
+      "changelog": "首次发布：为文件和文件夹设置图标或 Emoji，支持中英文设置页面。 最低需要 NoteGen 0.37.1，并满足对应插件 API 要求。",
+      "localizations": {
+        "en": {
+          "name": "Iconize",
+          "description": "Assign built-in icons or Emoji to workspace files and folders."
+        },
+        "zh-CN": {
+          "name": "文件图标",
+          "description": "为工作区文件和文件夹设置内置图标或 Emoji。"
+        }
+      }
+    },
+    {
+      "directory": "plugins/language-pack-ko",
+      "categories": [
+        "language"
+      ],
+      "featured": true,
+      "official": true,
+      "changelog": "首次发布：为 NoteGen 添加韩语界面，插件介绍和使用说明提供中英文。 最低需要 NoteGen 0.37.1，并满足对应插件 API 要求。",
+      "localizations": {
+        "en": {
+          "name": "Korean Language Pack",
+          "description": "Add Korean to the NoteGen interface."
+        },
+        "zh-CN": {
+          "name": "韩语语言包",
+          "description": "为 NoteGen 界面添加韩语支持。"
+        }
+      }
+    },
+    {
+      "directory": "plugins/templates",
+      "categories": [
+        "productivity",
+        "editor"
+      ],
+      "featured": true,
+      "official": true,
+      "changelog": "首次发布：动态 Markdown 模板、自定义字段和安全插入，支持中英文设置页面。 最低需要 NoteGen 0.37.1，并满足对应插件 API 要求。",
+      "localizations": {
+        "en": {
+          "name": "Dynamic Templates",
+          "description": "Markdown templates with variables, custom fields and safe note insertion."
+        },
+        "zh-CN": {
+          "name": "动态模板",
+          "description": "支持变量、自定义字段和安全插入笔记的 Markdown 模板。"
+        }
+      }
+    },
+    {
+      "directory": "plugins/themes",
+      "categories": [
+        "appearance"
+      ],
+      "featured": true,
+      "official": true,
+      "changelog": "首次发布：纸墨、松林和海岚三组明暗主题，支持中英文名称和介绍。 最低需要 NoteGen 0.37.1，并满足对应插件 API 要求。",
+      "localizations": {
+        "en": {
+          "name": "NoteGen Themes",
+          "description": "Paper & Ink, Pine and Sea Mist: three themes with light and dark palettes."
+        },
+        "zh-CN": {
+          "name": "NoteGen 主题",
+          "description": "纸墨、松林和海岚：三组提供明暗配色的主题。"
         }
       }
     }

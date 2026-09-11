@@ -16,5 +16,7 @@
   "setting.includeCodeBlocks.title": "字符统计包含代码块",
   "permission.editorRead.description": "读取当前 Markdown 编辑器并在本地计算统计信息",
   "status.stale": "需手动更新",
-  "unit.minute": "分钟"
+  "unit.minute": "分钟",
+  "name": "写作统计",
+  "description": "在状态栏显示当前 Markdown 笔记的字数等写作统计。"
 }

@@ -1,0 +1,153 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.templates",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.4",
+  "minAppVersion": "0.37.1",
+  "platforms": [
+    "desktop"
+  ],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onCommand:top.notegen.templates.insert",
+    "onCommand:top.notegen.templates.create",
+    "onWorkspace:open",
+    "onCommand:top.notegen.templates.new-template"
+  ],
+  "permissions": {
+    "editor.read": {
+      "scope": "active-editor",
+      "description": "%permission.editorRead%"
+    },
+    "editor.write": {
+      "scope": "active-editor",
+      "description": "%permission.editorWrite%"
+    },
+    "notes.read": {
+      "scope": "workspace-folder",
+      "description": "%permission.read%"
+    },
+    "notes.list": {
+      "scope": "workspace-folder",
+      "description": "%permission.list%"
+    },
+    "notes.create": {
+      "scope": "workspace-folder",
+      "description": "%permission.create%"
+    },
+    "notes.open": {
+      "scope": "workspace-folder",
+      "description": "%permission.open%"
+    },
+    "notes.write": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%designer.permission%"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "top.notegen.templates.insert",
+        "title": "%insert%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.templates.create",
+        "title": "%create%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.templates.choose",
+        "title": "%choose%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.templates.preview",
+        "title": "%preview%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.templates.apply",
+        "title": "%apply%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.templates.next",
+        "title": "%next%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.templates.new-template",
+        "title": "%designer.open%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.templates.designer-submit",
+        "title": "%designer.save%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.templates.designer-back",
+        "title": "%designer.back%",
+        "icon": "file-text"
+      }
+    ],
+    "settings": [
+      {
+        "key": "top.notegen.templates.folder",
+        "type": "string",
+        "scope": "workspace",
+        "title": "%setting.folder%",
+        "description": "%setting.folderHelp%",
+        "default": "Templates",
+        "maxLength": 240
+      },
+      {
+        "key": "top.notegen.templates.destination",
+        "type": "string",
+        "scope": "workspace",
+        "title": "%setting.destination%",
+        "description": "%setting.destinationHelp%",
+        "default": "Notes",
+        "maxLength": 240,
+        "permissionPaths": [
+          "notes.create",
+          "notes.open"
+        ]
+      }
+    ],
+    "menus": [
+      {
+        "location": "editor/context",
+        "command": "top.notegen.templates.insert",
+        "when": "editor == markdown && !readOnly"
+      },
+      {
+        "location": "file/context",
+        "command": "top.notegen.templates.create"
+      }
+    ],
+    "views": [
+      {
+        "id": "top.notegen.templates.settings",
+        "title": "%designer.settingsTitle%",
+        "location": "settings",
+        "icon": "file-text"
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/templates",
+  "license": "GPL-3.0-or-later"
+}

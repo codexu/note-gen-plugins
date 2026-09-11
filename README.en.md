@@ -16,15 +16,32 @@ release tooling.
 
 | Plugin | ID | Purpose |
 | --- | --- | --- |
-| [Bookmarks](plugins/bookmarks) | `top.notegen.bookmarks` | 常用笔记收藏、正文摘要和拖拽排序 |
+| [Bookmarks](plugins/bookmarks) | `top.notegen.bookmarks` | Bookmark notes with content previews and drag to reorder |
 | [Daily Notes](plugins/daily-notes) | `top.notegen.daily-notes` | Open or create a note for the current logical day |
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | Show local Markdown writing statistics in the status bar |
+| [Document Preview](plugins/document-preview) | `top.notegen.document-preview` | Offline PDF, DOCX, XLSX and PPTX previews |
+| [Iconize](plugins/iconize) | `top.notegen.iconize` | File and folder icons or Emoji |
+| [Korean Language Pack](plugins/language-pack-ko) | `top.notegen.language-pack-ko` | Korean interface translations |
+| [Dynamic Templates](plugins/templates) | `top.notegen.templates` | Markdown templates and custom fields |
+| [NoteGen Themes](plugins/themes) | `top.notegen.themes` | Three themes with light and dark palettes |
+
+The five new plugins require NoteGen 0.37.1 or later and their declared plugin API.
 
 These are independent plugins. They use only the public host contract
 from
 [`@notegen/plugin-api`](https://github.com/codexu/note-gen-plugin-sdk/tree/main/packages/plugin-api),
 do not import NoteGen application internals, and are not loaded as built-in
 plugins.
+
+## Official plugin language requirements
+
+Every official plugin under `plugins/`, including themes and language packs, must support English (`en`) and Simplified Chinese (`zh-CN`). Declare both in `locales`, set `defaultLocale` to `en`, and use `%name%` and `%description%` for package metadata. Commands, permissions, settings and views must reference translated text. Both dictionaries must have the same keys and non-empty values.
+
+Buttons, notices and custom settings interfaces must also support both languages. Technical identifiers, example paths and user content are not translated. The host selects the NoteGen interface language; plugins provide translations and fall back to English for unsupported languages. Document previews receive `notegen:preview-init.locale`; older hosts that omit it use English.
+
+Provide Chinese `README.md` and `USAGE.zh-CN.md`, and English `README.en.md` and `USAGE.md`. A language pack's target language does not replace this requirement. Registered market names and descriptions must match the package dictionaries; market generation reads official English and Chinese metadata from those dictionaries. Unregistered plugins are not automatically published.
+
+`pnpm validate` includes `validate:localizations`, so existing CI and release workflows enforce locale declarations, matching message keys, translated contribution references, documentation presence and registered market metadata consistency. This does not assess translation quality: review the list and settings pages in both NoteGen interface languages before release.
 
 ## Source ownership
 

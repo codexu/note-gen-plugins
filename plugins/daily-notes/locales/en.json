@@ -42,5 +42,7 @@
   "navigation.next": "Daily Notes · Next day",
   "navigation.invalidDate": "Enter a valid YYYY-MM-DD date.",
   "navigation.workspaceChanged": "Workspace changed. Try again.",
-  "navigation.dateError": "Could not open. Check date, folder permissions and the error notice."
+  "navigation.dateError": "Could not open. Check date, folder permissions and the error notice.",
+  "name": "Daily Notes",
+  "description": "Open or create the note for the current logical day."
 }

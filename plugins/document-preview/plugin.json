@@ -1,0 +1,38 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.document-preview",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": ">=0.1.2",
+  "minAppVersion": "0.37.1",
+  "platforms": ["desktop"],
+  "activationEvents": [],
+  "permissions": {
+    "attachments.read": {
+      "scope": "workspace-folder",
+      "description": "%permission.read%"
+    }
+  },
+  "contributes": {},
+  "resources": {
+    "documentPreviews": [
+      {
+        "id": "documents",
+        "name": "%preview.name%",
+        "extensions": ["pdf", "docx", "xlsx", "pptx"],
+        "script": "dist/preview.js",
+        "assets": [
+          "dist/pdf.js", "dist/pdf.worker.mjs", "dist/pdf-support.json",
+          "dist/docx.js", "dist/xlsx.js", "dist/xlsx.worker.js", "dist/pptx.js",
+          "dist/THIRD-PARTY-NOTICES.txt"
+        ]
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": { "en": "locales/en.json", "zh-CN": "locales/zh-CN.json" },
+  "author": { "name": "NoteGen", "url": "https://notegen.top" },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/document-preview",
+  "license": "GPL-3.0-or-later"
+}

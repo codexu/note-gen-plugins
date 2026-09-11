@@ -1,0 +1,6 @@
+{
+  "permission.read": "读取此工作区内用于预览的文档，在本地处理，不上传文件。",
+  "name": "文档预览",
+  "description": "离线只读预览 PDF、Word（.docx）、Excel（.xlsx）和 PowerPoint（.pptx）文档。",
+  "preview.name": "文档预览 · PDF / DOCX / XLSX / PPTX"
+}

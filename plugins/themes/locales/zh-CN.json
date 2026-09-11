@@ -1,0 +1,7 @@
+{
+  "name": "NoteGen 主题",
+  "description": "纸墨、松林和海岚：三组提供明暗配色的主题。",
+  "theme.paper-ink": "纸墨",
+  "theme.pine": "松林",
+  "theme.sea-mist": "海岚"
+}

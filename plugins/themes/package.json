@@ -1,0 +1,16 @@
+{
+  "name": "@notegen/plugin-themes",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Three declarative NoteGen themes with coordinated light and dark palettes.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "notegen-plugin build",
+    "plugin:pack": "notegen-plugin pack",
+    "validate": "notegen-plugin validate"
+  },
+  "devDependencies": {
+    "@notegen/plugin-cli": "workspace:^0.1.3"
+  }
+}

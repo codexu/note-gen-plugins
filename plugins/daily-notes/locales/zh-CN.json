@@ -42,5 +42,7 @@
   "navigation.next": "每日笔记 · 后一天",
   "navigation.invalidDate": "请输入真实有效的 YYYY-MM-DD 日期。",
   "navigation.workspaceChanged": "工作区已切换，请重试。",
-  "navigation.dateError": "无法打开，请检查日期、目录授权及错误通知。"
+  "navigation.dateError": "无法打开，请检查日期、目录授权及错误通知。",
+  "name": "每日笔记",
+  "description": "按当前逻辑日期打开或创建每日笔记。"
 }

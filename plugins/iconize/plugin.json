@@ -1,0 +1,111 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.iconize",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.4",
+  "minAppVersion": "0.37.1",
+  "platforms": [
+    "desktop"
+  ],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onWorkspace:open",
+    "onEditor:markdown",
+    "onCommand:top.notegen.iconize.open",
+    "onCommand:top.notegen.iconize.assign",
+    "onCommand:top.notegen.iconize.new",
+    "onCommand:top.notegen.iconize.save",
+    "onCommand:top.notegen.iconize.edit",
+    "onCommand:top.notegen.iconize.toggle",
+    "onCommand:top.notegen.iconize.remove",
+    "onCommand:top.notegen.iconize.reorder"
+  ],
+  "permissions": {
+    "notes.list": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.notes.list%"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "top.notegen.iconize.open",
+        "title": "%command.open%",
+        "icon": "star"
+      },
+      {
+        "id": "top.notegen.iconize.assign",
+        "title": "%command.assign%",
+        "icon": "star"
+      },
+      {
+        "id": "top.notegen.iconize.new",
+        "title": "%command.new%",
+        "icon": "star"
+      },
+      {
+        "id": "top.notegen.iconize.save",
+        "title": "%command.save%",
+        "icon": "star"
+      },
+      {
+        "id": "top.notegen.iconize.edit",
+        "title": "%command.edit%",
+        "icon": "star"
+      },
+      {
+        "id": "top.notegen.iconize.toggle",
+        "title": "%command.toggle%",
+        "icon": "star"
+      },
+      {
+        "id": "top.notegen.iconize.remove",
+        "title": "%command.remove%",
+        "icon": "star"
+      },
+      {
+        "id": "top.notegen.iconize.reorder",
+        "title": "%command.reorder%",
+        "icon": "star"
+      }
+    ],
+    "views": [
+      {
+        "id": "top.notegen.iconize.view",
+        "title": "%name%",
+        "location": "settings",
+        "icon": "star"
+      }
+    ],
+    "menus": [
+      {
+        "location": "file/context",
+        "command": "top.notegen.iconize.assign",
+        "when": "resourceKind == file || resourceKind == folder",
+        "icon": "star",
+        "order": 20
+      },
+      {
+        "location": "tab/context",
+        "command": "top.notegen.iconize.assign",
+        "when": "resourceKind == file || resourceKind == folder",
+        "icon": "star",
+        "order": 20
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/iconize",
+  "license": "GPL-3.0-or-later"
+}

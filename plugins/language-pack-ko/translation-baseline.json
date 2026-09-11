@@ -1,0 +1,30 @@
+{
+  "locale": "ko",
+  "sourceRepository": "https://github.com/codexu/note-gen",
+  "sourceCommit": "4d00e6a5eff56f787aec77dfadf0c1f627508780",
+  "snapshotDate": "2026-09-11",
+  "sourceMessageCount": 4227,
+  "providedMessageCount": 4226,
+  "baselineAuthority": "messages/zh.json + messages/common/zh.json",
+  "fallbackMessageKeys": [
+    "settings.editor.mermaid.templates.er",
+    "editor.mermaid.templates.er"
+  ],
+  "fallbackReason": "The host parses its Chinese baseline as ICU; literal o{ in these unchanged Mermaid code examples produces MALFORMED_ARGUMENT. Omit these two keys so the pack can register and inherit host values.",
+  "literalReplacementMarkers": {
+    "editor.slashCommand.imageUpload.savePath": [
+      "__PATH__"
+    ]
+  },
+  "reviewStatus": "Static source/message review only; native Korean review and desktop acceptance remain pending.",
+  "translationMethod": "Local machine-assisted draft with manual corrections to common UI, terminology, technical identifiers, argument-bearing messages and prompts. No translation model or translation runtime is included in the plugin.",
+  "sourceFileSha256": {
+    "messages/zh.json": "fa356a1c83715cc03ab4def54c4c3635c5f1e9da254da7437effb0a3d7bc01de",
+    "messages/common/zh.json": "c377366a64a72411c6d1e8ea9534bf91137812ced95d4b077485886d1b5e1f83",
+    "messages/en.json": "4ebf2fbc3ef792675b89296b4ad38c1eb990f1eb211d9b2950d4ff183fdd5b83",
+    "messages/common/en.json": "ddfa37454e72a0276aa6ec9cec719a25965e763b455f74884881020ce8e6adc3"
+  },
+  "additionalMessageKeys": [
+    "settings.general.interface.language.findInPlugins"
+  ]
+}

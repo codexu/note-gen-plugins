@@ -1,6 +1,7 @@
 import { createHash, createPrivateKey, createPublicKey, sign, verify } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, resolve } from 'node:path'
+import { loadOfficialLocalizations } from './localizations.mjs'
 
 const MAX_RELEASES_PER_PLUGIN = 100
 const PERMISSIONS = new Set([
@@ -233,6 +234,10 @@ async function generate(args) {
     }
     const directory = resolve(dirname(registryPath), '..', registration.directory)
     const manifest = await json(join(directory, 'plugin.json'))
+    const localizations = registration.official === true
+      ? { ...registration.localizations, ...await loadOfficialLocalizations(directory, manifest) }
+      : registration.localizations
+    validateLocalizations(localizations)
     const assetName = `${manifest.id}-${manifest.version}.notegen-plugin`
     const asset = await readFile(join(artifacts, assetName))
     const packageSha256 = createHash('sha256').update(asset).digest('hex')
@@ -265,10 +270,10 @@ async function generate(args) {
         }, ...previousReleases]
     plugins.push({
       id: manifest.id,
-      name: manifest.name,
-      description: manifest.description ?? manifest.name,
-      ...(args.get('localized-metadata') === 'true' && registration.localizations
-        ? { localizations: registration.localizations }
+      name: localizations?.en?.name ?? manifest.name,
+      description: localizations?.en?.description ?? manifest.description ?? manifest.name,
+      ...(args.get('localized-metadata') === 'true' && localizations
+        ? { localizations }
         : previousPlugin?.localizations ? { localizations: previousPlugin.localizations } : {}),
       author: typeof manifest.author === 'string' ? manifest.author : manifest.author?.name ?? registry.publisherName,
       publisherId: registry.publisherId,
