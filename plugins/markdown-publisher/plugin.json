@@ -1,0 +1,124 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.markdown-publisher",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.7",
+  "minAppVersion": "0.38.0",
+  "platforms": [
+    "desktop"
+  ],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onWorkspace:open",
+    "onCommand:top.notegen.markdown-publisher.open",
+    "onCommand:top.notegen.markdown-publisher.refresh",
+    "onCommand:top.notegen.markdown-publisher.preview-width",
+    "onCommand:top.notegen.markdown-publisher.copy",
+    "onCommand:top.notegen.markdown-publisher.export",
+    "onCommand:top.notegen.markdown-publisher.new-template",
+    "onCommand:top.notegen.markdown-publisher.select-template",
+    "onCommand:top.notegen.markdown-publisher.save-template",
+    "onCommand:top.notegen.markdown-publisher.reset-template",
+    "onCommand:top.notegen.markdown-publisher.delete-template"
+  ],
+  "permissions": {
+    "editor.read": {
+      "scope": "active-editor",
+      "description": "%permission.read%"
+    },
+    "clipboard.write": {
+      "scope": "application",
+      "description": "%permission.clipboard%"
+    },
+    "files.export": {
+      "scope": "application",
+      "description": "%permission.export%"
+    },
+    "attachments.read": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.images%"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "top.notegen.markdown-publisher.open",
+        "title": "%command.open%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.refresh",
+        "title": "%command.refresh%",
+        "icon": "palette"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.preview-width",
+        "title": "%command.preview-width%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.copy",
+        "title": "%command.copy%",
+        "icon": "copy"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.export",
+        "title": "%command.export%",
+        "icon": "download"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.new-template",
+        "title": "%newTemplate%",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.select-template",
+        "title": "%useTemplate%",
+        "icon": "palette"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.save-template",
+        "title": "%command.save-template%",
+        "icon": "palette"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.reset-template",
+        "title": "%resetTemplate%",
+        "icon": "palette"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.delete-template",
+        "title": "%command.delete-template%",
+        "icon": "trash-2"
+      }
+    ],
+    "views": [
+      {
+        "id": "top.notegen.markdown-publisher.studio",
+        "title": "%statusBarTitle%",
+        "location": "status-bar-panel",
+        "icon": "file-text"
+      },
+      {
+        "id": "top.notegen.markdown-publisher.settings",
+        "title": "%name%",
+        "location": "settings",
+        "icon": "palette"
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins",
+  "license": "GPL-3.0-or-later"
+}

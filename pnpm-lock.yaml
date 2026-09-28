@@ -29,6 +29,10 @@ importers:
         version: 5.9.3
 
   .sdk/packages/plugin-api:
+    dependencies:
+      yaml:
+        specifier: ^2.8.0
+        version: 2.9.1
     devDependencies:
       typescript:
         specifier: ^5.8.3
@@ -181,6 +185,18 @@ importers:
       '@notegen/plugin-cli':
         specifier: workspace:^
         version: link:../../.sdk/packages/plugin-cli
+
+  plugins/markdown-publisher:
+    devDependencies:
+      '@notegen/plugin-api':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-api
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
 
   plugins/templates:
     devDependencies:
@@ -743,6 +759,11 @@ packages:
     engines: {node: '>=0.8'}
     hasBin: true
 
+  yaml@2.9.1:
+    resolution: {integrity: sha512-3NxN8+78OdzbT7C/WjGsyfPAtJaN3FNDsWxv7Y7mcDsT/oOmgW8BpyQQFFBnvZE3j9Y2Sdz1ULFLezL7Eb2yFw==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
+
   yauzl@3.4.0:
     resolution: {integrity: sha512-jIH9yLR9wqr0wOS0TpBvo/g/2UgZH5qePVbjgRliiF0BYvOZyaBknKsF+x9Iht0O6sqgnB93rCICdOZFecJuDw==}
     engines: {node: '>=12'}
@@ -1149,6 +1170,8 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   xlsx@https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz: {}
+
+  yaml@2.9.1: {}
 
   yauzl@3.4.0:
     dependencies:

@@ -16,13 +16,14 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [Bookmarks](plugins/bookmarks) | `top.notegen.bookmarks` | 常用笔记收藏、正文摘要和拖拽排序 |
 | [Daily Notes](plugins/daily-notes) | `top.notegen.daily-notes` | 按当前逻辑日期打开或创建每日笔记 |
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | 在状态栏显示本地 Markdown 写作统计 |
+| [公众号排版与导出](plugins/markdown-publisher) | `top.notegen.markdown-publisher` | 文章模板、公众号富文本复制和 HTML 导出 |
 | [文档预览](plugins/document-preview) | `top.notegen.document-preview` | 离线预览 PDF、DOCX、XLSX 和 PPTX |
 | [文件图标](plugins/iconize) | `top.notegen.iconize` | 为文件和文件夹设置图标或 Emoji |
 | [韩语语言包](plugins/language-pack-ko) | `top.notegen.language-pack-ko` | 添加韩语界面 |
 | [动态模板](plugins/templates) | `top.notegen.templates` | Markdown 动态模板和自定义字段 |
 | [主题](plugins/themes) | `top.notegen.themes` | 三组完整明暗配色主题 |
 
-新增的以上五个插件最低要求 NoteGen 0.37.1，并需满足各自声明的插件 API 版本。
+文档预览、文件图标、韩语语言包、动态模板和主题最低要求 NoteGen 0.37.1；公众号排版与导出最低要求 NoteGen 0.38.0。所有插件还需满足各自声明的插件 API 版本。
 
 这些插件都是独立插件，只使用
 [`@notegen/plugin-api`](https://github.com/codexu/note-gen-plugin-sdk/tree/main/packages/plugin-api)

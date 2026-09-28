@@ -160,6 +160,26 @@
           "description": "纸墨、松林和海岚：三组提供明暗配色的主题。"
         }
       }
+    },
+    {
+      "directory": "plugins/markdown-publisher",
+      "categories": [
+        "editor",
+        "productivity"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "新增公众号排版与导出：设置页管理内置与自定义模板，底部状态栏抽屉选择模板、预览、复制富文本和导出 HTML。",
+      "localizations": {
+        "en": {
+          "name": "WeChat Article Formatter",
+          "description": "Format WeChat articles with templates and optional CSS, then preview, copy rich text or export HTML."
+        },
+        "zh-CN": {
+          "name": "公众号排版与导出",
+          "description": "用模板排版公众号文章，预览后复制富文本或导出 HTML；支持可选的自定义 CSS。"
+        }
+      }
     }
   ]
 }

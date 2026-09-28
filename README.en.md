@@ -19,13 +19,14 @@ release tooling.
 | [Bookmarks](plugins/bookmarks) | `top.notegen.bookmarks` | Bookmark notes with content previews and drag to reorder |
 | [Daily Notes](plugins/daily-notes) | `top.notegen.daily-notes` | Open or create a note for the current logical day |
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | Show local Markdown writing statistics in the status bar |
+| [WeChat Article Formatter](plugins/markdown-publisher) | `top.notegen.markdown-publisher` | Article templates, WeChat rich-text copying and HTML export |
 | [Document Preview](plugins/document-preview) | `top.notegen.document-preview` | Offline PDF, DOCX, XLSX and PPTX previews |
 | [Iconize](plugins/iconize) | `top.notegen.iconize` | File and folder icons or Emoji |
 | [Korean Language Pack](plugins/language-pack-ko) | `top.notegen.language-pack-ko` | Korean interface translations |
 | [Dynamic Templates](plugins/templates) | `top.notegen.templates` | Markdown templates and custom fields |
 | [NoteGen Themes](plugins/themes) | `top.notegen.themes` | Three themes with light and dark palettes |
 
-The five new plugins require NoteGen 0.37.1 or later and their declared plugin API.
+Document Preview, Iconize, Korean Language Pack, Dynamic Templates and NoteGen Themes require NoteGen 0.37.1 or later. WeChat Article Formatter requires NoteGen 0.38.0 or later. Every plugin also requires its declared plugin API version.
 
 These are independent plugins. They use only the public host contract
 from

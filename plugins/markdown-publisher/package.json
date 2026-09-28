@@ -1,0 +1,25 @@
+{
+  "name": "@notegen/plugin-wechat-article-formatter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WeChat article formatting and export for NoteGen.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit && notegen-plugin build",
+    "dev": "notegen-plugin dev",
+    "validate": "tsc -p tsconfig.json --noEmit && notegen-plugin validate",
+    "plugin:pack": "notegen-plugin pack"
+  },
+  "notegen": {
+    "source": "src/main.ts"
+  },
+  "devDependencies": {
+    "@notegen/plugin-api": "workspace:^",
+    "@notegen/plugin-cli": "workspace:^",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
