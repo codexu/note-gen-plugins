@@ -111,6 +111,25 @@ test('market preserves historical release permissions when a newer version expan
   assert.deepEqual(refreshed.plugins[0].releases[0].permissions, ['notes.read'])
 })
 
+test('market accepts all protocol 0.1.7 permissions and rejects unknown names', async (t) => {
+  const fixture = await createMarketFixture(t)
+  const permissions = Object.fromEntries([
+    'records.read', 'records.write', 'chat.write', 'ai.generate',
+    'clipboard.write', 'files.export', 'editor.style',
+  ].map(name => [name, {}]))
+  await fixture.writeVersion('1.1.0', permissions)
+  await fixture.generate('document.json', 1)
+  const index = JSON.parse(await readFile(join(fixture.directory, 'document.json'), 'utf8'))
+  assert.deepEqual(index.plugins[0].permissions, Object.keys(permissions).sort())
+  assert.deepEqual(index.plugins[0].releases[0].permissions, Object.keys(permissions).sort())
+
+  await fixture.writeVersion('1.2.0', { 'unknown.permission': {} })
+  await assert.rejects(
+    fixture.generate('invalid.json', 2, 'document.json'),
+    error => error.stderr.includes('unique supported permission names'),
+  )
+})
+
 test('market refuses the 101st release without silently deleting compatible history', async (t) => {
   const fixture = await createMarketFixture(t)
   await fixture.generate('previous.json', 1)
