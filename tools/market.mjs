@@ -6,7 +6,7 @@ import { loadOfficialLocalizations } from './localizations.mjs'
 const MAX_RELEASES_PER_PLUGIN = 100
 const PERMISSIONS = new Set([
   'records.read', 'records.write', 'chat.write', 'ai.generate',
-  'clipboard.write', 'files.export', 'editor.style',
+  'clipboard.write', 'files.export', 'editor.style', 'terminal.open',
   'editor.read', 'editor.write', 'notes.read', 'notes.create', 'notes.open',
   'notes.list', 'notes.write', 'notes.move', 'notes.delete', 'network.fetch',
   'attachments.read', 'attachments.create',

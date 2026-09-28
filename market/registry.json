@@ -162,6 +162,26 @@
       }
     },
     {
+      "directory": "plugins/terminal",
+      "categories": [
+        "productivity",
+        "development"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首次发布：在独立标签页运行交互式终端，支持主题同步、快捷菜单和显示设置。最低需要 NoteGen 0.38.0。",
+      "localizations": {
+        "en": {
+          "name": "Terminal",
+          "description": "Run an interactive shell in the NoteGen workspace."
+        },
+        "zh-CN": {
+          "name": "终端",
+          "description": "在 NoteGen 工作区运行交互式命令行。"
+        }
+      }
+    },
+    {
       "directory": "plugins/markdown-publisher",
       "categories": [
         "editor",

@@ -6,6 +6,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "build": "pnpm -r --if-present build",
+    "dev:terminal": "pnpm --filter @notegen/plugin-terminal dev",
     "validate": "pnpm validate:localizations && pnpm -r --if-present validate",
     "validate:localizations": "node tools/validate-localizations.mjs",
     "plugin:pack": "pnpm -r --if-present run plugin:pack",

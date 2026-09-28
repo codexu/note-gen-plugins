@@ -1,0 +1,79 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.terminal",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.8",
+  "minAppVersion": "0.38.0",
+  "platforms": ["desktop"],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onWorkspace:open",
+    "onCommand:top.notegen.terminal.open"
+  ],
+  "permissions": {
+    "terminal.open": {
+      "scope": "application",
+      "description": "%permission.terminal%"
+    }
+  },
+  "resources": {
+    "embeddedViews": [
+      {
+        "id": "shell",
+        "name": "%view.title%",
+        "script": "dist/terminal-frame.js",
+        "style": "dist/terminal-frame.css"
+      }
+    ]
+  },
+  "contributes": {
+    "commands": [
+      {
+        "id": "top.notegen.terminal.open",
+        "title": "%command.open%",
+        "icon": "terminal"
+      }
+    ],
+    "settings": [
+      { "key": "top.notegen.terminal.fontFamily", "type": "select", "scope": "device", "title": "%setting.fontFamily%", "default": "system", "options": [
+        { "label": "%option.font.system%", "value": "system" },
+        { "label": "%option.font.menlo%", "value": "menlo" },
+        { "label": "%option.font.monospace%", "value": "monospace" }
+      ] },
+      { "key": "top.notegen.terminal.fontSize", "type": "number", "scope": "device", "title": "%setting.fontSize%", "description": "%setting.fontSize.desc%", "default": 13, "min": 10, "max": 24, "step": 1 },
+      { "key": "top.notegen.terminal.lineHeight", "type": "number", "scope": "device", "title": "%setting.lineHeight%", "description": "%setting.lineHeight.desc%", "default": 1.25, "min": 1, "max": 2, "step": 0.05 },
+      { "key": "top.notegen.terminal.cursorStyle", "type": "select", "scope": "device", "title": "%setting.cursorStyle%", "default": "block", "options": [
+        { "label": "%option.cursor.block%", "value": "block" },
+        { "label": "%option.cursor.underline%", "value": "underline" },
+        { "label": "%option.cursor.bar%", "value": "bar" }
+      ] },
+      { "key": "top.notegen.terminal.cursorBlink", "type": "boolean", "scope": "device", "title": "%setting.cursorBlink%", "default": true },
+      { "key": "top.notegen.terminal.scrollback", "type": "number", "scope": "device", "title": "%setting.scrollback%", "description": "%setting.scrollback.desc%", "default": 2000, "min": 100, "max": 20000, "step": 100 },
+      { "key": "top.notegen.terminal.scrollSensitivity", "type": "number", "scope": "device", "title": "%setting.scrollSensitivity%", "description": "%setting.scrollSensitivity.desc%", "default": 1, "min": 0.25, "max": 4, "step": 0.25 },
+      { "key": "top.notegen.terminal.rightClickSelectsWord", "type": "boolean", "scope": "device", "title": "%setting.rightClickSelectsWord%", "default": false }
+    ],
+    "views": [
+      {
+        "id": "top.notegen.terminal.panel",
+        "title": "%view.title%",
+        "location": "editor-tab",
+        "icon": "terminal",
+        "order": 10000
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json",
+    "zh-TW": "locales/zh-TW.json",
+    "ja": "locales/ja.json",
+    "de": "locales/de.json",
+    "pt-BR": "locales/pt-BR.json"
+  },
+  "author": { "name": "NoteGen", "url": "https://notegen.top" },
+  "repository": "https://github.com/codexu/note-gen-plugins",
+  "license": "GPL-3.0-or-later"
+}

@@ -18,6 +18,7 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | 在状态栏显示本地 Markdown 写作统计 |
 | [公众号排版与导出](plugins/markdown-publisher) | `top.notegen.markdown-publisher` | 文章模板、公众号富文本复制和 HTML 导出 |
 | [文档预览](plugins/document-preview) | `top.notegen.document-preview` | 离线预览 PDF、DOCX、XLSX 和 PPTX |
+| [终端](plugins/terminal) | `top.notegen.terminal` | 在独立标签页运行交互式终端（需要 NoteGen 0.38.0） |
 | [文件图标](plugins/iconize) | `top.notegen.iconize` | 为文件和文件夹设置图标或 Emoji |
 | [韩语语言包](plugins/language-pack-ko) | `top.notegen.language-pack-ko` | 添加韩语界面 |
 | [动态模板](plugins/templates) | `top.notegen.templates` | Markdown 动态模板和自定义字段 |

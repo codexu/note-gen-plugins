@@ -111,11 +111,11 @@ test('market preserves historical release permissions when a newer version expan
   assert.deepEqual(refreshed.plugins[0].releases[0].permissions, ['notes.read'])
 })
 
-test('market accepts all protocol 0.1.7 permissions and rejects unknown names', async (t) => {
+test('market accepts all protocol 0.1.8 permissions and rejects unknown names', async (t) => {
   const fixture = await createMarketFixture(t)
   const permissions = Object.fromEntries([
     'records.read', 'records.write', 'chat.write', 'ai.generate',
-    'clipboard.write', 'files.export', 'editor.style',
+    'clipboard.write', 'files.export', 'editor.style', 'terminal.open',
   ].map(name => [name, {}]))
   await fixture.writeVersion('1.1.0', permissions)
   await fixture.generate('document.json', 1)
