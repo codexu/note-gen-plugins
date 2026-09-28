@@ -335,6 +335,49 @@ jobs:
             node .sdk/packages/plugin-cli/dist/bin.js verify "release-assets/$name.notegen-plugin" \
               --public-key "$RUNNER_TEMP/notegen-keys/publisher.json" --require-signature
           done
+      - name: Reuse immutable packages for unchanged plugin versions
+        if: github.event_name != 'schedule' && inputs.reset_catalog != true
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PREVIOUS_INDEX:-}" ]; then exit 0; fi
+          node --input-type=module > "$RUNNER_TEMP/unchanged-plugin-packages.tsv" <<'NODE'
+          import { readFileSync } from 'node:fs'
+          import { join } from 'node:path'
+          const previous = JSON.parse(readFileSync(process.env.PREVIOUS_INDEX, 'utf8'))
+          const registry = JSON.parse(readFileSync('market/registry.json', 'utf8'))
+          const prefix = `/${process.env.GITHUB_REPOSITORY}/releases/download/`
+          for (const plugin of registry.plugins) {
+            const manifest = JSON.parse(readFileSync(join(plugin.directory, 'plugin.json'), 'utf8'))
+            const release = previous.plugins.find(item => item.id === manifest.id)?.releases.find(item => item.version === manifest.version)
+            if (!release) continue
+            const asset = `${manifest.id}-${manifest.version}.notegen-plugin`
+            const mirror = release.packageUrls?.map(value => new URL(value)).find(url => url.origin === 'https://github.com' && url.pathname.startsWith(prefix) && url.pathname.endsWith(`/${asset}`))
+            if (!mirror) throw new Error(`${asset}: previous release has no GitHub package mirror`)
+            const tag = mirror.pathname.slice(prefix.length, -asset.length - 1)
+            if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$/.test(tag)) throw new Error(`${asset}: invalid previous release tag`)
+            console.log([plugin.directory, tag, asset, release.packageSha256].join('\t'))
+          }
+          NODE
+          mkdir -p "$RUNNER_TEMP/immutable-packages"
+          while IFS=$'\t' read -r directory tag asset expected_sha; do
+            git fetch --quiet --depth=1 origin "refs/tags/$tag"
+            previous_commit="$(git rev-parse FETCH_HEAD)"
+            if ! git diff --quiet "$previous_commit" "$GITHUB_SHA" -- "$directory"; then
+              echo "::error::$directory changed since $tag without a plugin version bump."
+              exit 1
+            fi
+            gh release download "$tag" --repo "$GITHUB_REPOSITORY" \
+              --pattern "$asset" --dir "$RUNNER_TEMP/immutable-packages" --clobber
+            actual_sha="$(sha256sum "$RUNNER_TEMP/immutable-packages/$asset" | cut -d' ' -f1)"
+            if [ "$actual_sha" != "$expected_sha" ]; then
+              echo "::error::$asset differs from its root-signed previous index."
+              exit 1
+            fi
+            cp "$RUNNER_TEMP/immutable-packages/$asset" "release-assets/$asset"
+          done < "$RUNNER_TEMP/unchanged-plugin-packages.tsv"
       - name: Restore previously published community assets for interrupted OSS uploads
         if: github.event_name != 'schedule'
         shell: bash
