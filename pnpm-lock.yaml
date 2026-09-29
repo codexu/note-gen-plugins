@@ -186,6 +186,12 @@ importers:
         specifier: workspace:^
         version: link:../../.sdk/packages/plugin-cli
 
+  plugins/language-pack-ru:
+    devDependencies:
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+
   plugins/markdown-publisher:
     devDependencies:
       '@notegen/plugin-api':
@@ -237,6 +243,18 @@ importers:
       '@notegen/plugin-cli':
         specifier: workspace:^0.1.3
         version: link:../../.sdk/packages/plugin-cli
+
+  plugins/unlinked-mentions:
+    devDependencies:
+      '@notegen/plugin-api':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-api
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
 
 packages:
 

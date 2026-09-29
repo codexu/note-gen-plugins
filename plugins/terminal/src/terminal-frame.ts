@@ -2,21 +2,9 @@ import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import '@xterm/xterm/css/xterm.css'
 import './terminal-frame.css'
+import { acceptEmbeddedFrameInit, createEmbeddedFrameSession, type PluginEmbeddedFrameSession } from '@notegen/plugin-api'
 
 type Status = 'starting' | 'running' | 'ended' | 'error'
-
-interface HostMessage {
-  id?: unknown
-  result?: unknown
-  error?: unknown
-  type?: unknown
-  sessionId?: unknown
-  data?: unknown
-  background?: unknown
-  foreground?: unknown
-  theme?: unknown
-  settings?: unknown
-}
 
 const labels = {
   en: {
@@ -72,12 +60,12 @@ function blendBackground(background: string, muted: string, mutedShare: number):
 let initialized = false
 const frameToken = (window as Window & { __notegenFrameToken?: string }).__notegenFrameToken
 window.addEventListener('message', event => {
-  if (initialized || (event.source && event.source !== window.parent) || event.data?.type !== 'notegen:embedded-view-init'
-    || event.data.protocol !== 1 || event.data.token !== frameToken || !frameToken || event.ports.length !== 1) return
+  const accepted = acceptEmbeddedFrameInit(event, frameToken ?? '', window.parent)
+  if (initialized || !accepted) return
   initialized = true
-  const port = event.ports[0]
-  const text = localizedLabels(String(event.data.locale || ''))
-  const canOpen = Array.isArray(event.data.capabilities) && event.data.capabilities.includes('terminal')
+  const { init, port } = accepted
+  const text = localizedLabels(init.locale)
+  const canOpen = init.capabilities.includes('terminal')
   const root = document.createElement('main')
   root.className = 'terminal-root'
   const viewport = document.createElement('div')
@@ -96,15 +84,9 @@ window.addEventListener('message', event => {
   let decoder = new TextDecoder()
   let status: Status = 'ended'
   let sessionId: string | undefined
-  let nextRequestId = 0
   let inputQueue = Promise.resolve()
-  const pending = new Map<number, { resolve: (value: unknown) => void; reject: (reason: Error) => void }>()
-
-  const request = (method: string, values: Record<string, unknown> = {}): Promise<unknown> => new Promise((resolve, reject) => {
-    const id = ++nextRequestId
-    pending.set(id, { resolve, reject })
-    port.postMessage({ id, method, ...values })
-  })
+  let session: PluginEmbeddedFrameSession
+  const request = (method: string, values: Record<string, unknown> = {}): Promise<unknown> => session.request(method, values)
   const setStatus = (next: Status, detail = '') => {
     status = next
     if (next === 'ended') terminal.writeln(`\r\n${text.ended}`)
@@ -194,34 +176,25 @@ window.addEventListener('message', event => {
     if (status === 'running' && sessionId) void request('terminal.resize', { sessionId, ...dimensions() }).catch(() => undefined)
   })
   observer.observe(viewport)
-  port.onmessage = ({ data }: MessageEvent<HostMessage>) => {
-    if (!data || typeof data !== 'object') return
-    if (typeof data.id === 'number') {
-      const response = pending.get(data.id)
-      if (!response) return
-      pending.delete(data.id)
-      if (data.error !== undefined) response.reject(new Error(String(data.error)))
-      else response.resolve(data.result)
-      return
-    }
-    if (data.type === 'host.theme') { applyTheme(data.theme, data.background, data.foreground); return }
-    if (data.type === 'host.settings') { applySettings(data.settings); return }
+  session = createEmbeddedFrameSession(port, {
+    onTheme: applyTheme,
+    onSettings: applySettings,
+    onEvent: data => {
     if (data.type === 'terminal.closed' && data.sessionId === sessionId) { sessionId = undefined; setStatus('ended'); return }
     if (data.type === 'terminal.output' && data.sessionId === sessionId && typeof data.data === 'string') {
       const bytes = Uint8Array.from(atob(data.data), character => character.charCodeAt(0))
       terminal.write(decoder.decode(bytes, { stream: true }))
     }
-  }
+    },
+  })
   window.addEventListener('pagehide', () => {
     observer.disconnect()
-    for (const response of pending.values()) response.reject(new Error('Frame closed'))
-    pending.clear()
-    port.close()
+    session.dispose()
     terminal.dispose()
   }, { once: true })
-  applyTheme(event.data.theme, event.data.background, event.data.foreground)
-  applySettings(event.data.settings)
-  port.postMessage({ type: 'frame.ready' })
+  applyTheme(init.theme, init.background, init.foreground)
+  applySettings(init.settings)
+  session.ready()
   if (canOpen) void start()
   else setStatus('error', text.unavailable)
 })

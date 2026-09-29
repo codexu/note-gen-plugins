@@ -3,7 +3,7 @@
   "id": "top.notegen.markdown-publisher",
   "name": "%name%",
   "description": "%description%",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "apiVersion": "^0.1.7",
   "minAppVersion": "0.38.0",
   "platforms": [

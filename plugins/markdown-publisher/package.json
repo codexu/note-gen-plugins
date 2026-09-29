@@ -1,6 +1,6 @@
 {
   "name": "@notegen/plugin-wechat-article-formatter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "WeChat article formatting and export for NoteGen.",
   "license": "GPL-3.0-or-later",

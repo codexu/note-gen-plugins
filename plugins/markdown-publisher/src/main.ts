@@ -1,4 +1,4 @@
-import { registerView, PluginError, type PluginActivate, type PluginContext, type PluginFormBlock, type PluginJsonValue, type PluginRenderedDocument, type PluginUiBlock, type ActiveEditorContext } from '@notegen/plugin-api'
+import { registerView, resolveMarkdownAttachmentPath, collectMarkdownImageSources, PluginError, type PluginActivate, type PluginContext, type PluginFormBlock, type PluginJsonValue, type PluginRenderedDocument, type PluginUiBlock, type ActiveEditorContext } from '@notegen/plugin-api'
 
 const builtInIds = ['simple', 'technical', 'reading'] as const
 type BuiltInId = typeof builtInIds[number]
@@ -94,24 +94,13 @@ function stylesheet(base: BuiltInId, style: TemplateStyle, css: string): string 
 .article { color: ${style.textColor}; background-color: ${style.backgroundColor}; font-family: ${family}; font-size: ${style.fontSize}px; line-height: ${style.lineHeight}; }
 ${css}`
 }
-function attachmentPath(note: string, source: string): string | null {
-  if (/^(?:[a-z][a-z\d+.-]*:|\/|\\)/i.test(source)) return null
-  let decoded: string
-  try { decoded = decodeURIComponent(source.split(/[?#]/)[0]) } catch { return null }
-  const parts = note.split('/').slice(0, -1)
-  for (const part of decoded.replace(/\\/g, '/').split('/')) {
-    if (part === '..') { if (!parts.length) return null; parts.pop() }
-    else if (part && part !== '.') parts.push(part)
-  }
-  return parts.join('/')
-}
 async function imageMappings(context: PluginContext, markdown: string, path?: string): Promise<{ source: string; dataUrl: string }[]> {
   if (!path) return []
   const images: { source: string; dataUrl: string }[] = []
-  const sources = [...new Set(Array.from(markdown.matchAll(/!\[[^\]]*\]\((?:<([^>]+)>|([^\s)]+))(?:\s+[^)]*)?\)/g), match => match[1] ?? match[2]))].slice(0, 32)
+  const sources = collectMarkdownImageSources(markdown)
   let total = 0
   for (const source of sources) {
-    const relative = attachmentPath(path, source)
+    const relative = resolveMarkdownAttachmentPath(path, source)
     const extension = relative?.split('.').pop()?.toLowerCase()
     const mime = extension === 'jpg' || extension === 'jpeg' ? 'jpeg' : extension === 'png' || extension === 'gif' || extension === 'webp' ? extension : null
     if (!relative || !mime) continue

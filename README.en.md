@@ -21,8 +21,10 @@ release tooling.
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | Show local Markdown writing statistics in the status bar |
 | [WeChat Article Formatter](plugins/markdown-publisher) | `top.notegen.markdown-publisher` | Article templates, WeChat rich-text copying and HTML export |
 | [Document Preview](plugins/document-preview) | `top.notegen.document-preview` | Offline PDF, DOCX, XLSX and PPTX previews |
+| [Related Notes](plugins/unlinked-mentions) | `top.notegen.unlinked-mentions` | Find matching and related notes for selected text, then create a link (requires NoteGen 0.38.0) |
 | [Iconize](plugins/iconize) | `top.notegen.iconize` | File and folder icons or Emoji |
 | [Korean Language Pack](plugins/language-pack-ko) | `top.notegen.language-pack-ko` | Korean interface translations |
+| [Russian Language Pack](plugins/language-pack-ru) | `top.notegen.language-pack-ru` | Add Russian to the interface (translations still need native review) |
 | [Dynamic Templates](plugins/templates) | `top.notegen.templates` | Markdown templates and custom fields |
 | [NoteGen Themes](plugins/themes) | `top.notegen.themes` | Three themes with light and dark palettes |
 

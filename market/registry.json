@@ -123,6 +123,23 @@
       }
     },
     {
+      "directory": "plugins/language-pack-ru",
+      "categories": ["language"],
+      "featured": false,
+      "official": true,
+      "changelog": "首次发布俄语界面语言包；译文经机器辅助起稿，仍欢迎俄语母语用户校对。桌面端最低需要 NoteGen 0.37.1。",
+      "localizations": {
+        "en": {
+          "name": "Russian Language Pack",
+          "description": "Add Russian to the NoteGen interface."
+        },
+        "zh-CN": {
+          "name": "俄语语言包",
+          "description": "为 NoteGen 界面添加俄语支持。"
+        }
+      }
+    },
+    {
       "directory": "plugins/templates",
       "categories": [
         "productivity",
@@ -169,7 +186,7 @@
       ],
       "featured": false,
       "official": true,
-      "changelog": "首次发布：在独立标签页运行交互式终端，支持主题同步、快捷菜单和显示设置。最低需要 NoteGen 0.38.0。",
+      "changelog": "更新至 0.1.1：使用 SDK 提供的嵌入视图会话封装，统一握手、请求和页面关闭处理。最低需要 NoteGen 0.38.0。",
       "localizations": {
         "en": {
           "name": "Terminal",
@@ -189,7 +206,7 @@
       ],
       "featured": false,
       "official": true,
-      "changelog": "新增公众号排版与导出：设置页管理内置与自定义模板，底部状态栏抽屉选择模板、预览、复制富文本和导出 HTML。",
+      "changelog": "更新至 0.1.1：使用 SDK Markdown 图片路径辅助函数处理本地图片映射。最低需要 NoteGen 0.38.0。",
       "localizations": {
         "en": {
           "name": "WeChat Article Formatter",
@@ -198,6 +215,23 @@
         "zh-CN": {
           "name": "公众号排版与导出",
           "description": "用模板排版公众号文章，预览后复制富文本或导出 HTML；支持可选的自定义 CSS。"
+        }
+      }
+    },
+    {
+      "directory": "plugins/unlinked-mentions",
+      "categories": ["editor", "productivity"],
+      "featured": false,
+      "official": true,
+      "changelog": "首次发布关联笔记：先显示文字匹配，再查找 RAG 相关笔记；支持相关度和结果数量设置，可打开笔记或将选中文字建立链接。最低需要 NoteGen 0.38.0。",
+      "localizations": {
+        "en": {
+          "name": "Related Notes",
+          "description": "Find text matches and related notes for selected text, then link the selection to a chosen note."
+        },
+        "zh-CN": {
+          "name": "关联笔记",
+          "description": "根据选中文字查找文字匹配与相关笔记，并可将选中文字链接到所选笔记。"
         }
       }
     }
