@@ -1,0 +1,21 @@
+{
+  "language": "zh-CN",
+  "name": "关联笔记",
+  "description": "根据选中文字查找文字匹配与相关笔记，并可将选中文字链接到所选笔记。",
+  "command.find": "查找关联笔记",
+  "command.link": "将选中文字链接到候选笔记",
+  "command.open": "打开候选笔记",
+  "permission.editor.read": "读取选中文字和当前笔记路径。",
+  "permission.editor.write": "点击建立链接时，在当前笔记中将选中文字替换为链接。",
+  "permission.notes.list": "在授权的工作区目录中查找直接提及与 RAG 关联笔记。",
+  "permission.notes.read": "读取已授权候选笔记的摘要；RAG 可能使用 NoteGen 已配置的 AI 服务。",
+  "permission.notes.open": "按用户要求打开候选笔记。",
+  "setting.textResultCount": "文字匹配数量",
+  "setting.textResultCount.desc": "最多显示多少篇直接包含选中文字的笔记。",
+  "setting.ragEnabled": "启用相关笔记搜索",
+  "setting.ragEnabled.desc": "文字匹配显示后，继续在已索引笔记中搜索相关内容。",
+  "setting.ragMinScore": "最低相关度",
+  "setting.ragMinScore.desc": "筛选相关搜索返回的 0–1 分数。调高可减少弱相关结果，也可能漏掉有用笔记；不改变 NoteGen 的全局 RAG 设置。",
+  "setting.ragResultCount": "相关结果数量",
+  "setting.ragResultCount.desc": "最多显示多少篇达到最低相关度的笔记。"
+}

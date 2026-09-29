@@ -1,0 +1,47 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.unlinked-mentions",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.9",
+  "minAppVersion": "0.38.0",
+  "platforms": ["desktop"],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onCommand:top.notegen.unlinked-mentions.find",
+    "onCommand:top.notegen.unlinked-mentions.link",
+    "onCommand:top.notegen.unlinked-mentions.open"
+  ],
+  "permissions": {
+    "editor.read": { "scope": "active-editor", "description": "%permission.editor.read%" },
+    "editor.write": { "scope": "active-editor", "description": "%permission.editor.write%" },
+    "notes.list": { "scope": "workspace-folder", "description": "%permission.notes.list%" },
+    "notes.read": { "scope": "workspace-folder", "description": "%permission.notes.read%" },
+    "notes.open": { "scope": "workspace-folder", "description": "%permission.notes.open%" }
+  },
+  "contributes": {
+    "commands": [
+      { "id": "top.notegen.unlinked-mentions.find", "title": "%command.find%", "icon": "search" },
+      { "id": "top.notegen.unlinked-mentions.link", "title": "%command.link%", "icon": "link" },
+      { "id": "top.notegen.unlinked-mentions.open", "title": "%command.open%", "icon": "file-text" }
+    ],
+    "menus": [
+      { "location": "editor/selection", "command": "top.notegen.unlinked-mentions.find", "when": "editor == markdown && selection == true", "order": 40 }
+    ],
+    "views": [
+      { "id": "top.notegen.unlinked-mentions.view", "title": "%name%", "location": "editor/selection-panel", "icon": "search" }
+    ],
+    "settings": [
+      { "key": "top.notegen.unlinked-mentions.textResultCount", "type": "number", "scope": "workspace", "title": "%setting.textResultCount%", "description": "%setting.textResultCount.desc%", "default": 10, "min": 1, "max": 15, "step": 1 },
+      { "key": "top.notegen.unlinked-mentions.ragEnabled", "type": "boolean", "scope": "workspace", "title": "%setting.ragEnabled%", "description": "%setting.ragEnabled.desc%", "default": true },
+      { "key": "top.notegen.unlinked-mentions.ragMinScore", "type": "number", "scope": "workspace", "title": "%setting.ragMinScore%", "description": "%setting.ragMinScore.desc%", "default": 0.35, "min": 0, "max": 1, "step": 0.05 },
+      { "key": "top.notegen.unlinked-mentions.ragResultCount", "type": "number", "scope": "workspace", "title": "%setting.ragResultCount%", "description": "%setting.ragResultCount.desc%", "default": 5, "min": 1, "max": 10, "step": 1 }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": { "en": "locales/en.json", "zh-CN": "locales/zh-CN.json" },
+  "author": { "name": "NoteGen", "url": "https://notegen.top" },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/unlinked-mentions",
+  "license": "GPL-3.0-or-later"
+}

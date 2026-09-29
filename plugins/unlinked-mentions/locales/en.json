@@ -1,0 +1,21 @@
+{
+  "language": "en",
+  "name": "Related Notes",
+  "description": "Find text matches and related notes for selected text, then link the selection to a chosen note.",
+  "command.find": "Find related notes",
+  "command.link": "Link selected text to candidate note",
+  "command.open": "Open candidate note",
+  "permission.editor.read": "Read selected text and the current note path.",
+  "permission.editor.write": "Replace selected text with a link in the current note when requested.",
+  "permission.notes.list": "Find literal and RAG related Markdown notes in an authorized workspace folder.",
+  "permission.notes.read": "Read authorized note excerpts for literal and RAG search; RAG may use NoteGen's configured AI providers.",
+  "permission.notes.open": "Open a candidate note when requested.",
+  "setting.textResultCount": "Text match count",
+  "setting.textResultCount.desc": "Maximum number of notes that directly contain the selected text.",
+  "setting.ragEnabled": "Search related notes",
+  "setting.ragEnabled.desc": "After showing text matches, search indexed notes for related content.",
+  "setting.ragMinScore": "Minimum relevance score",
+  "setting.ragMinScore.desc": "Filter the 0–1 scores returned by related search. Higher values reduce weak matches but may miss useful notes; this does not change NoteGen's global RAG settings.",
+  "setting.ragResultCount": "Related result count",
+  "setting.ragResultCount.desc": "Maximum number of related notes that meet the minimum relevance score."
+}
