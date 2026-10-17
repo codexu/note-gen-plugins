@@ -1,0 +1,5 @@
+{
+  "name": "Nomnoml 预览",
+  "description": "离线预览 Nomnoml 文本 UML 图。",
+  "renderer.name": "Nomnoml"
+}

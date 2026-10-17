@@ -1,0 +1,5 @@
+{
+  "name": "Nomnoml Preview",
+  "description": "Preview Nomnoml text UML diagrams offline.",
+  "renderer.name": "Nomnoml"
+}

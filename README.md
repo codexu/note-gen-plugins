@@ -26,7 +26,7 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [动态模板](plugins/templates) | `top.notegen.templates` | Markdown 动态模板和自定义字段 |
 | [主题](plugins/themes) | `top.notegen.themes` | 三组完整明暗配色主题 |
 
-文档预览、文件图标、韩语语言包、动态模板和主题最低要求 NoteGen 0.37.1；公众号排版与导出最低要求 NoteGen 0.38.0。所有插件还需满足各自声明的插件 API 版本。代码块预览插件最低要求 NoteGen 0.38.3。
+文档预览、文件图标、韩语语言包、动态模板和主题最低要求 NoteGen 0.37.1；公众号排版与导出最低要求 NoteGen 0.38.0。所有插件还需满足各自声明的插件 API 版本。本次新增的 12 个代码块预览插件最低要求 NoteGen 0.38.3。
 
 这些插件都是独立插件，只使用
 [`@notegen/plugin-api`](https://github.com/codexu/note-gen-plugin-sdk/tree/main/packages/plugin-api)
@@ -50,8 +50,11 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [BPMN](plugins/bpmn) | `bpmn` | 含 DI 布局信息的 BPMN 2.0 XML |
 | [Excalidraw](plugins/excalidraw) | `excalidraw` | JSON 场景的静态草图预览 |
 | [ABC 乐谱](plugins/abc) | `abc` | ABC 文本生成五线谱 |
+| [Nomnoml](plugins/nomnoml) | `nomnoml` | 简洁的文本 UML 图 |
 
 各插件独立安装，使用时加载本地引擎，仅支持编辑器预览。开发包由各插件构建生成在 `.notegen/package`，尚未进行应用内运行验证；限制与手动验收示例见各插件的中英文 README/USAGE。
+
+ECharts、DBML、BPMN、Excalidraw、ABC、Nomnoml 也已生成本地可导入开发包，尚未进行应用内运行验证；未发布。
 
 ## 源码边界
 
