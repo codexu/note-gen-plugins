@@ -1,0 +1,5 @@
+{
+  "name": "Graphviz 预览",
+  "description": "离线预览 DOT 和 Graphviz 代码块。",
+  "renderer.name": "Graphviz"
+}

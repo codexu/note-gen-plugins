@@ -259,6 +259,26 @@
           "description": "离线预览 PlantUML 代码块。仅读取匹配代码块，无需 Java 或服务器。"
         }
       }
+    },
+    {
+      "directory": "plugins/graphviz",
+      "categories": [
+        "editor",
+        "diagrams"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首个开发版本：仅提供离线编辑器预览，尚未构建、验证或发布。 最低需要 NoteGen 0.38.3。",
+      "localizations": {
+        "en": {
+          "name": "Graphviz Preview",
+          "description": "Preview DOT and Graphviz code blocks offline."
+        },
+        "zh-CN": {
+          "name": "Graphviz 预览",
+          "description": "离线预览 DOT 和 Graphviz 代码块。"
+        }
+      }
     }
   ]
 }

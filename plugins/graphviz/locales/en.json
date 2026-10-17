@@ -1,0 +1,5 @@
+{
+  "name": "Graphviz Preview",
+  "description": "Preview DOT and Graphviz code blocks offline.",
+  "renderer.name": "Graphviz"
+}

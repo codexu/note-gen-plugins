@@ -168,6 +168,25 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
+  plugins/graphviz:
+    dependencies:
+      '@viz-js/viz':
+        specifier: 3.31.0
+        version: 3.31.0
+    devDependencies:
+      '@notegen/plugin-api':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-api
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+      '@types/node':
+        specifier: ^20.19.43
+        version: 20.19.43
+      esbuild:
+        specifier: ^0.28.2
+        version: 0.28.2
+
   plugins/iconize:
     devDependencies:
       '@notegen/plugin-api':
@@ -691,6 +710,9 @@ packages:
   '@types/yazl@3.3.1':
     resolution: {integrity: sha512-DIWfCKpsTp6hE5BDBHV3+fIL/bLUF9Bv13iDrWnMlmhQpH67buNvI291ZauQ1xcccxK3FqQ9honnXpq4R8NMuQ==}
 
+  '@viz-js/viz@3.31.0':
+    resolution: {integrity: sha512-r7zlQdRvcwvIpjHGgs+KNWHeE/P5/Dq7k8ZAKaMCbZqomxCBJV78gVuQYaHzFVca+kB0mX0fMW9UFevCOBG50A==}
+
   '@xterm/addon-fit@0.11.0':
     resolution: {integrity: sha512-jYcgT6xtVYhnhgxh3QgYDnnNMYTcf8ElbxxFzX0IZo+vabQqSPAjC3c1wJrKB5E19VwQei89QCiZZP86DCPF7g==}
 
@@ -1079,6 +1101,8 @@ snapshots:
   '@types/yazl@3.3.1':
     dependencies:
       '@types/node': 20.19.43
+
+  '@viz-js/viz@3.31.0': {}
 
   '@xterm/addon-fit@0.11.0': {}
 
