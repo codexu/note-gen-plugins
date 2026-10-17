@@ -1,0 +1,44 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.d2",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": ">=0.1.9",
+  "minAppVersion": "0.38.3",
+  "platforms": [
+    "desktop"
+  ],
+  "activationEvents": [],
+  "permissions": {},
+  "contributes": {},
+  "resources": {
+    "codeBlockRenderers": [
+      {
+        "id": "d2",
+        "name": "%renderer.name%",
+        "languages": [
+          "d2"
+        ],
+        "script": "dist/renderer.js",
+        "assets": [
+          "dist/engine.js",
+          "dist/THIRD-PARTY-NOTICES.txt",
+          "dist/d2-wasm-0.bin",
+          "dist/d2-wasm-1.bin"
+        ]
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/d2",
+  "license": "GPL-3.0-or-later"
+}

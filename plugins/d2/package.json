@@ -1,0 +1,28 @@
+{
+  "name": "@notegen/plugin-d2",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Preview D2 architecture diagrams offline.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild ../../tools/build-code-block-renderer.ts --bundle --platform=node --format=esm --packages=external --outfile=.notegen/build-renderer.mjs && node .notegen/build-renderer.mjs && notegen-plugin build",
+    "validate": "notegen-plugin validate",
+    "plugin:pack": "notegen-plugin pack"
+  },
+  "notegen": {
+    "source": "src/renderer.ts"
+  },
+  "dependencies": {
+    "@terrastruct/d2": "0.1.33"
+  },
+  "devDependencies": {
+    "@notegen/plugin-api": "workspace:^",
+    "@notegen/plugin-cli": "workspace:^",
+    "@types/node": "^20.19.43",
+    "esbuild": "^0.28.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

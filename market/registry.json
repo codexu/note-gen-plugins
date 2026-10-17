@@ -339,6 +339,26 @@
           "description": "将 Markdown 大纲离线预览为静态 Markmap 思维导图。"
         }
       }
+    },
+    {
+      "directory": "plugins/d2",
+      "categories": [
+        "editor",
+        "diagrams"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首个开发版本：D2 离线编辑器预览，使用 Dagre 布局。尚未运行验证或发布。 最低需要 NoteGen 0.38.3。",
+      "localizations": {
+        "en": {
+          "name": "D2 Preview",
+          "description": "Preview D2 architecture diagrams offline."
+        },
+        "zh-CN": {
+          "name": "D2 预览",
+          "description": "离线预览 D2 架构图和系统关系图。"
+        }
+      }
     }
   ]
 }

@@ -1,0 +1,5 @@
+{
+  "name": "D2 Preview",
+  "description": "Preview D2 architecture diagrams offline.",
+  "renderer.name": "D2"
+}

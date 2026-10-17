@@ -109,6 +109,25 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
+  plugins/d2:
+    dependencies:
+      '@terrastruct/d2':
+        specifier: 0.1.33
+        version: 0.1.33
+    devDependencies:
+      '@notegen/plugin-api':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-api
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+      '@types/node':
+        specifier: ^20.19.43
+        version: 20.19.43
+      esbuild:
+        specifier: ^0.28.2
+        version: 0.28.2
+
   plugins/daily-notes:
     devDependencies:
       '@notegen/plugin-api':
@@ -773,6 +792,9 @@ packages:
 
   '@plantuml/core@1.2026.9':
     resolution: {integrity: sha512-Qy46og9hEb+wOFtjUfniWkl/BDwHpDuebQX5rF+35s9PS2G4cKZf1iWw4E/ELLQ0pTkESPDoQTbKWcc3ZyVcVA==}
+
+  '@terrastruct/d2@0.1.33':
+    resolution: {integrity: sha512-eK5hyfGIJFolC7sUsiKvWdY9xGFctTe3d+PSijo09IYDso8psztC+A4SammizXtlwYZpnnW0AtDjfBYauceSeA==}
 
   '@types/d3-hierarchy@3.1.7':
     resolution: {integrity: sha512-tJFtNoYBtRtkNysX1Xq4sxtjK8YgoWUNpIiUee0/jHGRwqvzYxkq0hGVbbOGSz+JgFxxRu4K8nb3YpG3CMARtg==}
@@ -1692,6 +1714,8 @@ snapshots:
     optional: true
 
   '@plantuml/core@1.2026.9': {}
+
+  '@terrastruct/d2@0.1.33': {}
 
   '@types/d3-hierarchy@3.1.7': {}
 
