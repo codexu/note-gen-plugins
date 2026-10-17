@@ -1,0 +1,5 @@
+{
+  "name": "ABC 乐谱",
+  "description": "将 ABC 记谱文本离线预览为静态五线谱。",
+  "renderer.name": "ABC"
+}

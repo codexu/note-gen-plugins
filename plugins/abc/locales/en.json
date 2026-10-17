@@ -1,0 +1,5 @@
+{
+  "name": "ABC Sheet Music",
+  "description": "Preview ABC music notation as static sheet music offline.",
+  "renderer.name": "ABC"
+}
