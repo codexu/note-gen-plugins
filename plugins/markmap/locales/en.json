@@ -1,0 +1,5 @@
+{
+  "name": "Markmap Mind Maps",
+  "description": "Preview Markdown outlines as static Markmap mind maps offline.",
+  "renderer.name": "Markmap"
+}

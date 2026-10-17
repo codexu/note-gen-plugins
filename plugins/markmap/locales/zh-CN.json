@@ -1,0 +1,5 @@
+{
+  "name": "Markmap 思维导图",
+  "description": "将 Markdown 大纲离线预览为静态 Markmap 思维导图。",
+  "renderer.name": "Markmap"
+}
