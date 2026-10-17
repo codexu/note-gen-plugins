@@ -1,0 +1,45 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.excalidraw",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": ">=0.1.9",
+  "minAppVersion": "0.38.3",
+  "platforms": [
+    "desktop"
+  ],
+  "activationEvents": [],
+  "permissions": {},
+  "contributes": {},
+  "resources": {
+    "codeBlockRenderers": [
+      {
+        "id": "excalidraw",
+        "name": "%renderer.name%",
+        "languages": [
+          "excalidraw"
+        ],
+        "script": "dist/renderer.js",
+        "assets": [
+          "dist/engine-0.bin",
+          "dist/engine-1.bin",
+          "dist/engine-2.bin",
+          "dist/engine-3.bin",
+          "dist/THIRD-PARTY-NOTICES.txt"
+        ]
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/excalidraw",
+  "license": "GPL-3.0-or-later"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Excalidraw 草图预览",
+  "description": "将 Excalidraw JSON 场景离线预览为静态草图。",
+  "renderer.name": "Excalidraw"
+}

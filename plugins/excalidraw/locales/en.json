@@ -1,0 +1,5 @@
+{
+  "name": "Excalidraw Preview",
+  "description": "Preview Excalidraw JSON scenes as static offline diagrams.",
+  "renderer.name": "Excalidraw"
+}

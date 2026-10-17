@@ -419,6 +419,26 @@
           "description": "离线预览包含布局信息的 BPMN 2.0 XML 流程图。"
         }
       }
+    },
+    {
+      "directory": "plugins/excalidraw",
+      "categories": [
+        "editor",
+        "diagrams"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首个开发版本：离线编辑器静态预览，已生成本地开发包，尚未运行验证或发布。 最低需要 NoteGen 0.38.3。",
+      "localizations": {
+        "en": {
+          "name": "Excalidraw Preview",
+          "description": "Preview Excalidraw JSON scenes as static offline diagrams."
+        },
+        "zh-CN": {
+          "name": "Excalidraw 草图预览",
+          "description": "将 Excalidraw JSON 场景离线预览为静态草图。"
+        }
+      }
     }
   ]
 }
