@@ -47,6 +47,7 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [D2](plugins/d2) | `d2` | 使用 Dagre 布局的静态架构图 |
 | [ECharts](plugins/echarts) | `echarts` | JSON 配置的静态数据图表 |
 | [DBML](plugins/dbml) | `dbml` | 数据库表、字段和关联关系 |
+| [BPMN](plugins/bpmn) | `bpmn` | 含 DI 布局信息的 BPMN 2.0 XML |
 
 各插件独立安装，使用时加载本地引擎，仅支持编辑器预览。开发包由各插件构建生成在 `.notegen/package`，尚未进行应用内运行验证；限制与手动验收示例见各插件的中英文 README/USAGE。
 

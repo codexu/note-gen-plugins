@@ -399,6 +399,26 @@
           "description": "离线预览 DBML 数据表、字段与关联关系。"
         }
       }
+    },
+    {
+      "directory": "plugins/bpmn",
+      "categories": [
+        "editor",
+        "diagrams"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首个开发版本：离线编辑器静态预览，已生成本地开发包，尚未运行验证或发布。 最低需要 NoteGen 0.38.3。",
+      "localizations": {
+        "en": {
+          "name": "BPMN Preview",
+          "description": "Preview BPMN 2.0 XML diagrams with embedded layout offline."
+        },
+        "zh-CN": {
+          "name": "BPMN 流程图",
+          "description": "离线预览包含布局信息的 BPMN 2.0 XML 流程图。"
+        }
+      }
     }
   ]
 }
