@@ -140,6 +140,28 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
+  plugins/dbml:
+    dependencies:
+      '@dagrejs/dagre':
+        specifier: 3.1.1
+        version: 3.1.1
+      '@dbml/parse':
+        specifier: 10.3.1
+        version: 10.3.1
+    devDependencies:
+      '@notegen/plugin-api':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-api
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+      '@types/node':
+        specifier: ^20.19.43
+        version: 20.19.43
+      esbuild:
+        specifier: ^0.28.2
+        version: 0.28.2
+
   plugins/document-preview:
     dependencies:
       '@aiden0z/pptx-renderer':
@@ -423,6 +445,16 @@ packages:
   '@babel/runtime@7.29.10':
     resolution: {integrity: sha512-NpugTzbKgGrNe45Ui32cN8vCFFMxVtP/9rtfwv0nP5FRDAjvYBxJcLVpYA9mr1jxP6cnIT7x9LUzuDTbWYYNRA==}
     engines: {node: '>=6.9.0'}
+
+  '@dagrejs/dagre@3.1.1':
+    resolution: {integrity: sha512-zroZB1dFOFiGgv4Xcrn1DckB1o4aOikPqD2NDQPV0WM//CXGcS6xiD0rNkqHmw6FEg4tabt4nxPLwgCWT+Vb2A==}
+
+  '@dagrejs/graphlib@4.0.5':
+    resolution: {integrity: sha512-7xrBTqIts3o+PMUZX97wSc+7TUbW+/rULzGNCTP6yooNVDXbzw4Wutg/H/xOutTB/c/k0YqOAavgPh4/Zk9PFA==}
+
+  '@dbml/parse@10.3.1':
+    resolution: {integrity: sha512-l2T+RYUpkCxqSlqMnc3YOwJyLDnDDckddG26KO4vwtYGJKIPYautzBi+ypKxEMdLvuNpHN/HkRCteApeZei8TA==}
+    engines: {node: '>=18'}
 
   '@esbuild/aix-ppc64@0.25.12':
     resolution: {integrity: sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==}
@@ -1185,8 +1217,15 @@ packages:
   linkify-it@5.0.2:
     resolution: {integrity: sha512-ONTm2jCMAVZjgQa/Fy1kScXsuOoF5NPTsoFBdE1KVIZ2vAh/r9+Bqo+0jINCBYnavTPQZz38QzFTme79ENoN3Q==}
 
+  lodash-es@4.18.1:
+    resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
+
   logidrom@1.0.0:
     resolution: {integrity: sha512-U/EJCm08bYI6N1wY59/9kwFoYGBiJFTc3CPKIcyNpQgBHM4ZsHbQ/tt7ZO7Q0YE4jS9Ms03ni690qH4uSVWhFw==}
+
+  luxon@3.7.2:
+    resolution: {integrity: sha512-vtEhXh/gNjI9Yg1u4jX/0YVPMvxzHuGgCm6tC5kZyb08yjGWGnqAjGJvcXbqQR2P3MyMEFnRbpcdFS6PBcLqew==}
+    engines: {node: '>=12'}
 
   markdown-it-ins@4.0.0:
     resolution: {integrity: sha512-sWbjK2DprrkINE4oYDhHdCijGT+MIDhEupjSHLXe5UXeVr5qmVxs/nTUVtgi0Oh/qtF+QKV0tNWDhQBEPxiMew==}
@@ -1254,6 +1293,9 @@ packages:
 
   parse5@7.3.0:
     resolution: {integrity: sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw==}
+
+  pathe@2.0.3:
+    resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
 
   pdfjs-dist@4.10.38:
     resolution: {integrity: sha512-/Y3fcFrXEAsMjJXeL9J8+ZG9U01LbuWaYypvDW2ycW1jL269L3js3DVBjDJ0Up9Np1uqDXsDrRihHANhZOlwdQ==}
@@ -1523,6 +1565,18 @@ snapshots:
       pdfjs-dist: 4.10.38
 
   '@babel/runtime@7.29.10': {}
+
+  '@dagrejs/dagre@3.1.1':
+    dependencies:
+      '@dagrejs/graphlib': 4.0.5
+
+  '@dagrejs/graphlib@4.0.5': {}
+
+  '@dbml/parse@10.3.1':
+    dependencies:
+      lodash-es: 4.18.1
+      luxon: 3.7.2
+      pathe: 2.0.3
 
   '@esbuild/aix-ppc64@0.25.12':
     optional: true
@@ -2181,10 +2235,14 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
+  lodash-es@4.18.1: {}
+
   logidrom@1.0.0:
     dependencies:
       estraverse: 5.3.0
       tspan: 0.4.0
+
+  luxon@3.7.2: {}
 
   markdown-it-ins@4.0.0: {}
 
@@ -2268,6 +2326,8 @@ snapshots:
   parse5@7.3.0:
     dependencies:
       entities: 6.0.1
+
+  pathe@2.0.3: {}
 
   pdfjs-dist@4.10.38:
     optionalDependencies:

@@ -379,6 +379,26 @@
           "description": "离线预览 ECharts JSON 图表。"
         }
       }
+    },
+    {
+      "directory": "plugins/dbml",
+      "categories": [
+        "editor",
+        "diagrams"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首个开发版本：离线编辑器静态预览，已生成本地开发包，尚未运行验证或发布。 最低需要 NoteGen 0.38.3。",
+      "localizations": {
+        "en": {
+          "name": "DBML Database Diagrams",
+          "description": "Preview DBML tables, fields and relationships offline."
+        },
+        "zh-CN": {
+          "name": "DBML 数据库关系图",
+          "description": "离线预览 DBML 数据表、字段与关联关系。"
+        }
+      }
     }
   ]
 }

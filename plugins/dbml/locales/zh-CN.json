@@ -1,0 +1,5 @@
+{
+  "name": "DBML 数据库关系图",
+  "description": "离线预览 DBML 数据表、字段与关联关系。",
+  "renderer.name": "DBML"
+}

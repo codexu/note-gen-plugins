@@ -1,0 +1,5 @@
+{
+  "name": "DBML Database Diagrams",
+  "description": "Preview DBML tables, fields and relationships offline.",
+  "renderer.name": "DBML"
+}
