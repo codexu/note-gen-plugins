@@ -1,0 +1,5 @@
+{
+  "name": "WaveDrom Preview",
+  "description": "Preview WaveDrom digital timing diagrams offline.",
+  "renderer.name": "WaveDrom"
+}

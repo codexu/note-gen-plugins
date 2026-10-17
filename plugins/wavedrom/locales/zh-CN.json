@@ -1,0 +1,5 @@
+{
+  "name": "WaveDrom 预览",
+  "description": "离线预览 WaveDrom 数字波形与时序图。",
+  "renderer.name": "WaveDrom"
+}
