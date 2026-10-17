@@ -1,0 +1,5 @@
+{
+  "name": "PlantUML Preview",
+  "description": "Preview PlantUML code blocks offline. Reads matching code blocks only; no Java or server required.",
+  "renderer.name": "PlantUML"
+}

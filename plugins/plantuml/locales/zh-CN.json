@@ -1,0 +1,5 @@
+{
+  "name": "PlantUML 预览",
+  "description": "离线预览 PlantUML 代码块。仅读取匹配代码块，无需 Java 或服务器。",
+  "renderer.name": "PlantUML"
+}

@@ -26,12 +26,22 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [动态模板](plugins/templates) | `top.notegen.templates` | Markdown 动态模板和自定义字段 |
 | [主题](plugins/themes) | `top.notegen.themes` | 三组完整明暗配色主题 |
 
-文档预览、文件图标、韩语语言包、动态模板和主题最低要求 NoteGen 0.37.1；公众号排版与导出最低要求 NoteGen 0.38.0。所有插件还需满足各自声明的插件 API 版本。
+文档预览、文件图标、韩语语言包、动态模板和主题最低要求 NoteGen 0.37.1；公众号排版与导出最低要求 NoteGen 0.38.0。所有插件还需满足各自声明的插件 API 版本。代码块预览插件最低要求 NoteGen 0.38.3。
 
 这些插件都是独立插件，只使用
 [`@notegen/plugin-api`](https://github.com/codexu/note-gen-plugin-sdk/tree/main/packages/plugin-api)
 提供的公开宿主契约。它们不依赖 NoteGen 应用内部模块，也不会以内置插件形式
 随应用加载。
+
+### 开发中的代码块预览插件
+
+以下插件需要包含通用代码块渲染 API 的开发版宿主，尚未发布：
+
+| 插件 | 围栏类型 | 说明 |
+| --- | --- | --- |
+| [PlantUML](plugins/plantuml) | `plantuml`、`puml` | UML 和文本图表 |
+
+各插件独立安装，使用时加载本地引擎，仅支持编辑器预览。开发包由各插件构建生成在 `.notegen/package`，尚未进行应用内运行验证；限制与手动验收示例见各插件的中英文 README/USAGE。
 
 ## 源码边界
 

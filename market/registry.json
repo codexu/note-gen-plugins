@@ -124,7 +124,9 @@
     },
     {
       "directory": "plugins/language-pack-ru",
-      "categories": ["language"],
+      "categories": [
+        "language"
+      ],
       "featured": false,
       "official": true,
       "changelog": "首次发布俄语界面语言包；译文经机器辅助起稿，仍欢迎俄语母语用户校对。桌面端最低需要 NoteGen 0.37.1。",
@@ -220,7 +222,10 @@
     },
     {
       "directory": "plugins/unlinked-mentions",
-      "categories": ["editor", "productivity"],
+      "categories": [
+        "editor",
+        "productivity"
+      ],
       "featured": false,
       "official": true,
       "changelog": "首次发布关联笔记：先显示文字匹配，再查找 RAG 相关笔记；支持相关度和结果数量设置，可打开笔记或将选中文字建立链接。最低需要 NoteGen 0.38.0。",
@@ -232,6 +237,26 @@
         "zh-CN": {
           "name": "关联笔记",
           "description": "根据选中文字查找文字匹配与相关笔记，并可将选中文字链接到所选笔记。"
+        }
+      }
+    },
+    {
+      "directory": "plugins/plantuml",
+      "categories": [
+        "editor",
+        "diagrams"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首个开发版本：离线预览 PlantUML 代码块，支持源码切换和明暗主题。尚未验证或发布。 最低需要 NoteGen 0.38.3。",
+      "localizations": {
+        "en": {
+          "name": "PlantUML Preview",
+          "description": "Preview PlantUML code blocks offline. Reads matching code blocks only; no Java or server required."
+        },
+        "zh-CN": {
+          "name": "PlantUML 预览",
+          "description": "离线预览 PlantUML 代码块。仅读取匹配代码块，无需 Java 或服务器。"
         }
       }
     }

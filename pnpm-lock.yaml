@@ -204,6 +204,25 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
+  plugins/plantuml:
+    dependencies:
+      '@plantuml/core':
+        specifier: 1.2026.9
+        version: 1.2026.9
+    devDependencies:
+      '@notegen/plugin-api':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-api
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+      '@types/node':
+        specifier: ^20.19.43
+        version: 20.19.43
+      esbuild:
+        specifier: ^0.28.2
+        version: 0.28.2
+
   plugins/templates:
     devDependencies:
       '@notegen/plugin-api':
@@ -648,6 +667,9 @@ packages:
     resolution: {integrity: sha512-xglYA6q3XO5P3BNJYxVZ1IV7DLVjp1Py6nwag88YntrS+3vKHyYcMqXVS4ZztJmwz2uGvz1FWhI/4LgbR5uQDA==}
     engines: {node: '>= 10'}
 
+  '@plantuml/core@1.2026.9':
+    resolution: {integrity: sha512-Qy46og9hEb+wOFtjUfniWkl/BDwHpDuebQX5rF+35s9PS2G4cKZf1iWw4E/ELLQ0pTkESPDoQTbKWcc3ZyVcVA==}
+
   '@types/linkify-it@5.0.0':
     resolution: {integrity: sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==}
 
@@ -1032,6 +1054,8 @@ snapshots:
       '@napi-rs/canvas-win32-arm64-msvc': 0.1.100
       '@napi-rs/canvas-win32-x64-msvc': 0.1.100
     optional: true
+
+  '@plantuml/core@1.2026.9': {}
 
   '@types/linkify-it@5.0.0': {}
 

@@ -1,0 +1,28 @@
+{
+  "name": "@notegen/plugin-plantuml",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline PlantUML code block previews for NoteGen.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild scripts/build.ts --bundle --platform=node --format=esm --packages=external --outfile=.notegen/build-plantuml.mjs && node .notegen/build-plantuml.mjs && notegen-plugin build",
+    "validate": "notegen-plugin validate",
+    "plugin:pack": "notegen-plugin pack"
+  },
+  "notegen": {
+    "source": "src/renderer.ts"
+  },
+  "dependencies": {
+    "@plantuml/core": "1.2026.9"
+  },
+  "devDependencies": {
+    "@notegen/plugin-api": "workspace:^",
+    "@notegen/plugin-cli": "workspace:^",
+    "@types/node": "^20.19.43",
+    "esbuild": "^0.28.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
