@@ -1,0 +1,5 @@
+{
+  "name": "Vega 图表",
+  "description": "使用内嵌数据离线预览 Vega 和 Vega-Lite 图表。",
+  "renderer.name": "Vega / Vega-Lite"
+}

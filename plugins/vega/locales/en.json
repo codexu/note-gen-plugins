@@ -1,0 +1,5 @@
+{
+  "name": "Vega Charts",
+  "description": "Preview Vega and Vega-Lite charts offline using inline data.",
+  "renderer.name": "Vega / Vega-Lite"
+}

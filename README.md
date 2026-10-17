@@ -41,6 +41,7 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | --- | --- | --- |
 | [PlantUML](plugins/plantuml) | `plantuml`、`puml` | UML 和文本图表 |
 | [Graphviz](plugins/graphviz) | `dot`、`graphviz` | 有向图、依赖图，Worker 中进行布局 |
+| [Vega 图表](plugins/vega) | `vega`、`vega-lite`、`vegalite` | 使用内嵌数据的静态图表 |
 
 各插件独立安装，使用时加载本地引擎，仅支持编辑器预览。开发包由各插件构建生成在 `.notegen/package`，尚未进行应用内运行验证；限制与手动验收示例见各插件的中英文 README/USAGE。
 

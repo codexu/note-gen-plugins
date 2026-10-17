@@ -279,6 +279,26 @@
           "description": "离线预览 DOT 和 Graphviz 代码块。"
         }
       }
+    },
+    {
+      "directory": "plugins/vega",
+      "categories": [
+        "editor",
+        "diagrams"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首个开发版本：仅提供离线编辑器预览，尚未构建、验证或发布。 最低需要 NoteGen 0.38.3。",
+      "localizations": {
+        "en": {
+          "name": "Vega Charts",
+          "description": "Preview Vega and Vega-Lite charts offline using inline data."
+        },
+        "zh-CN": {
+          "name": "Vega 图表",
+          "description": "使用内嵌数据离线预览 Vega 和 Vega-Lite 图表。"
+        }
+      }
     }
   ]
 }

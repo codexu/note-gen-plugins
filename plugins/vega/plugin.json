@@ -1,0 +1,44 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.vega",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": ">=0.1.9",
+  "minAppVersion": "0.38.3",
+  "platforms": [
+    "desktop"
+  ],
+  "activationEvents": [],
+  "permissions": {},
+  "contributes": {},
+  "resources": {
+    "codeBlockRenderers": [
+      {
+        "id": "vega",
+        "name": "%renderer.name%",
+        "languages": [
+          "vega",
+          "vega-lite",
+          "vegalite"
+        ],
+        "script": "dist/renderer.js",
+        "assets": [
+          "dist/engine.js",
+          "dist/THIRD-PARTY-NOTICES.txt"
+        ]
+      }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins/tree/main/plugins/vega",
+  "license": "GPL-3.0-or-later"
+}
