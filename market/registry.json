@@ -359,6 +359,26 @@
           "description": "离线预览 D2 架构图和系统关系图。"
         }
       }
+    },
+    {
+      "directory": "plugins/echarts",
+      "categories": [
+        "editor",
+        "diagrams"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "首个开发版本：离线编辑器静态预览，已生成本地开发包，尚未运行验证或发布。 最低需要 NoteGen 0.38.3。",
+      "localizations": {
+        "en": {
+          "name": "ECharts Preview",
+          "description": "Preview ECharts JSON charts offline."
+        },
+        "zh-CN": {
+          "name": "ECharts 图表",
+          "description": "离线预览 ECharts JSON 图表。"
+        }
+      }
     }
   ]
 }

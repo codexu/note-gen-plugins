@@ -165,6 +165,25 @@ importers:
         specifier: ^0.25.0
         version: 0.25.12
 
+  plugins/echarts:
+    dependencies:
+      echarts:
+        specifier: 6.1.0
+        version: 6.1.0
+    devDependencies:
+      '@notegen/plugin-api':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-api
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+      '@types/node':
+        specifier: ^20.19.43
+        version: 20.19.43
+      esbuild:
+        specifier: ^0.28.2
+        version: 0.28.2
+
   plugins/editor-statistics:
     dependencies:
       graphemer:

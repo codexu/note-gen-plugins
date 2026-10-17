@@ -1,0 +1,5 @@
+{
+  "name": "ECharts 图表",
+  "description": "离线预览 ECharts JSON 图表。",
+  "renderer.name": "ECharts"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "ECharts Preview",
+  "description": "Preview ECharts JSON charts offline.",
+  "renderer.name": "ECharts"
+}
