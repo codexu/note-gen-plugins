@@ -9,6 +9,6 @@
   },
   "include": [
     "src/**/*.ts",
-    "../../shared/code-block-renderer.ts"
+    "../../renderers/code-block-renderer.ts"
   ]
 }

@@ -1,6 +1,6 @@
 import { Compiler, DEFAULT_ENTRY, MemoryProjectLayout, getMultiplicities, type RefEndpoint } from '@dbml/parse'
 import { Graph, layout, type GraphLabel, type NodeLabel, type EdgeLabel } from '@dagrejs/dagre'
-import { assertImageSize, escapeXml, serveSvgWorker } from '../../../shared/svg'
+import { assertImageSize, escapeXml, serveSvgWorker } from '../../../renderers/svg'
 
 serveSvgWorker(request => {
   const files = new MemoryProjectLayout()

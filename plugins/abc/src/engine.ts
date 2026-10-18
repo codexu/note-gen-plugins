@@ -1,6 +1,6 @@
 import renderAbc from 'abcjs/src/api/abc_tunebook_svg'
 import type { CodeBlockRenderRequest } from '@notegen/plugin-api'
-import { assertImageSize } from '../../../shared/svg'
+import { assertImageSize } from '../../../renderers/svg'
 
 export function render(request: CodeBlockRenderRequest) {
   if ((request.source.match(/^X\s*:/gm)?.length ?? 0) !== 1 || !/^K\s*:/m.test(request.source)) throw new Error('Provide one ABC tune with X: and K: headers')

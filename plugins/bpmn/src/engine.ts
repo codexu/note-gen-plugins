@@ -2,7 +2,7 @@ import Viewer from 'bpmn-js/lib/Viewer'
 import diagramStyles from 'bpmn-js/dist/assets/diagram-js.css'
 import bpmnStyles from 'bpmn-js/dist/assets/bpmn-js.css'
 import type { CodeBlockRenderRequest } from '@notegen/plugin-api'
-import { assertImageSize } from '../../../shared/svg'
+import { assertImageSize } from '../../../renderers/svg'
 
 export async function render(request: CodeBlockRenderRequest) {
   if (/<!DOCTYPE|<!ENTITY/i.test(request.source)) throw new Error('XML DTDs and entities are unavailable')

@@ -1,5 +1,5 @@
 import { renderSvg } from 'nomnoml'
-import { serveSvgWorker } from '../../../shared/svg'
+import { serveSvgWorker } from '../../../renderers/svg'
 
 serveSvgWorker(request => {
   if (/^\s*#import\s*:/im.test(request.source)) throw new Error('External Nomnoml imports are unavailable')

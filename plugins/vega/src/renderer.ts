@@ -1,3 +1,3 @@
-import { registerSvgRenderer } from '../../../shared/code-block-renderer'
+import { registerSvgRenderer } from '../../../renderers/code-block-renderer'
 
 registerSvgRenderer()

@@ -13,7 +13,7 @@ const options: BuildOptions = { absWorkingDir: root, bundle: true, platform: 'br
 const d2Directory = slug === 'd2' ? resolve(dirname(require.resolve('@terrastruct/d2')), '../node-esm') : null
 const alias = d2Directory ? { 'd2-go-runtime': join(d2Directory, 'wasm_exec.js') } : slug === 'wavedrom'
   ? { 'wavedrom-render-any': join(dirname(require.resolve('wavedrom/package.json')), 'lib/render-any.js') }
-  : slug === 'nomnoml' ? { fs: resolve(root, '../../shared/unavailable-file-imports.ts'), path: resolve(root, '../../shared/unavailable-file-imports.ts') }
+  : slug === 'nomnoml' ? { fs: resolve(root, '../../renderers/unavailable-file-imports.ts'), path: resolve(root, '../../renderers/unavailable-file-imports.ts') }
   : undefined
 await mkdir(join(root, 'dist'), { recursive: true })
 if (d2Directory) {
