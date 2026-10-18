@@ -97,9 +97,8 @@ official-plugin release chain.
 
 The 12 code-block preview plugins require SDK 0.1.12 or later for their API/CLI
 development dependencies; the root API/test tools require the same version.
-SDK 0.1.12 is prepared but not published. After committing the SDK, separately
-update `PLUGIN_SDK_REF` to the full reviewed SHA containing both the renderer
-implementation and version preparation before pushing these dependency changes.
+SDK 0.1.12 is published. `PLUGIN_SDK_REF` is pinned to
+`a18e8f0c019adcd4b81ef721e675888517c63823`, matching the local `.sdk` checkout.
 The plugin API protocol remains 0.1.9, and the minimum host is NoteGen 0.38.3.
 SDK package versions, protocol versions and host versions are maintained separately.
 
