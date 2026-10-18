@@ -19,8 +19,8 @@
     "vega-interpreter": "1.2.0"
   },
   "devDependencies": {
-    "@notegen/plugin-api": "workspace:^",
-    "@notegen/plugin-cli": "workspace:^",
+    "@notegen/plugin-api": "workspace:^0.1.12",
+    "@notegen/plugin-cli": "workspace:^0.1.12",
     "@types/node": "^20.19.43",
     "esbuild": "^0.28.2"
   },

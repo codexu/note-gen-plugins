@@ -9,16 +9,16 @@ importers:
   .:
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:.sdk/packages/plugin-api
       '@notegen/plugin-test':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:.sdk/packages/plugin-test
 
   .sdk/packages/create-notegen-plugin:
     dependencies:
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../plugin-cli
     devDependencies:
       '@types/node':
@@ -41,7 +41,7 @@ importers:
   .sdk/packages/plugin-cli:
     dependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../plugin-api
       canonicalize:
         specifier: ^4.0.0
@@ -87,7 +87,7 @@ importers:
   .sdk/packages/plugin-test:
     dependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../plugin-api
     devDependencies:
       '@types/node':
@@ -104,10 +104,10 @@ importers:
         version: 6.7.2
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -135,10 +135,10 @@ importers:
         version: 18.31.0
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -154,10 +154,10 @@ importers:
         version: 0.1.33
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -188,10 +188,10 @@ importers:
         version: 10.3.1
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -232,10 +232,10 @@ importers:
         version: 6.1.0
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -273,10 +273,10 @@ importers:
         version: 0.1.5
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -292,10 +292,10 @@ importers:
         version: 3.31.0
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -353,10 +353,10 @@ importers:
         version: 0.18.12(markmap-common@0.18.9)
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/d3-hierarchy':
         specifier: 3.1.7
@@ -375,10 +375,10 @@ importers:
         version: 1.7.0
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -394,10 +394,10 @@ importers:
         version: 1.2026.9
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -471,10 +471,10 @@ importers:
         version: 5.23.0(vega@5.33.1)
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43
@@ -496,10 +496,10 @@ importers:
         version: 3.7.0
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-api
       '@notegen/plugin-cli':
-        specifier: workspace:^
+        specifier: workspace:^0.1.12
         version: link:../../.sdk/packages/plugin-cli
       '@types/node':
         specifier: ^20.19.43

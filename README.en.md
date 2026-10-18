@@ -95,6 +95,14 @@ review. The `.sdk` checkout itself is never committed. Community authors still
 consume the SDK through npm; the source checkout is limited to the reproducible
 official-plugin release chain.
 
+The 12 code-block preview plugins require SDK 0.1.12 or later for their API/CLI
+development dependencies; the root API/test tools require the same version.
+SDK 0.1.12 is prepared but not published. After committing the SDK, separately
+update `PLUGIN_SDK_REF` to the full reviewed SHA containing both the renderer
+implementation and version preparation before pushing these dependency changes.
+The plugin API protocol remains 0.1.9, and the minimum host is NoteGen 0.38.3.
+SDK package versions, protocol versions and host versions are maintained separately.
+
 ## Marketplace status
 
 Official packages are published. Community registration, PR verification, and independent signed-package ingestion are implemented; production opening remains pending real-client acceptance and repository protection setup.
