@@ -8,7 +8,7 @@ Reads matching blocks only and preserves Markdown source. Offline engines load o
 
 Uses the visual-only abcjs entry for SVG sheet music, without MIDI, soundfonts, playback or score-editor modules. One tune with X:/K: headers and one SVG page per block; split longer scores. Parser warnings are surfaced as preview errors, preserving source for correction. Dark mode adjusts the foreground; score text uses system fonts. External includes and embedded markup are rejected.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

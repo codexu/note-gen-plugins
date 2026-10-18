@@ -8,7 +8,7 @@ Reads matching code blocks only, with no workspace-file or network access. The h
 
 One plugin supports `vega`, `vega-lite` and `vegalite`. Uses Vega 5 / Vega-Lite 5 compatible with the Node 20 toolchain, with an expression interpreter for the host CSP and no eval. Inline data only; URL fields, links and image marks are rejected. No hover tooltips, interactive filtering or note attachments. Arrays are limited to 5,000 entries and JSON nesting to 32 levels. Light/dark defaults can be overridden by explicit chart configuration.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

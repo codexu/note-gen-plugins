@@ -1,9 +1,9 @@
-# 使用Vega 图表
+# Using Vega Charts
 
-开发包由获批的构建生成在 `.notegen/package`；尚未进行应用内运行验证或发布。需要包含通用代码块渲染 API 的 NoteGen 桌面宿主和修改后的本地 SDK/CLI。最低需要 NoteGen 0.38.3，以使用通用代码块渲染 API。
+An approved build generates `.notegen/package`; in-app behavior is not verified and nothing is published. Requires the desktop host with the generic code-block renderer API and the modified local SDK/CLI. Requires NoteGen 0.38.3 or later for the generic code-block renderer API.
 
-1. 导入开发包，启用插件并确认匹配代码块的渲染说明。
-2. 在笔记中插入以下围栏代码块：
+1. Import the development package, enable the plugin and review the code-block rendering disclosure.
+2. Insert this fenced code block into a note:
 
 ````markdown
 ```vega-lite
@@ -18,17 +18,17 @@
 ```
 ````
 
-插件仅读取匹配的代码块，不访问工作区文件或网络。由宿主提供默认预览、源码切换、错误提示和渲染器选择。源码最多 32 KiB、1,000 行；SVG 输出最多 2 MiB，宿主还限制图像尺寸。按需加载引擎，插件之间无运行时依赖；不提供导出或移动端支持。
+Reads matching code blocks only, with no workspace-file or network access. The host provides preview by default, source switching, error feedback and renderer selection. Input is limited to 32 KiB and 1,000 lines; SVG output to 2 MiB plus host dimension limits. Engines load on demand and plugins have no runtime dependency on each other. Editor preview only; no export or mobile support.
 
-一个插件支持 `vega`、`vega-lite` 和 `vegalite`。使用兼容 Node 20 工具链的 Vega 5 / Vega-Lite 5，并使用表达式解释器适配宿主 CSP，不开启 eval。只允许内嵌数据，拒绝 URL、链接和图片标记；不支持悬浮提示、交互筛选或读取笔记附件。每个数组最多 5,000 项，JSON 最多嵌套 32 层。明暗主题提供默认配色，源码显式配置可覆盖默认值。
+One plugin supports `vega`, `vega-lite` and `vegalite`. Uses Vega 5 / Vega-Lite 5 compatible with the Node 20 toolchain, with an expression interpreter for the host CSP and no eval. Inline data only; URL fields, links and image marks are rejected. No hover tooltips, interactive filtering or note attachments. Arrays are limited to 5,000 entries and JSON nesting to 32 levels. Light/dark defaults can be overridden by explicit chart configuration.
 
-使用“编辑源码”和“预览”按钮切换。预览失败时源码保留，可修正后重试；多插件支持相同类型时，在代码块中选择默认渲染器。禁用插件后恢复普通代码块。
+Use **Edit source** and **Preview** to switch. Failures preserve source for correction and retry. Choose a default renderer when multiple plugins support the same type. Disabling a plugin restores ordinary code blocks.
 
-## 手动验收建议（未执行）
+## Suggested manual acceptance (not performed)
 
-- 示例正常预览；不同图表与重复图表不会串内容。
-- 点击“编辑源码”修改，切回预览；撤销、保存重开后源码一致。
-- 中文、英文、明暗主题、窄窗口和长文档分节预览。
-- 错误语法、超限源码、外部资源引用会显示错误并保留源码。
-- 禁用插件或切换工作区后清理旧结果；重新启用可恢复。
-- 首次加载、重复预览和复杂图表的响应速度；无网络请求。
+- Render the example, different diagrams and duplicate diagrams without cross-contamination.
+- Edit source, switch back to preview, undo, save and reopen without changing Markdown source.
+- English/Chinese, light/dark, narrow windows and sectioned long documents.
+- Invalid syntax, oversized input and external resources show errors while preserving source.
+- Disable or switch workspace during rendering; stale results disappear and enabling restores previews.
+- First load, cached previews, complex-diagram responsiveness and no remote requests.

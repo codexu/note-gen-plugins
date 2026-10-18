@@ -8,7 +8,7 @@ Reads matching code blocks only, with no workspace-file or network access. The h
 
 Uses the Graphviz WASM bundled by Viz.js with the dot layout in a dedicated Worker. Supports `dot` and `graphviz`. External images/files, interactive links and a layout-engine picker are unavailable. Generated SVG DTDs are removed and dimensions normalized before host filtering.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

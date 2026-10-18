@@ -8,7 +8,7 @@
 
 使用 bpmn-js Viewer，只接受包含 BPMNDiagram/BPMNPlane、BPMNShape 坐标和 BPMNEdge 路径的 BPMN 2.0 XML；只有业务定义、没有 DI 布局的 XML 不会自动布局。最多 300 个形状、600 条连接。不执行流程、脚本或外部调用，不提供流程编辑。拒绝 XML DTD/实体。静态图片底部保留原始 bpmn.io 标识，输出字体/样式会在隔离环境中转为 SVG 属性，明暗主题提供默认配色。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

@@ -1,9 +1,9 @@
-# 使用 D2 预览
+# Using D2 Preview
 
-需要包含通用代码块渲染 API 的 NoteGen 桌面宿主与本地 SDK/CLI。开发包由获批的构建生成在 `.notegen/package`；应用内手动验证已发现 Dagre 被 CSP 拦截的问题；源码已加入固定命令适配器，并重新构建了开发包；修复效果等待应用内手动验证，未发布。最低需要 NoteGen 0.38.3，以使用通用代码块渲染 API。
+Requires the desktop host with the generic code-block renderer API and the local SDK/CLI. An approved build generates `.notegen/package`; manual in-app validation exposed a Dagre CSP failure. The source now includes a fixed-command adapter and the development package has been rebuilt; the fix awaits manual in-app verification, and nothing is published. Requires NoteGen 0.38.3 or later for the generic code-block renderer API.
 
-1. 导入 `.notegen/package`，启用插件并确认匹配代码块的渲染说明。
-2. 在笔记中粘贴以下围栏代码块：
+1. Import `.notegen/package`, enable the plugin and review the code-block disclosure.
+2. Paste this fenced block into a note:
 
 ````markdown
 ```d2
@@ -15,19 +15,19 @@ user -> gateway -> service
 ```
 ````
 
-默认显示预览，通过“编辑源码”和“预览”切换；错误会保留源码，修正后可重试。禁用插件后恢复普通代码块。
+Preview appears by default. Use **Edit source** and **Preview** to switch; errors preserve source for correction/retry. Disabling restores ordinary code blocks.
 
-使用固定版本 `@terrastruct/d2@0.1.33` 的 WASM 与官方 Go 运行时，在独立 Worker 中编译与绘图。适配器不使用动态 Function，也不降低宿主 CSP。Dagre 在构建时静态打包；WASM 的 jsrunner 调用由专用 Worker 中的固定命令适配器处理，只接受上游的初始化、图属性、节点、父子关系、连线、布局与结果读取模板，不把字符串作为 JavaScript 执行。引擎升级时构建入口检查内嵌资源是否匹配，未知命令直接报错。WASM 压缩后拆为两个声明资源，单个资源不超过 5 MiB；首次使用时读取、解压并初始化。首次加载与运行内存可能明显高于其他轻量插件。
+Uses the WASM and official Go runtime from pinned `@terrastruct/d2@0.1.33`, compiling/rendering in a dedicated Worker. The adapter uses neither dynamic Function nor a weaker host CSP. Dagre is bundled statically at build time. A fixed-command adapter inside the dedicated Worker handles the WASM jsrunner calls: only the pinned upstream initialization, graph attributes, nodes, parents, edges, layout and result queries are accepted. Strings are never executed as JavaScript. The build checks embedded resource compatibility, and unknown commands fail explicitly. The compressed WASM is split into two declared assets, each under 5 MiB, read/decompressed/initialized on demand. First-load cost and runtime memory may be noticeably higher than lighter renderers.
 
-首期只支持 Dagre 布局、单个静态画板和普通文字。支持基础节点、连接与容器；不包含 ELK、外部文件导入、图片/图标、可点击链接、Markdown/LaTeX 标签、动画和多画板。编译仅获得当前代码块的单个内存文件，不访问笔记目录或网络。源码最多 32 KiB、1,000 行，输出最多 2 MiB，并受宿主图像尺寸限制。需要支持 DecompressionStream 的现代桌面 WebView。
+Initially supports Dagre, a single static board and plain-text labels, with basic nodes, connections and containers. No ELK, external imports, images/icons, clickable links, Markdown/LaTeX labels, animation or multiple boards. Compilation receives only one in-memory file for the current block, with no note-directory or network access. Limits: 32 KiB / 1,000 lines input, 2 MiB output, plus host image dimension limits. Requires a modern desktop WebView supporting DecompressionStream.
 
-D2 的生成样式会在隔离 iframe 内转为 SVG 属性，再由宿主独立过滤。内嵌字体样式不保留，使用系统字体，因此字形和布局可能与 D2 官方编辑器略有差别。
+Generated styles are flattened into SVG attributes in the isolated iframe before independent host filtering. Embedded font styles are omitted in favor of system fonts, so font shapes and layout can differ slightly from the official D2 editor.
 
-## 手动验收建议（未执行）
+## Suggested manual acceptance (not performed)
 
-- 回归截图中的三节点示例，确认不再出现 CSP / unsafe-eval 报错；连续重试和修改后能更新预览。
-- 示例、中文标签、明暗主题、窄窗口与长文档分节模式。
-- 四种方向、嵌套容器、自环、平行连线、含反斜杠和换行的连线名称；不支持的布局命令应给出错误，不能执行源码中的 JavaScript。
-- 首次初始化和重复渲染的速度；Worker 超时后的重试。
-- 错误语法、外部导入、图标/图片、富文本标签和超大图表错误提示。
-- 修改、撤销、保存和重开后源码不变；切换工作区或禁用插件后旧结果清理。
+- Example, Chinese labels, light/dark, narrow windows and sectioned long documents.
+- Cold initialization, repeated rendering and retry after Worker timeout.
+- Invalid syntax, external imports, icons/images, rich labels and oversized diagrams.
+- Edit, undo, save/reopen source preservation; workspace switches and disablement clear stale results.
+
+CSP regression checks after rebuilding: the three-node example, repeated renders, all four directions, nested containers, self-loops, parallel edges and escaped edge names. Unknown layout commands must fail without executing source text as JavaScript.

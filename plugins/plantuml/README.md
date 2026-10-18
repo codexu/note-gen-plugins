@@ -13,7 +13,7 @@
 
 浏览器版 PlantUML 依赖 DOM 测量，运行于宿主共享的隔离 iframe。iframe 不保证独立线程；复杂图表性能仍待桌面实测。当前插件宿主只启用桌面端，本插件不声明移动端支持。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发与资源
 

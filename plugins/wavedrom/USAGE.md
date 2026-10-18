@@ -1,9 +1,9 @@
-# 使用WaveDrom 预览
+# Using WaveDrom Preview
 
-开发包由获批的构建生成在 `.notegen/package`；尚未进行应用内运行验证或发布。需要包含通用代码块渲染 API 的 NoteGen 桌面宿主和修改后的本地 SDK/CLI。最低需要 NoteGen 0.38.3，以使用通用代码块渲染 API。
+An approved build generates `.notegen/package`; in-app behavior is not verified and nothing is published. Requires the desktop host with the generic code-block renderer API and the modified local SDK/CLI. Requires NoteGen 0.38.3 or later for the generic code-block renderer API.
 
-1. 导入开发包，启用插件并确认匹配代码块的渲染说明。
-2. 在笔记中插入以下围栏代码块：
+1. Import the development package, enable the plugin and review the code-block rendering disclosure.
+2. Insert this fenced code block into a note:
 
 ````markdown
 ```wavedrom
@@ -16,17 +16,17 @@
 ```
 ````
 
-插件仅读取匹配的代码块，不访问工作区文件或网络。由宿主提供默认预览、源码切换、错误提示和渲染器选择。源码最多 32 KiB、1,000 行；SVG 输出最多 2 MiB，宿主还限制图像尺寸。按需加载引擎，插件之间无运行时依赖；不提供导出或移动端支持。
+Reads matching code blocks only, with no workspace-file or network access. The host provides preview by default, source switching, error feedback and renderer selection. Input is limited to 32 KiB and 1,000 lines; SVG output to 2 MiB plus host dimension limits. Engines load on demand and plugins have no runtime dependency on each other. Editor preview only; no export or mobile support.
 
-使用 WaveDrom 和 JSON5。仅支持包含 `signal` 的波形描述，以及分组、文字标题和连线；不使用上游基于 eval 的入口，不支持 `reg`、`assign`、自定义皮肤或富文本 JsonML 标签。最多 64 条信号，每条最多 256 个波形字符，分组最多 12 层，hscale 为 1–4。使用默认皮肤的白色画布，深色编辑器中也保留白底，确保波形可读。绘制前复制皮肤，绘制后将样式内联为 SVG 属性。
+Uses WaveDrom and JSON5. Supports `signal` waveforms, groups, plain-text titles and edges. Does not use upstream eval-based entry points. Register/assignment diagrams (`reg`/`assign`), custom skins and rich JsonML labels are unsupported. Limits: 64 lanes, 256 wave characters per lane, 12 grouping levels and hscale 1–4. The default skin retains a white canvas in dark editors for readability. The skin is cloned per render and styles are flattened into SVG attributes.
 
-使用“编辑源码”和“预览”按钮切换。预览失败时源码保留，可修正后重试；多插件支持相同类型时，在代码块中选择默认渲染器。禁用插件后恢复普通代码块。
+Use **Edit source** and **Preview** to switch. Failures preserve source for correction and retry. Choose a default renderer when multiple plugins support the same type. Disabling a plugin restores ordinary code blocks.
 
-## 手动验收建议（未执行）
+## Suggested manual acceptance (not performed)
 
-- 示例正常预览；不同图表与重复图表不会串内容。
-- 点击“编辑源码”修改，切回预览；撤销、保存重开后源码一致。
-- 中文、英文、明暗主题、窄窗口和长文档分节预览。
-- 错误语法、超限源码、外部资源引用会显示错误并保留源码。
-- 禁用插件或切换工作区后清理旧结果；重新启用可恢复。
-- 首次加载、重复预览和复杂图表的响应速度；无网络请求。
+- Render the example, different diagrams and duplicate diagrams without cross-contamination.
+- Edit source, switch back to preview, undo, save and reopen without changing Markdown source.
+- English/Chinese, light/dark, narrow windows and sectioned long documents.
+- Invalid syntax, oversized input and external resources show errors while preserving source.
+- Disable or switch workspace during rendering; stale results disappear and enabling restores previews.
+- First load, cached previews, complex-diagram responsiveness and no remote requests.

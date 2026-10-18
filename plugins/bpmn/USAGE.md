@@ -1,9 +1,9 @@
-# 使用BPMN 流程图
+# Using BPMN Preview
 
-已生成本地可导入开发包，位于 `.notegen/package`；尚未进行应用内运行验证或发布。需要包含本次通用代码块 API 的 NoteGen 桌面开发宿主和本地 SDK/CLI。最低需要 NoteGen 0.38.3，以使用通用代码块渲染 API。
+The local importable development package is available in `.notegen/package`; in-app behavior is not verified and nothing is published. Requires the desktop development host with the generic code-block API and the local SDK/CLI. Requires NoteGen 0.38.3 or later for the generic code-block renderer API.
 
-1. 导入 `.notegen/package`，启用插件并确认代码块渲染说明。
-2. 将下列围栏代码块插入笔记：
+1. Import `.notegen/package`, enable the plugin and review the rendering disclosure.
+2. Insert this fenced block into a note:
 
 ````markdown
 ```bpmn
@@ -33,17 +33,17 @@
 ```
 ````
 
-仅读取匹配代码块，源码保持在原 Markdown 文档中。按需加载离线引擎，由宿主提供默认预览、源码切换、错误反馈与渲染器选择。源码最多 32 KiB、1,000 行；结果最多 2 MiB，且受宿主图像尺寸限制。仅做编辑器静态预览，不支持移动端或导出承诺。
+Reads matching blocks only and preserves Markdown source. Offline engines load on demand; the host provides preview by default, source switching, errors and renderer selection. Input: 32 KiB / 1,000 lines; output: 2 MiB plus host dimension limits. Static editor preview only, with no mobile support or export guarantee.
 
-使用 bpmn-js Viewer，只接受包含 BPMNDiagram/BPMNPlane、BPMNShape 坐标和 BPMNEdge 路径的 BPMN 2.0 XML；只有业务定义、没有 DI 布局的 XML 不会自动布局。最多 300 个形状、600 条连接。不执行流程、脚本或外部调用，不提供流程编辑。拒绝 XML DTD/实体。静态图片底部保留原始 bpmn.io 标识，输出字体/样式会在隔离环境中转为 SVG 属性，明暗主题提供默认配色。
+Uses bpmn-js Viewer for BPMN 2.0 XML containing BPMNDiagram/BPMNPlane, BPMNShape coordinates and BPMNEdge waypoints. XML with semantic definitions but no DI layout is not automatically laid out. Limits: 300 shapes and 600 connections. Does not execute processes, scripts or external calls, and does not edit models. XML DTDs/entities are rejected. The original bpmn.io watermark remains visible in the static-image footer. Styles are flattened into SVG attributes in isolation; light/dark defaults are provided.
 
-使用“编辑源码”和“预览”切换；错误时保留源码，可修正后重试。禁用插件后恢复普通代码块。
+Use **Edit source** and **Preview** to switch. Errors preserve source for correction/retry. Disabling restores ordinary code blocks.
 
-## 手动验收建议（未执行）
+## Suggested manual acceptance (not performed)
 
-- 示例、中文标签、明暗主题、窄窗口与长文档分节模式。
-- 首次加载、重复预览、多张图表的内容与响应速度。
-- 修改、撤销、保存和重开后源码不变。
-- 无效语法、超限输入、外部资源与不支持功能的错误反馈。
-- 禁用/重载插件或切换工作区后旧结果消失；重新启用后恢复。
-- 对照上述格式限制逐项确认；不应产生外部资源请求。
+- Example, Chinese labels, light/dark, narrow windows and sectioned long documents.
+- Cold initialization, repeated previews, multiple diagrams and responsiveness.
+- Edit, undo, save/reopen source preservation.
+- Invalid syntax, oversized input, external resources and unsupported features.
+- Disable/reload and workspace switches clear stale output; re-enabling restores previews.
+- Verify the format-specific limitations above and absence of external resource requests.

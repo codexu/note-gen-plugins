@@ -8,7 +8,7 @@ Reads matching code blocks only, with no workspace-file or network access. The h
 
 Uses the Markmap transformer without extension plugins for Markdown headings/lists and d3-hierarchy for a static tree layout. Supports `markmap`. To work with the host static-SVG filter, labels contain text only and inline formatting is reduced to text. No folding, zoom controls, clickable links, images, formulas, external styles/scripts or frontmatter options. Limits: 400 nodes, 20 levels and 500 characters per label. Large outlines must be split if they exceed host image dimensions.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

@@ -8,7 +8,7 @@
 
 一个插件支持 `vega`、`vega-lite` 和 `vegalite`。使用兼容 Node 20 工具链的 Vega 5 / Vega-Lite 5，并使用表达式解释器适配宿主 CSP，不开启 eval。只允许内嵌数据，拒绝 URL、链接和图片标记；不支持悬浮提示、交互筛选或读取笔记附件。每个数组最多 5,000 项，JSON 最多嵌套 32 层。明暗主题提供默认配色，源码显式配置可覆盖默认值。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

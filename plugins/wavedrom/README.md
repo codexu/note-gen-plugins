@@ -8,7 +8,7 @@
 
 使用 WaveDrom 和 JSON5。仅支持包含 `signal` 的波形描述，以及分组、文字标题和连线；不使用上游基于 eval 的入口，不支持 `reg`、`assign`、自定义皮肤或富文本 JsonML 标签。最多 64 条信号，每条最多 256 个波形字符，分组最多 12 层，hscale 为 1–4。使用默认皮肤的白色画布，深色编辑器中也保留白底，确保波形可读。绘制前复制皮肤，绘制后将样式内联为 SVG 属性。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

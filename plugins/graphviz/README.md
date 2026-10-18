@@ -8,7 +8,7 @@
 
 使用 Viz.js 内置的 Graphviz WASM，默认使用 dot 布局，在独立 Worker 中计算。支持 `dot`、`graphviz`，不提供外部图片、文件、链接交互或其他布局引擎选择。SVG 会去掉生成器的 DTD，并规范尺寸后交由宿主过滤。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

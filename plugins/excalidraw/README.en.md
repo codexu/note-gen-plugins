@@ -8,7 +8,7 @@ Reads matching blocks only and preserves Markdown source. Offline engines load o
 
 Uses official @excalidraw/utils to export complete Excalidraw JSON scenes, previewing rectangles, ellipses, diamonds, lines, arrows, freehand strokes and text. No canvas editing, images/attachments, embeddables, links, frames or scene migration. Limits: 400 elements and 5,000 points per array; input remains limited to 32 KiB. Provide full exported element properties and seeds. Text uses a system sans-serif font, so handwritten fonts and line wrapping may differ from the official editor. The large upstream export module is compressed into four asset chunks at build time and decompressed on first use, requiring a modern desktop WebView with DecompressionStream. The development package is about 13.3 MiB and the decompressed engine script about 19 MiB. In-app cold-start cost and runtime memory remain unmeasured.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

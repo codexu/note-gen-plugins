@@ -8,7 +8,7 @@
 
 使用 Nomnoml 在独立 Worker 中生成 UML SVG，支持分类器、关系和常见样式指令。最多 400 个分类器，不支持 #import、外部资源或交互。提供明暗主题默认颜色，源码中的显式样式可覆盖默认值。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

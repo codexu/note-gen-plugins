@@ -8,7 +8,7 @@ Reads matching blocks only and preserves Markdown source. Offline engines load o
 
 Uses official @dbml/parse on the current block, with Dagre layout in a dedicated Worker. Shows tables, field types, primary-key/not-null flags and relationship labels/cardinalities; supports Ref and inline ref. Limits: 50 tables, 500 fields, 200 relationships and 100 characters per label. No database connections, SQL execution or external DBML files. Notes, records, indexes and table groups are not rendered as separate visual objects. TablePartial expansion is unavailable; declare fields directly in each table.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

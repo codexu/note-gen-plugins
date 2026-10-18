@@ -10,7 +10,7 @@ D2 是用文本描述架构、流程和组件关系的绘图语言。本插件�
 
 D2 的生成样式会在隔离 iframe 内转为 SVG 属性，再由宿主独立过滤。内嵌字体样式不保留，使用系统字体，因此字形和布局可能与 D2 官方编辑器略有差别。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

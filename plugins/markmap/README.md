@@ -8,7 +8,7 @@
 
 使用 Markmap 的无扩展解析器处理 Markdown 标题和列表，再用 d3-hierarchy 生成静态树形布局。支持 `markmap`。为兼容宿主纯 SVG 安全过滤，标签只输出文字，基础行内格式简化为文字，不提供折叠、缩放、可点击链接、图片、公式、外部样式和脚本，也不应用 frontmatter 选项。最多 400 个节点、20 层，每个标签最多 500 字符；超出宿主尺寸限制时需要拆分大纲。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

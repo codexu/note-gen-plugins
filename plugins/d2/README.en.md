@@ -10,7 +10,7 @@ Initially supports Dagre, a single static board and plain-text labels, with basi
 
 Generated styles are flattened into SVG attributes in the isolated iframe before independent host filtering. Embedded font styles are omitted in favor of system fonts, so font shapes and layout can differ slightly from the official D2 editor.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

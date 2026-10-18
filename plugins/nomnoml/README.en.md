@@ -8,7 +8,7 @@ Reads matching blocks only and preserves Markdown source. Offline engines load o
 
 Uses Nomnoml in a dedicated Worker for UML SVG, supporting classifiers, relationships and common styling directives. Limited to 400 classifiers; no #import, external resources or interaction. Light/dark defaults can be overridden by explicit source directives.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

@@ -8,7 +8,7 @@
 
 使用 ECharts 6 的 SVG SSR 渲染，画布为 720×420。只解析 JSON option，不执行 JavaScript、formatter/renderItem 函数或扩展脚本。支持常见静态图表；不支持地图、custom、lines、effectScatter、外部图片、链接、网络数据、动画或交互。显式 animation/universalTransition 只能为 false；每个数组最多 5,000 项，最多嵌套 32 层。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

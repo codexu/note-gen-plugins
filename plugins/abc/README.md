@@ -8,7 +8,7 @@
 
 使用 abcjs 的纯视觉入口，输出五线谱 SVG，不加载 MIDI、音源、播放或乐谱编辑组件。每个代码块仅支持包含 X:、K: 的一首曲子和一张 SVG 页面；长谱请拆分。解析器警告作为预览错误显示，保留源码供修改。深色主题调整前景色，乐谱文字使用系统字体。拒绝外部 include 和嵌入标记。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

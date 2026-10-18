@@ -1,34 +1,34 @@
-# 使用 PlantUML 预览
+# Using PlantUML Preview
 
-最低需要 NoteGen 0.38.3。
+Requires NoteGen 0.38.3 or later.
 
-这是待验证的开发插件，需要本次新增渲染 API 的桌面宿主。本地开发包已生成在 `.notegen/package`；正式安装包尚未发布。
+This development plugin requires the desktop host with the new renderer API. The local development package is available in `.notegen/package`; no installation archive has been published.
 
-1. 在插件设置中启用插件，确认其可读取匹配代码块以生成预览的说明。
-2. 在笔记中使用以下围栏，或打开已有 PlantUML 笔记：
+1. Enable the plugin and review the matching-code-block disclosure.
+2. Open an existing note or insert this fenced block:
 
 ````markdown
 ```plantuml
 @startuml
-Alice -> Bob : 你好
-Bob --> Alice : 收到
+Alice -> Bob : Hello
+Bob --> Alice : Received
 @enduml
 ```
 ````
 
-也可以使用 `puml` 语言名。不要使用单反引号行内代码。源码应包含完整图表起止标记。
+`puml` is also supported. Use a fenced code block, not inline backticks, and include complete diagram markers.
 
-图表进入编辑器可视范围后生成预览。选择“编辑源码”修改内容，再选择“预览”查看图表。编辑器焦点进入代码块时会显示源码，避免编辑隐藏内容。错误会提示原因并显示源码，重试按钮可重新渲染；超时后重试会创建新的隔离渲染实例。
+Previews load near the editor viewport. Use **Edit source**, then **Preview** to switch. Keyboard focus inside a code block reveals its source so edits never target hidden text. Errors reveal source without moving focus; use retry to render again. After a timeout, retry starts a fresh isolated engine.
 
-若同一语言有多个插件提供预览，在图表顶部选择默认渲染器。选择按工作区保存在当前设备上。禁用或卸载插件后，围栏恢复普通代码块，笔记内容不变。
+If several plugins handle the same language, choose a default renderer in the block header. The choice is stored per workspace on this device. Disabling or uninstalling the plugin restores ordinary code blocks without changing the note.
 
-内置主题可使用 `!theme`。本版不支持 `!include`、本地文件、AWS/C4 等外部标准库或联网资源。大图请简化到 32 KiB、1,000 行以内。此版本只提供编辑器预览，Markdown 复制和导出仍保留源码，不承诺 PDF/HTML 图表导出。
+Bundled themes are available with `!theme`. File/network `!include`, local files, external standard libraries such as AWS/C4, and remote resources are not supported. Keep diagrams within 32 KiB and 1,000 lines. This version only previews in the editor; Markdown copying and exports retain source, with no promise of PDF/HTML diagram export.
 
-## 人工验收建议（尚未执行）
+## Suggested manual acceptance (not performed)
 
-- 两个不同图表、重复图表、同笔记分屏和两个窗口分别预览。
-- 编辑、撤销/重做、切换源码/预览，再保存重开，确认围栏和源码完整。
-- 切换明暗主题与中英文，检查错误、空值、长文本和窄窗口。
-- 渲染中禁用插件、切换工作区、重载开发插件或关闭开发者模式，确认旧预览消失。
-- 无效语法、不支持的引用、复杂图和超时后重试；同时检查在其他段落输入的流畅度。
-- 确认不产生外部请求；普通代码块、Mermaid 和已有文档预览保持原行为。
+- Different and duplicate diagrams, split panes and separate windows.
+- Source/preview switching, editing, undo/redo, save/reopen and exact source preservation.
+- Light/dark themes, English/Chinese, errors, empty source, long diagrams and narrow windows.
+- Disable/reload, workspace changes or Developer Mode revocation during rendering; obsolete output disappears.
+- Invalid syntax, unsupported includes, complex diagrams, timeout/retry and typing responsiveness elsewhere in the note.
+- No remote requests; ordinary code blocks, Mermaid and existing document previews retain their behavior.

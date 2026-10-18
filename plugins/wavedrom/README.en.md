@@ -8,7 +8,7 @@ Reads matching code blocks only, with no workspace-file or network access. The h
 
 Uses WaveDrom and JSON5. Supports `signal` waveforms, groups, plain-text titles and edges. Does not use upstream eval-based entry points. Register/assignment diagrams (`reg`/`assign`), custom skins and rich JsonML labels are unsupported. Limits: 64 lanes, 256 wave characters per lane, 12 grouping levels and hscale 1–4. The default skin retains a white canvas in dark editors for readability. The skin is cloned per render and styles are flattened into SVG attributes.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

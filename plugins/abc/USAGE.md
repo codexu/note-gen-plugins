@@ -1,9 +1,9 @@
-# 使用ABC 乐谱
+# Using ABC Sheet Music
 
-已生成本地可导入开发包，位于 `.notegen/package`；尚未进行应用内运行验证或发布。需要包含本次通用代码块 API 的 NoteGen 桌面开发宿主和本地 SDK/CLI。最低需要 NoteGen 0.38.3，以使用通用代码块渲染 API。
+The local importable development package is available in `.notegen/package`; in-app behavior is not verified and nothing is published. Requires the desktop development host with the generic code-block API and the local SDK/CLI. Requires NoteGen 0.38.3 or later for the generic code-block renderer API.
 
-1. 导入 `.notegen/package`，启用插件并确认代码块渲染说明。
-2. 将下列围栏代码块插入笔记：
+1. Import `.notegen/package`, enable the plugin and review the rendering disclosure.
+2. Insert this fenced block into a note:
 
 ````markdown
 ```abc
@@ -16,17 +16,17 @@ C D E F | G A B c | c B A G | F E D C |]
 ```
 ````
 
-仅读取匹配代码块，源码保持在原 Markdown 文档中。按需加载离线引擎，由宿主提供默认预览、源码切换、错误反馈与渲染器选择。源码最多 32 KiB、1,000 行；结果最多 2 MiB，且受宿主图像尺寸限制。仅做编辑器静态预览，不支持移动端或导出承诺。
+Reads matching blocks only and preserves Markdown source. Offline engines load on demand; the host provides preview by default, source switching, errors and renderer selection. Input: 32 KiB / 1,000 lines; output: 2 MiB plus host dimension limits. Static editor preview only, with no mobile support or export guarantee.
 
-使用 abcjs 的纯视觉入口，输出五线谱 SVG，不加载 MIDI、音源、播放或乐谱编辑组件。每个代码块仅支持包含 X:、K: 的一首曲子和一张 SVG 页面；长谱请拆分。解析器警告作为预览错误显示，保留源码供修改。深色主题调整前景色，乐谱文字使用系统字体。拒绝外部 include 和嵌入标记。
+Uses the visual-only abcjs entry for SVG sheet music, without MIDI, soundfonts, playback or score-editor modules. One tune with X:/K: headers and one SVG page per block; split longer scores. Parser warnings are surfaced as preview errors, preserving source for correction. Dark mode adjusts the foreground; score text uses system fonts. External includes and embedded markup are rejected.
 
-使用“编辑源码”和“预览”切换；错误时保留源码，可修正后重试。禁用插件后恢复普通代码块。
+Use **Edit source** and **Preview** to switch. Errors preserve source for correction/retry. Disabling restores ordinary code blocks.
 
-## 手动验收建议（未执行）
+## Suggested manual acceptance (not performed)
 
-- 示例、中文标签、明暗主题、窄窗口与长文档分节模式。
-- 首次加载、重复预览、多张图表的内容与响应速度。
-- 修改、撤销、保存和重开后源码不变。
-- 无效语法、超限输入、外部资源与不支持功能的错误反馈。
-- 禁用/重载插件或切换工作区后旧结果消失；重新启用后恢复。
-- 对照上述格式限制逐项确认；不应产生外部资源请求。
+- Example, Chinese labels, light/dark, narrow windows and sectioned long documents.
+- Cold initialization, repeated previews, multiple diagrams and responsiveness.
+- Edit, undo, save/reopen source preservation.
+- Invalid syntax, oversized input, external resources and unsupported features.
+- Disable/reload and workspace switches clear stale output; re-enabling restores previews.
+- Verify the format-specific limitations above and absence of external resource requests.

@@ -8,7 +8,7 @@ Reads matching blocks only and preserves Markdown source. Offline engines load o
 
 Uses ECharts 6 SVG SSR on a 720×420 canvas. Accepts JSON options only, with no JavaScript, formatter/renderItem callbacks or extension scripts. Supports common static charts; no maps, custom/lines/effectScatter series, external images, links, network data, animation or interaction. Explicit animation/universalTransition must be false. Arrays: 5,000 entries; nesting: 32 levels.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development
 

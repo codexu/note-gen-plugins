@@ -8,7 +8,7 @@
 
 使用官方 @dbml/parse 解析当前代码块，通过 Dagre 在独立 Worker 中布局。显示表名、字段类型、主键/非空标记和外键连线及基数；支持独立 Ref 与行内 ref。最多 50 张表、500 个字段、200 条关系，单行标签最多 100 字符。不访问数据库、不运行 SQL，不加载外部 DBML 文件；注释、记录、索引和分组信息不作为独立图形显示；首期不展开 TablePartial，请直接在表中声明字段。
 
-[使用说明](USAGE.md) · [English](README.en.md)
+[使用说明](USAGE.zh-CN.md) · [English](README.en.md)
 
 ## 开发
 

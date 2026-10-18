@@ -13,7 +13,7 @@ This is development source with a locally built, importable development package.
 
 The browser engine needs SVG DOM measurements and runs in the host's shared opaque iframe. An iframe is not guaranteed to run on another thread; complex-diagram responsiveness still requires desktop validation. The current plugin host supports desktop execution only; this plugin does not declare mobile support.
 
-[Usage](USAGE.en.md) · [中文](README.md)
+[Usage](USAGE.md) · [中文](README.md)
 
 ## Development assets
 
