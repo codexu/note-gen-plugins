@@ -9,16 +9,16 @@ importers:
   .:
     devDependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^0.1.12
+        specifier: workspace:^0.1.14
         version: link:.sdk/packages/plugin-api
       '@notegen/plugin-test':
-        specifier: workspace:^0.1.12
+        specifier: workspace:^0.1.14
         version: link:.sdk/packages/plugin-test
 
   .sdk/packages/create-notegen-plugin:
     dependencies:
       '@notegen/plugin-cli':
-        specifier: workspace:^0.1.12
+        specifier: workspace:^0.1.14
         version: link:../plugin-cli
     devDependencies:
       '@types/node':
@@ -41,7 +41,7 @@ importers:
   .sdk/packages/plugin-cli:
     dependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^0.1.12
+        specifier: workspace:^0.1.14
         version: link:../plugin-api
       canonicalize:
         specifier: ^4.0.0
@@ -87,7 +87,7 @@ importers:
   .sdk/packages/plugin-test:
     dependencies:
       '@notegen/plugin-api':
-        specifier: workspace:^0.1.12
+        specifier: workspace:^0.1.14
         version: link:../plugin-api
     devDependencies:
       '@types/node':
@@ -327,6 +327,18 @@ importers:
       '@notegen/plugin-cli':
         specifier: workspace:^
         version: link:../../.sdk/packages/plugin-cli
+
+  plugins/html-exporter:
+    devDependencies:
+      '@notegen/plugin-api':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-api
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
 
   plugins/markdown-publisher:
     devDependencies:

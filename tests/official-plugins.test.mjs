@@ -389,15 +389,23 @@ test('Official plugin locale files are symmetric and cover manifest and runtime 
       ...Array.from({ length: 7 }, (_, index) => `weekday.${index}`),
     ],
     'editor-statistics': [],
+    'html-exporter': [
+      'template.edit', 'template.new', 'saved', 'savedWithWarnings', 'copied', 'copiedWithWarnings',
+      'exportComplete', 'copyComplete', 'cancelledTitle',
+      'warning.asset-not-embedded', 'warning.unsupported-content', 'warning.highlight-fallback',
+      'warning.additional-warnings', 'warning.rich-text-css-omitted', 'warning.rich-text-math-fallback',
+      'warning.rich-text-script-omitted', 'warning.rich-text-content-omitted',
+    ],
   }
 
-  for (const name of ['daily-notes', 'editor-statistics']) {
+  for (const name of ['daily-notes', 'editor-statistics', 'html-exporter']) {
     const directory = new URL(`../plugins/${name}/`, import.meta.url)
     const manifest = JSON.parse(await readFile(new URL('plugin.json', directory), 'utf8'))
     const source = await readFile(new URL('src/main.ts', directory), 'utf8')
     const requiredKeys = new Set([
       ...collectManifestLocaleKeys(manifest),
       ...collectLiteralRuntimeLocaleKeys(source),
+      ...(name === 'html-exporter' ? [...source.matchAll(/\bt\(\s*(['"])([^'"]+)\1/gu)].map(match => match[2]) : []),
       ...dynamicRuntimeKeys[name],
     ])
     const messagesByLocale = await Promise.all(

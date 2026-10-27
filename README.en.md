@@ -20,6 +20,7 @@ release tooling.
 | [Daily Notes](plugins/daily-notes) | `top.notegen.daily-notes` | Open or create a note for the current logical day |
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | Show local Markdown writing statistics in the status bar |
 | [WeChat Article Formatter](plugins/markdown-publisher) | `top.notegen.markdown-publisher` | Article templates, WeChat rich-text copying and HTML export |
+| [Advanced HTML Export](plugins/html-exporter) | `top.notegen.html-exporter` | Use templates to export HTML or copy source and rich text (requires NoteGen 0.39.1 and plugin protocol 0.1.12) |
 | [Document Preview](plugins/document-preview) | `top.notegen.document-preview` | Offline PDF, DOCX, XLSX and PPTX previews |
 | [Related Notes](plugins/unlinked-mentions) | `top.notegen.unlinked-mentions` | Find matching and related notes for selected text, then create a link (requires NoteGen 0.38.0) |
 | [Iconize](plugins/iconize) | `top.notegen.iconize` | File and folder icons or Emoji |

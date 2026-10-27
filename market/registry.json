@@ -201,6 +201,26 @@
       }
     },
     {
+      "directory": "plugins/html-exporter",
+      "categories": [
+        "editor",
+        "productivity"
+      ],
+      "featured": false,
+      "official": true,
+      "changelog": "HTML 高级导出支持多个 CSS 和 JavaScript 模板，可通过弹窗导出文件、复制 HTML 源码或复制富文本。最低需要支持插件协议 0.1.12 的 NoteGen 0.39.1。",
+      "localizations": {
+        "en": {
+          "name": "Advanced HTML Export",
+          "description": "Choose CSS and JavaScript templates to export HTML or copy source and rich text."
+        },
+        "zh-CN": {
+          "name": "HTML 高级导出",
+          "description": "选择 CSS 和 JavaScript 模板，导出 HTML 或复制源码和富文本。"
+        }
+      }
+    },
+    {
       "directory": "plugins/markdown-publisher",
       "categories": [
         "editor",

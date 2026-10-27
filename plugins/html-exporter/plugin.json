@@ -1,0 +1,63 @@
+{
+  "manifestVersion": 1,
+  "id": "top.notegen.html-exporter",
+  "name": "%name%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "apiVersion": "^0.1.12",
+  "minAppVersion": "0.39.1",
+  "platforms": ["desktop"],
+  "entry": "dist/main.js",
+  "activationEvents": [
+    "onWorkspace:open",
+    "onCommand:top.notegen.html-exporter.open",
+    "onCommand:top.notegen.html-exporter.action",
+    "onCommand:top.notegen.html-exporter.delete-confirm",
+    "onCommand:top.notegen.html-exporter.delete-cancel"
+  ],
+  "permissions": {
+    "editor.read": {
+      "scope": "active-editor",
+      "description": "%permission.read%"
+    },
+    "files.export": {
+      "scope": "application",
+      "description": "%permission.export%"
+    },
+    "clipboard.write": {
+      "scope": "application",
+      "optional": true,
+      "description": "%permission.clipboard%"
+    },
+    "attachments.read": {
+      "scope": "workspace-folder",
+      "optional": true,
+      "description": "%permission.images%"
+    }
+  },
+  "contributes": {
+    "commands": [
+      { "id": "top.notegen.html-exporter.open", "title": "%command.open%", "icon": "code" },
+      { "id": "top.notegen.html-exporter.action", "title": "%command.action%", "icon": "code" },
+      { "id": "top.notegen.html-exporter.delete-confirm", "title": "%command.delete-confirm%", "icon": "trash-2" },
+      { "id": "top.notegen.html-exporter.delete-cancel", "title": "%command.delete-cancel%", "icon": "x" }
+    ],
+    "statusBar": [
+      { "id": "top.notegen.html-exporter.status", "alignment": "right", "priority": 100, "command": "top.notegen.html-exporter.open" }
+    ],
+    "views": [
+      { "id": "top.notegen.html-exporter.settings", "title": "%name%", "location": "settings", "icon": "code" }
+    ]
+  },
+  "defaultLocale": "en",
+  "locales": {
+    "en": "locales/en.json",
+    "zh-CN": "locales/zh-CN.json"
+  },
+  "author": {
+    "name": "NoteGen",
+    "url": "https://notegen.top"
+  },
+  "repository": "https://github.com/codexu/note-gen-plugins",
+  "license": "GPL-3.0-or-later"
+}

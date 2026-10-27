@@ -17,6 +17,7 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [Daily Notes](plugins/daily-notes) | `top.notegen.daily-notes` | 按当前逻辑日期打开或创建每日笔记 |
 | [Editor Statistics](plugins/editor-statistics) | `top.notegen.editor-statistics` | 在状态栏显示本地 Markdown 写作统计 |
 | [公众号排版与导出](plugins/markdown-publisher) | `top.notegen.markdown-publisher` | 文章模板、公众号富文本复制和 HTML 导出 |
+| [HTML 高级导出](plugins/html-exporter) | `top.notegen.html-exporter` | 使用模板导出 HTML、复制源码或富文本（需要 NoteGen 0.39.1 和插件协议 0.1.12） |
 | [文档预览](plugins/document-preview) | `top.notegen.document-preview` | 离线预览 PDF、DOCX、XLSX 和 PPTX |
 | [终端](plugins/terminal) | `top.notegen.terminal` | 在独立标签页运行交互式终端（需要 NoteGen 0.38.0） |
 | [关联笔记](plugins/unlinked-mentions) | `top.notegen.unlinked-mentions` | 根据选中文字查找匹配与相关笔记，并建立链接（需要 NoteGen 0.38.0） |
