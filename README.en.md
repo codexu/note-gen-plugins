@@ -343,3 +343,10 @@ When changing an entry, update its manifest, both README translations, and bundl
 ## Community submissions
 
 The registration and independent-package publication path is implemented. See [Submit a community plugin](community/README.en.md) for the format, PR workflow, updates, key rotation, and revocation. Production opening remains pending protected-branch/environment setup and real-client acceptance. Merge registers a plugin; a maintainer must dispatch the release workflow on main.
+
+## Plugin download statistics
+
+A daily GitHub Actions workflow aggregates CDN offline logs into a separate
+`stats.json`. See [statistics setup](docs/plugin-download-statistics.en.md) for
+Alibaba Cloud permissions, GitHub configuration, initial backfill and recovery.
+NoteGen client display is not yet connected.

@@ -364,3 +364,9 @@ Re-run jobs，以保留原源码提交；定时任务也会复用同一 run ID �
 ## 社区插件投稿入口
 
 已提供社区登记和独立签名包发布链路，见 [社区插件投稿](community/README.md)。作者通过 PR 修改 `community/registry.json`，审核合并后由维护者在 main 手动发布。生产开放仍需配置分支/环境保护并完成真实客户端验收；合并不等于上架。
+
+## 插件下载量统计
+
+已提供每日汇总 CDN 离线日志的 GitHub Actions 工作流，输出独立的 `stats.json`。
+阿里云最小权限、GitHub 环境变量、首次回填与恢复步骤见
+[下载量统计配置](docs/plugin-download-statistics.zh-CN.md)。当前尚未接入 NoteGen 客户端展示。
