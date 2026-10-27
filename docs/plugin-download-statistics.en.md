@@ -7,6 +7,10 @@ Runs daily at 04:37 UTC (12:37 Asia/Shanghai), rechecking seven previous days
 and completed hours of the current day. GitHub may delay scheduled execution.
 This implements collection and publication only; NoteGen does not yet display these metrics.
 
+The workflow pins Python 3.11 for the legacy TLS implementation bundled in the
+current Alibaba Cloud SDK, avoiding SNI detection problems as the runner's
+default Python changes. Unbuffered output shows counts after each log is processed.
+
 ## Counting rules
 
 - Count GET requests returning HTTP 200 for known plugin IDs and SemVer package
@@ -135,8 +139,7 @@ public repositories; manually backfill after reenabling.
 
 ## First run and manual acceptance
 
-These steps are for the maintainer after configuration. No cloud task or check
-was executed as part of this implementation.
+These steps are for the maintainer after initial configuration.
 
 1. Actions → **Collect plugin download statistics** → Run workflow on `main`.
    Set `lookback_days=29` and leave `dry_run=true`. Check parsed line counts and

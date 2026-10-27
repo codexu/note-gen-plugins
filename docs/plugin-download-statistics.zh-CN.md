@@ -7,6 +7,10 @@
 7 天及当天已结束的小时。GitHub Actions 定时执行可能延迟。
 当前只实现统计与发布数据，NoteGen 客户端尚未接入展示。
 
+工作流固定使用 Python 3.11，兼容当前阿里云 SDK 内置的旧版 TLS 实现，
+避免随 runner 默认 Python 升级出现 SNI 检测异常。日志输出不使用缓冲，
+每处理完一份日志即可在 Actions 中查看计数。
+
 ## 统计口径
 
 - 只统计配置域名 `/plugins/v1/packages/` 下、文件名对应已知插件 ID 和
@@ -131,7 +135,7 @@ GitHub 可能因公共仓库长期无活动而停用定时工作流，恢复后�
 
 ## 首次运行与人工验收
 
-以下步骤由维护者配置后执行；本次实现未运行云端任务或检查。
+以下步骤由维护者在首次配置后执行。
 
 1. Actions → **Collect plugin download statistics** → Run workflow，选择 `main`，
    设置 `lookback_days=29`，保留 `dry_run=true`。确认读取日志成功，输出各日志行数和增量。
