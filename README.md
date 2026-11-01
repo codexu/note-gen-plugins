@@ -22,6 +22,10 @@ NoteGen 官方插件源码与静态插件市场发布工具的维护仓库。
 | [终端](plugins/terminal) | `top.notegen.terminal` | 在独立标签页运行交互式终端（需要 NoteGen 0.38.0） |
 | [关联笔记](plugins/unlinked-mentions) | `top.notegen.unlinked-mentions` | 根据选中文字查找匹配与相关笔记，并建立链接（需要 NoteGen 0.38.0） |
 | [文件图标](plugins/iconize) | `top.notegen.iconize` | 为文件和文件夹设置图标或 Emoji |
+| [日语语言包](plugins/language-pack-ja) | `top.notegen.language-pack-ja` | 添加日语界面（由原内置语言迁移） |
+| [巴西葡萄牙语语言包](plugins/language-pack-pt-br) | `top.notegen.language-pack-pt-br` | 添加巴西葡萄牙语界面（由原内置语言迁移） |
+| [繁体中文语言包](plugins/language-pack-zh-tw) | `top.notegen.language-pack-zh-tw` | 添加繁体中文界面（由原内置语言迁移） |
+| [德语语言包](plugins/language-pack-de) | `top.notegen.language-pack-de` | 添加德语界面（由原内置语言迁移） |
 | [韩语语言包](plugins/language-pack-ko) | `top.notegen.language-pack-ko` | 添加韩语界面 |
 | [俄语语言包](plugins/language-pack-ru) | `top.notegen.language-pack-ru` | 添加俄语界面（译文仍需母语校对） |
 | [动态模板](plugins/templates) | `top.notegen.templates` | Markdown 动态模板和自定义字段 |

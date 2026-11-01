@@ -1,0 +1,51 @@
+{
+  "locale": "ja",
+  "sourceRepository": "https://github.com/codexu/note-gen",
+  "sourceCommit": "257f20dc6846aef72eb656d7d3c1cb280b0c3a28",
+  "snapshotDate": "2026-11-01",
+  "baselineAuthority": "messages/zh.json + messages/common/zh.json; English source at the same commit",
+  "sourceMessageCount": 5168,
+  "providedMessageCount": 5168,
+  "fallbackMessageKeys": [],
+  "sourceFileSha256": {
+    "messages/en.json": "57a1b38e67fb9697bf109e31741e266e4881d2fb8665056dc7413e476a817cf2",
+    "messages/zh.json": "8ff08a44b03eab781f6a637f851ed08990891d681622e7cd0fd10dc673aa871f",
+    "messages/common/en.json": "a8e3c1fe4af635ee2e64ead489e5d0d8c1d8343fa916150eec14f2f4e01ec6da",
+    "messages/common/zh.json": "422de62bf9141bf80771127029e164ac5c8f8f17c0c7e38f712bc06878087d55"
+  },
+  "literalCodeMessageKeys": [
+    "settings.editor.mermaid.templates.flowchart",
+    "settings.editor.mermaid.templates.sequence",
+    "settings.editor.mermaid.templates.classDiagram",
+    "settings.editor.mermaid.templates.stateDiagram",
+    "settings.editor.mermaid.templates.er",
+    "settings.editor.mermaid.templates.gantt",
+    "settings.editor.mermaid.templates.pie",
+    "settings.editor.mermaid.templates.journey",
+    "editor.mermaid.templates.flowchart",
+    "editor.mermaid.templates.sequence",
+    "editor.mermaid.templates.classDiagram",
+    "editor.mermaid.templates.stateDiagram",
+    "editor.mermaid.templates.er",
+    "editor.mermaid.templates.gantt",
+    "editor.mermaid.templates.pie",
+    "editor.mermaid.templates.journey"
+  ],
+  "literalReplacementMarkers": {
+    "editor.slashCommand.imageUpload.savePath": [
+      "__PATH__"
+    ]
+  },
+  "translationMethod": "Migrated existing built-in translations; authored missing messages and retained source code examples and runtime markers.",
+  "reviewStatus": "Field coverage, ICU syntax/argument signatures, host registration/fallback/lifecycle logic, manifest validation, plugin build/pack and host production build passed on 2026-11-01. Desktop UI acceptance and native-language review remain pending.",
+  "verification": {
+    "date": "2026-11-01",
+    "hostVersion": "0.39.1",
+    "fields": 5168,
+    "missing": 0,
+    "extra": 0,
+    "icuErrors": 0,
+    "desktopUiAcceptance": "pending: computer-use cannot attach to the current unbundled development process",
+    "nativeLanguageReview": "pending"
+  }
+}

@@ -1,21 +1,24 @@
 {
   "locale": "ru",
   "sourceRepository": "https://github.com/codexu/note-gen",
-  "sourceCommit": "3284534d3e5ea12abf0c7de5981d4cca2c26f62c",
-  "snapshotDate": "2026-09-29",
-  "baselineAuthority": "Committed messages/zh.json + messages/common/zh.json; English source at the same commit",
-  "sourceMessageCount": 4390,
-  "providedMessageCount": 4388,
-  "fallbackMessageKeys": [
-    "settings.editor.mermaid.templates.er",
-    "editor.mermaid.templates.er"
-  ],
-  "fallbackReason": "The host parses the Chinese baseline as ICU. Literal o{ in these Mermaid ER examples is not a valid ICU argument. Inherit these code examples rather than redeclaring them.",
+  "sourceCommit": "257f20dc6846aef72eb656d7d3c1cb280b0c3a28",
+  "snapshotDate": "2026-11-01",
+  "baselineAuthority": "messages/zh.json + messages/common/zh.json; English source at the same commit",
+  "sourceMessageCount": 5168,
+  "providedMessageCount": 5168,
+  "fallbackMessageKeys": [],
+  "sourceFileSha256": {
+    "messages/en.json": "57a1b38e67fb9697bf109e31741e266e4881d2fb8665056dc7413e476a817cf2",
+    "messages/zh.json": "8ff08a44b03eab781f6a637f851ed08990891d681622e7cd0fd10dc673aa871f",
+    "messages/common/en.json": "a8e3c1fe4af635ee2e64ead489e5d0d8c1d8343fa916150eec14f2f4e01ec6da",
+    "messages/common/zh.json": "422de62bf9141bf80771127029e164ac5c8f8f17c0c7e38f712bc06878087d55"
+  },
   "literalCodeMessageKeys": [
     "settings.editor.mermaid.templates.flowchart",
     "settings.editor.mermaid.templates.sequence",
     "settings.editor.mermaid.templates.classDiagram",
     "settings.editor.mermaid.templates.stateDiagram",
+    "settings.editor.mermaid.templates.er",
     "settings.editor.mermaid.templates.gantt",
     "settings.editor.mermaid.templates.pie",
     "settings.editor.mermaid.templates.journey",
@@ -23,6 +26,7 @@
     "editor.mermaid.templates.sequence",
     "editor.mermaid.templates.classDiagram",
     "editor.mermaid.templates.stateDiagram",
+    "editor.mermaid.templates.er",
     "editor.mermaid.templates.gantt",
     "editor.mermaid.templates.pie",
     "editor.mermaid.templates.journey"
@@ -32,13 +36,16 @@
       "__PATH__"
     ]
   },
-  "sourceFileSha256": {
-    "messages/en.json": "7db1405099dc195a31a12c485121657991f152e9d712d3ab1004b3730d4e2c06",
-    "messages/zh.json": "5d602901b66dc630e465159b2a333345596fec93a2fa3c32ae09822966b53db7",
-    "messages/common/en.json": "45c75daaa51a248f5888ca230e9e1944849bc565dae3a0a7756ec249c93b6cea",
-    "messages/common/zh.json": "371e62a048883e4385d0c09772a7d855b13be226c94b3359ddb72d11954db6c9"
-  },
-  "translationMethod": "Local Argos en-ru 1.9 machine-assisted draft with authored parameterized messages, Russian plural forms and revisions to common UI terminology. The translation model and authoring scripts are not shipped.",
-  "translationModelSource": "https://github.com/argosopentech/argospm-index/blob/main/index.json",
-  "reviewStatus": "Machine-assisted draft. Native Russian review and manual desktop acceptance are pending."
+  "translationMethod": "Preserved existing translations; local Argos en-ru 1.9 assisted draft for new messages, with authored parameterized messages, terminology and safety-related revisions.",
+  "reviewStatus": "Field coverage, ICU syntax/argument signatures, host registration/fallback/lifecycle logic, manifest validation, plugin build/pack and host production build passed on 2026-11-01. Desktop UI acceptance and native-language review remain pending.",
+  "verification": {
+    "date": "2026-11-01",
+    "hostVersion": "0.39.1",
+    "fields": 5168,
+    "missing": 0,
+    "extra": 0,
+    "icuErrors": 0,
+    "desktopUiAcceptance": "pending: computer-use cannot attach to the current unbundled development process",
+    "nativeLanguageReview": "pending"
+  }
 }

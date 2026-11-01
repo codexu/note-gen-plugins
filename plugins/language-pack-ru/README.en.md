@@ -1,37 +1,34 @@
 # Russian Language Pack
 
-[简体中文](README.md) · [Русский: инструкция](USAGE.ru.md)
+[简体中文](README.md) · [Usage](USAGE.md) · [中文使用说明](USAGE.zh-CN.md)
 
-An independent NoteGen interface language pack. After installation and activation, open Settings → General Settings → Interface Settings → Language and select **Русский**. The host refreshes interface messages while retaining all built-in language options.
+Adds **Русский** to NoteGen. Version `0.1.1` supplies declarative language resources without executable scripts, permissions, network requests or runtime dependencies.
 
-This is the **0.1.0 initial release**. Translations began as a local machine-assisted draft, with revisions to common UI terminology, parameterized messages and technical terms. Native Russian review and desktop acceptance remain pending.
+## Install and switch
 
-| Item | Value |
-| --- | --- |
-| Plugin ID | `top.notegen.language-pack-ru` |
-| Workspace package | `@notegen/plugin-language-pack-ru` |
-| Locale / language label | `ru` / Русский |
-| Minimum host | NoteGen 0.37.1 with language resource protocol 0.1.2 |
-| Platform | Desktop |
-| Permissions / runtime script | None / none |
+Install and enable the pack in the current workspace, then open Settings → General Settings → Interface Settings → Language and choose **Русский**. Only Simplified Chinese and English are built in; other interface languages are independent plugins.
+
+Requires a NoteGen host containing this language migration and the unchanged-literal template validation fix. The manifest minimum is `0.39.1`; an older build bearing that version may lack the fix. Confirm the actual minimum host version before release. Language resource protocol `0.1.2` is unchanged. Desktop only: mobile message fields are retained but do not imply mobile installation support.
 
 ## Coverage and maintenance
 
-`messages/ru.json` follows the host's nested message structure, including `common`. It covers common actions, settings, plugin management, the editor, records, AI chat, files, sync, retrieval, canvas and windows. Mobile messages are included as data, but language resources currently register only on desktop. The pack's own name and description are available in English, Simplified Chinese and Russian.
+`messages/ru.json` provides all **5,168 string fields** from the current host baseline, including `common`. It covers settings, records, tags, AI chat, the editor, files, sync, canvases, plugin management and windows. See [translation-baseline.json](translation-baseline.json) for the source commit, hashes and review status.
 
-The baseline is committed host revision `3284534d3e5ea12abf0c7de5981d4cca2c26f62c`, excluding uncommitted host changes. The pack provides 4,388 of 4,390 string fields. [translation-baseline.json](translation-baseline.json) records source hashes, the commit, exceptions and review status. Coverage is not evidence of runtime acceptance or a full native-language review.
+Existing translations retained; new plain messages drafted locally with Argos en-ru 1.9, with authored parameter messages and revisions to terminology and critical data-operation notices. Field coverage, ICU argument checks, host registration and fallback logic, plugin build/pack and the host production build passed on 2026-11-01. Desktop UI acceptance and native-language review remain pending.
 
-- Count messages use Russian ICU `one`, `few`, `many` and `other` forms, or wording such as “Количество: {count}” that avoids inflection. Parameter names and code identifiers are preserved.
-- `editor.slashCommand.imageUpload.savePath` retains the host's literal `__PATH__` replacement marker.
-- `settings.editor.mermaid.templates.er` and `editor.mermaid.templates.er` inherit the host examples. Their Chinese baseline contains literal `o{`, which the host ICU validator interprets as an invalid argument. Other Mermaid templates retain the executable English examples.
-- New or missing host fields fall back to Simplified Chinese. Other plugins own their translations; this pack does not translate their messages.
-- The authoring model, cache and scripts are not shipped. Using the pack needs no translation model, network connection or additional runtime dependencies.
+- Preserve ICU argument names and compatible plural structures.
+- Mermaid templates use unchanged host code, including literal braces in ER examples. Code samples are not natural-language translations. The host must support registration of unchanged literal templates.
+- Keep the runtime `__PATH__` replacement marker in image-save messages.
+- Future untranslated fields fall back to built-in English, then Simplified Chinese. Other plugins maintain their own translations.
+- This pack does not read or translate notes or change AI response languages. Authoring tools and translation models are not shipped.
 
-For updates, use the Chinese host tree and parameter names as the authority and the English messages from the same revision as the translation source. Update the baseline metadata and document unreviewed or fallback areas instead of counting untranslated English copies as Russian coverage.
+## Lifecycle
 
-## Building and developer import
+Disabling or uninstalling the pack removes its language option. Without another provider for the same language, the interface temporarily uses the default Simplified Chinese while preserving the saved language preference. Re-enabling restores it. Restarting and switching workspaces follow the current workspace’s enabled plugins. For overlapping translations, the lexically earlier plugin ID wins.
 
-This package uses the workspace's `@notegen/plugin-cli` and `.sdk` configuration. The existing `plugins/*` workspace glob includes it. Run these from the plugin repository:
+## Developer import
+
+From the plugin repository (executed in this testing stage):
 
 ```bash
 pnpm --filter @notegen/plugin-language-pack-ru build
@@ -39,19 +36,8 @@ pnpm --filter @notegen/plugin-language-pack-ru validate
 pnpm --filter @notegen/plugin-language-pack-ru run plugin:pack
 ```
 
-Developer import uses the generated `.notegen/package` and requires Developer Mode in NoteGen. The source directory itself is not an installable package. The minimum version alone does not guarantee that an older host implements the required resource protocol.
+Enable Developer Mode in NoteGen and import the generated `.notegen/package`. The source directory is not a published installable package. Marketplace registration prepares metadata only; packaging, signing and publishing remain separate.
 
-## Lifecycle and acceptance
+## Pending acceptance
 
-Resources register while the plugin is enabled in the current workspace. Disabling or uninstalling the last Russian provider restores the built-in default, Simplified Chinese, while retaining the saved `ru` choice for re-enablement. If several packs provide Russian, the lexically earlier plugin ID wins on overlapping keys. This pack does not read, modify or translate note content, or change the output language of AI models.
-
-Pending manual acceptance:
-
-1. Build, import and enable the pack; choose Русский and inspect navigation, Save/Cancel, the editor and plugin settings.
-2. Inspect long Russian text in narrow windows, sidebars and dialogs.
-3. Check counts 1, 2, 5, 11, 21, 22 and 25, plus dynamic paths, names and error messages.
-4. Switch to a built-in language and back; inspect restart, workspace switching, disable/uninstall and re-enable behavior.
-5. Inspect missing-field fallback, Mermaid examples, image save paths and overlapping language providers.
-6. Obtain native Russian review, particularly for permissions, destructive/sync actions and AI instructions, and revise the translations accordingly.
-
-These manual acceptance steps remain pending. Mobile execution is not supported.
+Check installation, activation, selection, restart, workspace switching, disable and uninstall behavior; inspect long text, interpolation, counts, Mermaid samples, image paths and missing-field fallback. Review destructive-operation notices for accurate data effects. Complete native review and host compatibility confirmation before release.

@@ -316,6 +316,30 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
+  plugins/language-pack-ja:
+    devDependencies:
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+
+  plugins/language-pack-pt-br:
+    devDependencies:
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+
+  plugins/language-pack-zh-tw:
+    devDependencies:
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+
+  plugins/language-pack-de:
+    devDependencies:
+      '@notegen/plugin-cli':
+        specifier: workspace:^
+        version: link:../../.sdk/packages/plugin-cli
+
   plugins/language-pack-ko:
     devDependencies:
       '@notegen/plugin-cli':

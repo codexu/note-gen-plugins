@@ -3,9 +3,9 @@
   "id": "top.notegen.language-pack-ru",
   "name": "%name%",
   "description": "%description%",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "apiVersion": "^0.1.2",
-  "minAppVersion": "0.37.1",
+  "minAppVersion": "0.39.1",
   "platforms": [
     "desktop"
   ],

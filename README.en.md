@@ -24,6 +24,10 @@ release tooling.
 | [Document Preview](plugins/document-preview) | `top.notegen.document-preview` | Offline PDF, DOCX, XLSX and PPTX previews |
 | [Related Notes](plugins/unlinked-mentions) | `top.notegen.unlinked-mentions` | Find matching and related notes for selected text, then create a link (requires NoteGen 0.38.0) |
 | [Iconize](plugins/iconize) | `top.notegen.iconize` | File and folder icons or Emoji |
+| [Japanese Language Pack](plugins/language-pack-ja) | `top.notegen.language-pack-ja` | Japanese interface translations migrated from the host |
+| [Brazilian Portuguese Language Pack](plugins/language-pack-pt-br) | `top.notegen.language-pack-pt-br` | Brazilian Portuguese interface translations migrated from the host |
+| [Traditional Chinese Language Pack](plugins/language-pack-zh-tw) | `top.notegen.language-pack-zh-tw` | Traditional Chinese interface translations migrated from the host |
+| [German Language Pack](plugins/language-pack-de) | `top.notegen.language-pack-de` | German interface translations migrated from the host |
 | [Korean Language Pack](plugins/language-pack-ko) | `top.notegen.language-pack-ko` | Korean interface translations |
 | [Russian Language Pack](plugins/language-pack-ru) | `top.notegen.language-pack-ru` | Add Russian to the interface (translations still need native review) |
 | [Dynamic Templates](plugins/templates) | `top.notegen.templates` | Markdown templates and custom fields |

@@ -110,7 +110,7 @@
       ],
       "featured": true,
       "official": true,
-      "changelog": "首次发布：为 NoteGen 添加韩语界面，插件介绍和使用说明提供中英文。 最低需要 NoteGen 0.37.1，并满足对应插件 API 要求。",
+      "changelog": "补齐韩语界面文案至当前宿主的 5,168 个字段，保留参数、代码示例和路径标记。需要包含本次语言资源修复的 NoteGen 宿主；尚未完成运行验收。",
       "localizations": {
         "en": {
           "name": "Korean Language Pack",
@@ -129,7 +129,7 @@
       ],
       "featured": false,
       "official": true,
-      "changelog": "首次发布俄语界面语言包；译文经机器辅助起稿，仍欢迎俄语母语用户校对。桌面端最低需要 NoteGen 0.37.1。",
+      "changelog": "补齐俄语界面文案至当前宿主的 5,168 个字段，保留参数、代码示例和路径标记。需要包含本次语言资源修复的 NoteGen 宿主；尚未完成运行验收。",
       "localizations": {
         "en": {
           "name": "Russian Language Pack",
@@ -499,6 +499,82 @@
           "description": "离线预览 Nomnoml 文本 UML 图。"
         }
       }
+    },
+    {
+      "directory": "plugins/language-pack-ja",
+      "categories": [
+        "language"
+      ],
+      "featured": false,
+      "official": true,
+      "localizations": {
+        "en": {
+          "name": "Japanese Language Pack",
+          "description": "Add Japanese to the NoteGen interface."
+        },
+        "zh-CN": {
+          "name": "日语语言包",
+          "description": "为 NoteGen 界面添加日语支持。"
+        }
+      },
+      "changelog": "迁移原内置日语界面文案至当前宿主的 5,168 个字段，保留参数、代码示例和路径标记。需要包含本次语言资源修复的 NoteGen 宿主；尚未完成运行验收。"
+    },
+    {
+      "directory": "plugins/language-pack-pt-br",
+      "categories": [
+        "language"
+      ],
+      "featured": false,
+      "official": true,
+      "localizations": {
+        "en": {
+          "name": "Brazilian Portuguese Language Pack",
+          "description": "Add Brazilian Portuguese to the NoteGen interface."
+        },
+        "zh-CN": {
+          "name": "巴西葡萄牙语语言包",
+          "description": "为 NoteGen 界面添加巴西葡萄牙语支持。"
+        }
+      },
+      "changelog": "迁移原内置巴西葡萄牙语界面文案至当前宿主的 5,168 个字段，保留参数、代码示例和路径标记。需要包含本次语言资源修复的 NoteGen 宿主；尚未完成运行验收。"
+    },
+    {
+      "directory": "plugins/language-pack-zh-tw",
+      "categories": [
+        "language"
+      ],
+      "featured": false,
+      "official": true,
+      "localizations": {
+        "en": {
+          "name": "Traditional Chinese Language Pack",
+          "description": "Add Traditional Chinese to the NoteGen interface."
+        },
+        "zh-CN": {
+          "name": "繁体中文语言包",
+          "description": "为 NoteGen 界面添加繁体中文支持。"
+        }
+      },
+      "changelog": "迁移原内置繁体中文界面文案至当前宿主的 5,168 个字段，保留参数、代码示例和路径标记。需要包含本次语言资源修复的 NoteGen 宿主；尚未完成运行验收。"
+    },
+    {
+      "directory": "plugins/language-pack-de",
+      "categories": [
+        "language"
+      ],
+      "featured": false,
+      "official": true,
+      "localizations": {
+        "en": {
+          "name": "German Language Pack",
+          "description": "Add German to the NoteGen interface."
+        },
+        "zh-CN": {
+          "name": "德语语言包",
+          "description": "为 NoteGen 界面添加德语支持。"
+        }
+      },
+      "changelog": "迁移原内置德语界面文案至当前宿主的 5,168 个字段，保留参数、代码示例和路径标记。需要包含本次语言资源修复的 NoteGen 宿主；尚未完成运行验收。"
     }
   ]
 }
