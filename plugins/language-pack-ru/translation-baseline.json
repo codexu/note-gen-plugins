@@ -5,8 +5,11 @@
   "snapshotDate": "2026-11-01",
   "baselineAuthority": "messages/zh.json + messages/common/zh.json; English source at the same commit",
   "sourceMessageCount": 5168,
-  "providedMessageCount": 5168,
-  "fallbackMessageKeys": [],
+  "providedMessageCount": 5166,
+  "fallbackMessageKeys": [
+    "settings.editor.mermaid.templates.er",
+    "editor.mermaid.templates.er"
+  ],
   "sourceFileSha256": {
     "messages/en.json": "57a1b38e67fb9697bf109e31741e266e4881d2fb8665056dc7413e476a817cf2",
     "messages/zh.json": "8ff08a44b03eab781f6a637f851ed08990891d681622e7cd0fd10dc673aa871f",
@@ -18,7 +21,6 @@
     "settings.editor.mermaid.templates.sequence",
     "settings.editor.mermaid.templates.classDiagram",
     "settings.editor.mermaid.templates.stateDiagram",
-    "settings.editor.mermaid.templates.er",
     "settings.editor.mermaid.templates.gantt",
     "settings.editor.mermaid.templates.pie",
     "settings.editor.mermaid.templates.journey",
@@ -26,7 +28,6 @@
     "editor.mermaid.templates.sequence",
     "editor.mermaid.templates.classDiagram",
     "editor.mermaid.templates.stateDiagram",
-    "editor.mermaid.templates.er",
     "editor.mermaid.templates.gantt",
     "editor.mermaid.templates.pie",
     "editor.mermaid.templates.journey"
@@ -37,15 +38,18 @@
     ]
   },
   "translationMethod": "Preserved existing translations; local Argos en-ru 1.9 assisted draft for new messages, with authored parameterized messages, terminology and safety-related revisions.",
-  "reviewStatus": "Field coverage, ICU syntax/argument signatures, host registration/fallback/lifecycle logic, manifest validation, plugin build/pack and host production build passed on 2026-11-01. Desktop UI acceptance and native-language review remain pending.",
+  "reviewStatus": "Field coverage, ICU syntax/argument signatures, the released NoteGen 0.39.1 language override validator, current development host lifecycle/fallback logic, manifest validation, build and pack passed on 2026-11-01. Two raw ER code templates inherit host values. Desktop UI acceptance and native-language review remain pending.",
   "verification": {
     "date": "2026-11-01",
-    "hostVersion": "0.39.1",
-    "fields": 5168,
-    "missing": 0,
+    "releasedHostVersion": "0.39.1",
+    "releasedHostCommit": "d0c382a5f99ab56e9552a0d97ce8feaefc0fad4f",
+    "providedFields": 5166,
+    "inheritedCodeTemplates": 2,
+    "missingUiMessages": 0,
     "extra": 0,
     "icuErrors": 0,
-    "desktopUiAcceptance": "pending: computer-use cannot attach to the current unbundled development process",
+    "desktopUiAcceptance": "pending",
     "nativeLanguageReview": "pending"
-  }
+  },
+  "fallbackReason": "Inherit the two unchanged Mermaid ER code templates from the host. Their literal o{ syntax is not valid ICU and NoteGen 0.39.1 parses both the override and its Chinese baseline; omitting these code examples preserves compatibility without losing translated UI messages."
 }

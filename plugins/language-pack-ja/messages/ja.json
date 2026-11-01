@@ -1298,7 +1298,6 @@
           "sequence": "sequenceDiagram\n    participant Alice\n    participant Bob\n    Alice->>Bob: 你好\n    Bob-->>Alice: 回复",
           "classDiagram": "classDiagram\n    Animal <|-- Duck\n    Animal <|-- Fish\n    Animal : +int age\n    Animal : +String gender",
           "stateDiagram": "stateDiagram-v2\n    [*] --> Active\n    Active --> [*]",
-          "er": "erDiagram\n    CUSTOMER ||--o{ ORDER : places\n    CUSTOMER ||--o{ DELIVERY-ADDRESS : uses",
           "gantt": "gantt\n    title 项目计划\n    dateFormat YYYY-MM-DD\n    section 第一阶段\n    任务1 :a1, 2024-01-01, 30d\n    section 第二阶段\n    任务2 :after a1, 20d",
           "pie": "pie title 资源分配\n    \"CPU\" : 45\n    \"内存\" : 30\n    \"存储\" : 25",
           "journey": "journey\n    title 我的日常工作\n    section 上午\n    通勤 : 7:00, 5\n    工作 : 9:00, 8"
@@ -6349,7 +6348,6 @@
         "sequence": "sequenceDiagram\n    participant Alice\n    participant Bob\n    Alice->>Bob: 你好\n    Bob-->>Alice: 回复",
         "classDiagram": "classDiagram\n    Animal <|-- Duck\n    Animal <|-- Fish\n    Animal : +int age\n    Animal : +String gender",
         "stateDiagram": "stateDiagram-v2\n    [*] --> Active\n    Active --> [*]",
-        "er": "erDiagram\n    CUSTOMER ||--o{ ORDER : places\n    CUSTOMER ||--o{ DELIVERY-ADDRESS : uses",
         "gantt": "gantt\n    title 项目计划\n    dateFormat YYYY-MM-DD\n    section 第一阶段\n    任务1 :a1, 2024-01-01, 30d\n    section 第二阶段\n    任务2 :after a1, 20d",
         "pie": "pie title 资源分配\n    \"CPU\" : 45\n    \"内存\" : 30\n    \"存储\" : 25",
         "journey": "journey\n    title 我的日常工作\n    section 上午\n    通勤 : 7:00, 5\n    工作 : 9:00, 8"
